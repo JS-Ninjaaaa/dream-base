@@ -72,11 +72,11 @@ paths:
               properties:
                 content:
                   type: string
-                isPublic:
+                is_public:
                   type: boolean
               required:
                 - content
-                - isPublic
+                - is_public
       responses:
         '201':
           description: Created
@@ -84,8 +84,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dream'
+        '400':
+          description: BadRequest
 
-  /dreams/mine/{dreamId}:
+  /dreams/mine/{dream_id}:
     delete:
       tags:
         - dreams
@@ -93,7 +95,7 @@ paths:
       security:
         - BearerAuth: []
       parameters:
-        - name: dreamId
+        - name: dream_id
           in: path
           required: true
           schema:
@@ -102,6 +104,8 @@ paths:
       responses:
         '204':
           description: No Content
+        '404':
+          description: Not Found
 
   /dreams/public:
     get:
@@ -119,14 +123,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
-  /dreams/public/{dreamId}:
+  /dreams/public/{dream_id}:
     patch:
       tags:
         - dreams
       summary: Increment public dream likes
       security: []
       parameters:
-        - name: dreamId
+        - name: dream_id
           in: path
           required: true
           schema:
@@ -148,21 +152,21 @@ components:
         id:
           type: string
           format: integer
-        userId:
+        user_id:
           type: string
           format: integer
         content:
           type: string
           format: date
-        isPublic:
+        is_public:
           type: boolean
         likes:
           type: integer
           minimum: 0
-        createdAt:
+        created_at:
           type: string
           format: date-time
-        updatedAt:
+        updated_at:
           type: string
           format: date-time
     User:
