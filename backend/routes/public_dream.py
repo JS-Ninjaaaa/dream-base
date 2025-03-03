@@ -17,5 +17,5 @@ def increment_like_count(dream_id):
     dream_count = dream.likes + 1
     # インクリメントした「いいね数」に更新
     if dream.update_likes(dream_id=dream_id,likes=dream_count):
-        return jsonify(dream.__dict__), 200 # 更新されたデータだけ返す
-
+        updated_dream = Dream.get_by_id(dream_id)
+        return jsonify(updated_dream.__dict__), 200 # 更新されたデータだけ返す

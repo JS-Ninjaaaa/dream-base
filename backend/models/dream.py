@@ -124,7 +124,7 @@ class Dream:
             if result:
                 cur.close()
                 conn.close()
-                return result
+                return cls(*result)
             else:
                 cur.close()
                 conn.close()
