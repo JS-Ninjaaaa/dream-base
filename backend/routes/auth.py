@@ -18,9 +18,9 @@ def login():
         if user and user.check_password(password):
             access_token = create_access_token(identity=str(user.id))
             response_data = { # return user info
+                "id": "{}".format(user.id),
                 "name": "{}".format(user.username),
-                "email": "{}".format(user.email),
-                "id": user.id
+                "email": "{}".format(user.email)
             }
             response = jsonify(response_data)
             # headerにjwt tokenを仕込む
