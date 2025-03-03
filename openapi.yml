@@ -14,7 +14,7 @@ paths:
     post: 
       tags:
         - auth
-      summary: Login
+      summary: ログイン
       operationId: login
       security: []
       requestBody:
@@ -33,7 +33,7 @@ paths:
                 - password
       responses:
         '200':
-          description: Successful response
+          description: ログイン成功
           content:
             application/json:
               schema:
@@ -45,22 +45,27 @@ paths:
     get:
       tags: 
         - dreams
-      summary: Get my dreams
+      summary: 自分の夢を取得する
+      operationId: getMyDreams
       security:
         - BearerAuth: []
       responses:
         '200':
-          description: Successful response
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
+        '401':
+          description: Unauthorized
+
     post:
       tags: 
         - dreams
-      summary: Create a new dream
+      summary: 自分の夢を投稿する
+      operationId: createMyDream
       security:
         - BearerAuth: []
       requestBody:
@@ -86,12 +91,15 @@ paths:
                 $ref: '#/components/schemas/Dream'
         '400':
           description: BadRequest
+        '401':
+          description: Unauthorized
 
   /dreams/mine/{dream_id}:
     delete:
       tags:
         - dreams
-      summary: Delete my dream
+      summary: 自分の夢を削除する
+      operationId: deleteMyDream
       security:
         - BearerAuth: []
       parameters:
@@ -104,6 +112,8 @@ paths:
       responses:
         '204':
           description: No Content
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
 
@@ -111,23 +121,25 @@ paths:
     get:
       tags:
         - dreams
-      summary: Get public dreams
+      summary: 公開されている夢を取得する
       operationId: getPublicDreams
       security: []
       responses:
         '200':
-          description: Successful response
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
+
   /dreams/public/{dream_id}:
     patch:
       tags:
         - dreams
       summary: Increment public dream likes
+      operationId: incrementPublicDreamLikes
       security: []
       parameters:
         - name: dream_id
@@ -138,11 +150,13 @@ paths:
             format: integer
       responses:
         '200':
-          description: Successful response
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dream'
+        '404':
+          description: Not Found
 
 components:
   schemas:
