@@ -12,7 +12,6 @@ class Dream:
     def __init__(self, id, user_id, content, is_public,likes,created_at,updated_at):
         self.id = id
         self.user_id = user_id
-        # self.title = title
         self.content = content
         self.is_public = is_public
         self.likes = likes
@@ -134,27 +133,3 @@ class Dream:
         except Exception as e:
             print(f"Error occurred while fetching dream by id: {e}")
             return None
-
-
-    # @classmethod
-    # def update(cls, dream_id, title, content, is_public, likes):
-    #     # ドリームデータの一つを更新
-    #     # 必須データ：dream_id（投稿を特定するため）
-    #     try:
-    #         conn = psycopg2.connect(**DB_CONFIG)
-    #         cur = conn.cursor()
-    #         cur.execute(
-    #             "UPDATE dreams SET title = %s, content = %s, is_public = %s, likes = %s WHERE id = %s",
-    #             (title, content, is_public, likes, dream_id)
-    #         )
-    #         conn.commit()  # 変更をコミット
-    #         cur.close()
-    #         conn.close()
-    #
-    #         if cur.rowcount == 0:
-    #             print(f"Dream with id {dream_id} not found.")
-    #             return False
-    #         return True
-    #     except Exception as e:
-    #         print(f"Error occurred while updating dream: {e}")
-    #         return None

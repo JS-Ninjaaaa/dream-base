@@ -84,6 +84,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dream'
+        '400':
+          description: BadRequest
 
   /dreams/mine/{dream_id}:
     delete:

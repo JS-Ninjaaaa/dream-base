@@ -26,6 +26,8 @@ def create_dream():
         created_dream = Dream.create(user_id, content, is_public)
         # 作成した夢を返す
         return jsonify(created_dream.__dict__), 201
+    else:
+        return "",400
 
 # ドリーム削除
 @dream_bp.route('/dreams/mine/<int:dream_id>', methods=['DELETE'])
@@ -35,35 +37,3 @@ def delete_dream(dream_id):  # ドリームIDに基づいて削除
     if user_id: # 認証
         if Dream.delete(dream_id):
             return "",204 # 成功
-
-# # ドリーム取得、指定したドリームの中身を返す
-# @dream_bp.route('/dreams/<int:dream_id>', methods=['GET'])
-# def get_one_dream(dream_id):
-#     dream = Dream.get_by_id(dream_id)
-#     if dream is None:
-#         return jsonify({"error": "Not found"}), 404  # ドリームが見つからない場合は404エラーを返す
-#
-#     return jsonify(dream.__dict__), 200
-
-
-# # ドリーム更新
-# @dream_bp.route('/dreams/<int:dream_id>', methods=['PUT'])
-# @jwt_required()
-# def update_dream(dream_id):
-#     # define data from front
-#     user_id = get_jwt_identity()  # get jwt
-#     if user_id is None:
-#         return jsonify({"error": "NoZ authorization"}), 400
-#
-#     data = request.get_json()
-#     title = data.get('title')
-#     content = data.get('content')
-#     is_public = data.get('is_public')
-#     likes = data.get('likes')
-#
-#     if Dream.update(dream_id,title, content, is_public, likes):
-#         return jsonify({"success": "finished"}), 200
-#     else:
-#         return jsonify({"error": "failed to update"}), 400
-
-
