@@ -12,16 +12,6 @@ def get_dreams():
     dreams = Dream.get_all_by_user(user_id)  # トークンのuser idに当たるものを参照
     return jsonify([dream.__dict__ for dream in dreams]), 200
 
-
-# ドリーム取得、指定したドリームの中身を返す
-@dream_bp.route('/dreams/<int:dream_id>', methods=['GET'])
-def get_one_dream(dream_id):
-    dream = Dream.get_by_id(dream_id)
-    if dream is None:
-        return jsonify({"error": "Not found"}), 404  # ドリームが見つからない場合は404エラーを返す
-
-    return jsonify(dream.__dict__), 200
-
 # ドリーム新規作成
 @dream_bp.route('/dreams/mine', methods=['POST'])
 @jwt_required()
@@ -38,37 +28,42 @@ def create_dream():
         return jsonify(created_dream.__dict__), 201
 
 # ドリーム削除
-@dream_bp.route('/dreams/<int:dream_id>', methods=['DELETE'])
+@dream_bp.route('/dreams/mine/<int:dream_id>', methods=['DELETE'])
 @jwt_required()
 def delete_dream(dream_id):  # ドリームIDに基づいて削除
-    # 認証
     user_id = get_jwt_identity() # get jwt
-    if user_id is None:
-        return jsonify({"error": "No authorization"}), 400
+    if user_id: # 認証
+        if Dream.delete(dream_id):
+            return "",204 # 成功
 
-    if Dream.delete(dream_id):
-        return 204 # 成功
-    else:
-        return jsonify({"error": "An error occurred"}), 400
+# # ドリーム取得、指定したドリームの中身を返す
+# @dream_bp.route('/dreams/<int:dream_id>', methods=['GET'])
+# def get_one_dream(dream_id):
+#     dream = Dream.get_by_id(dream_id)
+#     if dream is None:
+#         return jsonify({"error": "Not found"}), 404  # ドリームが見つからない場合は404エラーを返す
+#
+#     return jsonify(dream.__dict__), 200
 
-# ドリーム更新
-@dream_bp.route('/dreams/<int:dream_id>', methods=['PUT'])
-@jwt_required()
-def update_dream(dream_id):
-    # define data from front
-    user_id = get_jwt_identity()  # get jwt
-    if user_id is None:
-        return jsonify({"error": "NoZ authorization"}), 400
 
-    data = request.get_json()
-    title = data.get('title')
-    content = data.get('content')
-    is_public = data.get('is_public')
-    likes = data.get('likes')
-
-    if Dream.update(dream_id,title, content, is_public, likes):
-        return jsonify({"success": "finished"}), 200
-    else:
-        return jsonify({"error": "failed to update"}), 400
+# # ドリーム更新
+# @dream_bp.route('/dreams/<int:dream_id>', methods=['PUT'])
+# @jwt_required()
+# def update_dream(dream_id):
+#     # define data from front
+#     user_id = get_jwt_identity()  # get jwt
+#     if user_id is None:
+#         return jsonify({"error": "NoZ authorization"}), 400
+#
+#     data = request.get_json()
+#     title = data.get('title')
+#     content = data.get('content')
+#     is_public = data.get('is_public')
+#     likes = data.get('likes')
+#
+#     if Dream.update(dream_id,title, content, is_public, likes):
+#         return jsonify({"success": "finished"}), 200
+#     else:
+#         return jsonify({"error": "failed to update"}), 400
 
 

@@ -72,11 +72,11 @@ paths:
               properties:
                 content:
                   type: string
-                isPublic:
+                is_public:
                   type: boolean
               required:
                 - content
-                - isPublic
+                - is_public
       responses:
         '201':
           description: Created
@@ -85,7 +85,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Dream'
 
-  /dreams/mine/{dreamId}:
+  /dreams/mine/{dream_id}:
     delete:
       tags:
         - dreams
@@ -93,7 +93,7 @@ paths:
       security:
         - BearerAuth: []
       parameters:
-        - name: dreamId
+        - name: dream_id
           in: path
           required: true
           schema:
