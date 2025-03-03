@@ -31,24 +31,23 @@ def create_dream():
     is_public = data.get('is_public')
     user_id = get_jwt_identity() # JWTトークンのヘッダからuser_idを取得
 
-    if not content:  # 内容の確認
-        return jsonify({"error": "内容は必須です"}), 400
-    # ドリームを作成してSQL保存
-    created_dream = Dream.create(user_id, content, is_public)
-    # 作成した夢を返す
-    return jsonify(created_dream.__dict__), 201
+    if content:  # 内容があれば
+        # ドリームを作成してSQL保存
+        created_dream = Dream.create(user_id, content, is_public)
+        # 作成した夢を返す
+        return jsonify(created_dream.__dict__), 201
 
 # ドリーム削除
 @dream_bp.route('/dreams/<int:dream_id>', methods=['DELETE'])
 @jwt_required()
 def delete_dream(dream_id):  # ドリームIDに基づいて削除
-    # 認証について後ほど修正必要
+    # 認証
     user_id = get_jwt_identity() # get jwt
     if user_id is None:
-        return jsonify({"error": "NoZ authorization"}), 400
+        return jsonify({"error": "No authorization"}), 400
 
     if Dream.delete(dream_id):
-        return jsonify({"success": "success to delete"}), 200
+        return 204 # 成功
     else:
         return jsonify({"error": "An error occurred"}), 400
 
