@@ -31,9 +31,10 @@ def create_dream():
 
 # ドリーム削除
 @dream_bp.route('/dreams/mine/<int:dream_id>', methods=['DELETE'])
-@jwt_required()
+@jwt_required() # authentication
 def delete_dream(dream_id):  # ドリームIDに基づいて削除
-    user_id = get_jwt_identity() # get jwt
-    if user_id: # 認証
-        if Dream.delete(dream_id):
-            return "",204 # 成功
+    # delete
+    if Dream.delete(dream_id):
+        return "",204 # 成功
+    else:
+        return "",404 # not found

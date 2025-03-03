@@ -7,8 +7,7 @@ public_dream_bp = Blueprint('public_dream', __name__)
 @public_dream_bp.route('/dreams/public', methods=['GET'])
 def view_public_dream():
     public_dreams = Dream.get_all_public_dreams() # 該当データを集める
-    if public_dreams:
-        return jsonify([dream.__dict__ for dream in public_dreams]), 200
+    return jsonify([dream.__dict__ for dream in public_dreams]), 200
 
 
 # いいねのインクリメントを行うAPI
