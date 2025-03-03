@@ -84,7 +84,7 @@ class Dream:
             cur = conn.cursor()
             # 並び順を一定にするためidの照準にソート
             cur.execute(
-                "SELECT id, user_id, title, content, is_public, likes FROM dreams WHERE is_public = TRUE ORDER BY id DESC")
+                "SELECT id, user_id, content, is_public, likes, created_at, updated_at  FROM dreams WHERE is_public = TRUE ORDER BY id DESC")
             dreams = [cls(*row) for row in cur.fetchall()]
             cur.close()
             conn.close()
@@ -96,7 +96,6 @@ class Dream:
     @classmethod
     def update_likes(cls, dream_id, likes):
         # likeを指定してデータを更新
-        # 必須データ：dream_id, likes
         try:
             conn = psycopg2.connect(**DB_CONFIG)
             cur = conn.cursor()
@@ -115,26 +114,26 @@ class Dream:
             print(f"Error occurred while updating dream: {e}")
             return None
 
-    # @classmethod
-    # def get_by_id(cls, id):
-    #     # メモのidに基づいて、特定のメモを取得
-    #     try:
-    #         conn = psycopg2.connect(**DB_CONFIG)
-    #         cur = conn.cursor()
-    #         cur.execute("SELECT id, user_id, content, is_public, likes FROM dreams WHERE id = %s", (id,))
-    #         result = cur.fetchone()
-    #         if result:
-    #             cur.close()
-    #             conn.close()
-    #             return cls(*result)
-    #         else:
-    #             cur.close()
-    #             conn.close()
-    #             print(f"Error occurred getting dream with id {id}")
-    #             return None  # メモが見つからなかった場合
-    #     except Exception as e:
-    #         print(f"Error occurred while fetching dream by id: {e}")
-    #         return None
+    @classmethod
+    def get_by_id(cls, id):
+        # メモのidに基づいて、特定のメモを取得
+        try:
+            conn = psycopg2.connect(**DB_CONFIG)
+            cur = conn.cursor()
+            cur.execute("SELECT id, user_id, content, is_public, likes, created_at, updated_at FROM dreams WHERE id = %s", (id,))
+            result = cur.fetchone()
+            if result:
+                cur.close()
+                conn.close()
+                return result
+            else:
+                cur.close()
+                conn.close()
+                print(f"Error occurred getting dream with id {id}")
+                return None  # メモが見つからなかった場合
+        except Exception as e:
+            print(f"Error occurred while fetching dream by id: {e}")
+            return None
 
 
     # @classmethod

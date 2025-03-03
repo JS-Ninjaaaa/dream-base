@@ -119,14 +119,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
-  /dreams/public/{dreamId}:
+  /dreams/public/{dream_id}:
     patch:
       tags:
         - dreams
       summary: Increment public dream likes
       security: []
       parameters:
-        - name: dreamId
+        - name: dream_id
           in: path
           required: true
           schema:
