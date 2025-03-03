@@ -9,10 +9,10 @@ DB_CONFIG = {  # connect info
 }
 
 class Dream:
-    def __init__(self, id, user_id, title, content, is_public,likes,created_at,updated_at):
+    def __init__(self, id, user_id, content, is_public,likes,created_at,updated_at):
         self.id = id
         self.user_id = user_id
-        self.title = title
+        # self.title = title
         self.content = content
         self.is_public = is_public
         self.likes = likes
@@ -27,7 +27,7 @@ class Dream:
             conn = psycopg2.connect(**DB_CONFIG)
             cur = conn.cursor()
             # user_idに該当するメモデータを取得、id順
-            cur.execute("SELECT id, user_id, title, content, is_public, likes, created_at, updated_at FROM dreams WHERE user_id = %s ORDER BY id DESC", (user_id,))
+            cur.execute("SELECT id, user_id, content, is_public, likes, created_at, updated_at FROM dreams WHERE user_id = %s ORDER BY id DESC", (user_id,))
             dreams = [cls(*row) for row in cur.fetchall()]
             cur.close()
             conn.close()
@@ -42,7 +42,7 @@ class Dream:
         try:
             conn = psycopg2.connect(**DB_CONFIG)
             cur = conn.cursor()
-            cur.execute("SELECT id, user_id, title, content, is_public, likes FROM dreams WHERE id = %s", (id,)) 
+            cur.execute("SELECT id, user_id, content, is_public, likes FROM dreams WHERE id = %s", (id,))
             result = cur.fetchone()
             if result:
                 cur.close()
@@ -58,21 +58,22 @@ class Dream:
             return None
 
     @classmethod
-    def create(cls, user_id, title, content, is_public=False):
+    def create(cls, user_id, content, is_public=False):
         # 新しいメモの作成 ****user_id必要****
         try:
             likes = 0 # 作成時はlikesは0
             conn = psycopg2.connect(**DB_CONFIG)
             cur = conn.cursor()
             cur.execute(
-                "INSERT INTO dreams (user_id, title, content, is_public, likes) VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                (user_id, title, content, is_public,likes)
+                # "returning * " でカラム全て返す
+                "INSERT INTO dreams (user_id, content, is_public, likes) VALUES (%s, %s, %s, %s) RETURNING *",
+                (user_id, content, is_public, likes)
             )
-            dream_id = cur.fetchone()[0]  # 新しいメモのIDを取得
+            created_dream = cur.fetchone()  # 新規作成したメモを返す
             conn.commit()  # 変更をコミット
             cur.close()
             conn.close()
-            return dream_id
+            return created_dream
         except Exception as e:
             print(f"Error occurred while creating dream: {e}")
             return None

@@ -21,22 +21,22 @@ def get_one_dream(dream_id):
         return jsonify({"error": "Not found"}), 404  # ドリームが見つからない場合は404エラーを返す
 
     return jsonify(dream.__dict__), 200
+
 # ドリーム新規作成
-@dream_bp.route('/dreams', methods=['POST'])
+@dream_bp.route('/dreams/mine', methods=['POST'])
 @jwt_required()
 def create_dream():
     data = request.get_json()
-    title = data.get('title')
     content = data.get('content')
     is_public = data.get('is_public')
-    user_id = get_jwt_identity() # get jwt
+    user_id = get_jwt_identity() # JWTトークンのヘッダからuser_idを取得
 
-    if not title or not content:  # 内容の確認
-        return jsonify({"error": "タイトルと内容は必須です"}), 400
+    if not content:  # 内容の確認
+        return jsonify({"error": "内容は必須です"}), 400
     # ドリームを作成してSQL保存
-    dream_id = Dream.create(user_id, title, content, is_public)
-
-    return jsonify({"message": "ドリームを作成しました", "dream_id": dream_id}), 201
+    created_dream = Dream.create(user_id, content, is_public)
+    # 作成した夢を返す
+    return jsonify(created_dream.__dict__), 201
 
 # ドリーム削除
 @dream_bp.route('/dreams/<int:dream_id>', methods=['DELETE'])
