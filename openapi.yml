@@ -138,7 +138,7 @@ paths:
     patch:
       tags:
         - dreams
-      summary: Increment public dream likes
+      summary: 公開されている夢のいいね数を増やす
       operationId: incrementPublicDreamLikes
       security: []
       parameters:
