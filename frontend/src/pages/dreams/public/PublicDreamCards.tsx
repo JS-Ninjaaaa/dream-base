@@ -2,7 +2,7 @@ import { fetchPublicDreams } from "@/api/dreams/public";
 import { Dream } from "@/types/dream";
 import { AlertDialog, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
-import { HiThumbUp } from "react-icons/hi";
+import PublicDreamLikeButton from "./PublicDreamLikeButton";
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
@@ -32,8 +32,11 @@ const PublicDreamCards = () => {
                 </div>
               </div>
             </AlertDialog.Trigger>
-            <div className="absolute top-23 left-1/2 z-10">
-              <HiThumbUp size={35} className="text-pink-300" />
+            <div className="absolute top-23 z-10 left-1/2 transform -translate-x-1/2">
+              <PublicDreamLikeButton
+                dream={dream}
+                setPublicDreams={setPublicDreams}
+              />
             </div>
           </div>
 
