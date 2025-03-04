@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import Header from "../components/Header";
 import MyDreamCards from "./MyDreamCards";
 import MyDreamInput from "./MyDreamInput";
+import SakuraEffect from "../components/SakuraEffect";
 
 const MyDreamPage = () => {
   const [myDreams, setMyDreams] = useState<Dream[]>([]);
@@ -32,6 +33,7 @@ const MyDreamPage = () => {
   return (
     <div>
       <Header />
+      <SakuraEffect />
       <MyDreamInput setMyDreams={setMyDreams} />
       <MyDreamCards myDreams={myDreams} setMyDreams={setMyDreams} />
     </div>
