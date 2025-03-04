@@ -32,6 +32,15 @@ def create_my_dream():
         return "Content is required", 400
 
 
+@my_dream_bp.route("/dreams/mine/<int:dream_id>", methods=["PATCH"])
+def toggle_visibility(dream_id: int):
+    updated_dream = Dream.toggle_visibility(dream_id)
+    if updated_dream is None:
+        return "", 404
+
+    return jsonify(updated_dream.__dict__), 200
+
+
 # 夢を削除
 @my_dream_bp.route("/dreams/mine/<int:dream_id>", methods=["DELETE"])
 @jwt_required()

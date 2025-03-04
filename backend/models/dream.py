@@ -79,6 +79,30 @@ class Dream:
         return public_dreams
 
     @classmethod
+    def toggle_visibility(cls, dream_id: int) -> Dream | None:
+        # 夢の公開状態を切り替える
+        supabase: Client = get_supabase_client()
+
+        response = (
+            supabase.table("dreams")
+            .select("*")
+            .eq("id", dream_id)
+            .execute()
+        )  # fmt: skip
+        if len(response.data) == 0:
+            return None
+
+        visibility = response.data[0]["is_public"]
+        response = (
+            supabase.table("dreams")
+            .update({"is_public": not visibility})
+            .eq("id", dream_id)
+            .execute()
+        )
+
+        return cls(**response.data[0])
+
+    @classmethod
     def update_likes(cls, dream_id: int, likes: int) -> Dream | None:
         # 夢のいいね数を更新
         supabase: Client = get_supabase_client()
