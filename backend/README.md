@@ -9,49 +9,9 @@ pip install -r requirements.txt
 
 ### データベース
 
-PostgreSQLをインストール
-
-```sh
-# インストール
-brew install postgresql@14
-
-# PostgreSQLを起動
-brew services start postgresql@14
-
-# 起動状況の確認
-brew services list
-```
-
-データベースを作成
-
-```sh
-# データベースの一覧を表示
-❯ psql -l
-                           List of databases
-   Name    |  Owner  | Encoding | Collate | Ctype |  Access privileges
------------+---------+----------+---------+-------+---------------------
- postgres  | shunsei | UTF8     | C       | C     |
- template0 | shunsei | UTF8     | C       | C     | =c/shunsei         +
-           |         |          |         |       | shunsei=CTc/shunsei
- template1 | shunsei | UTF8     | C       | C     | =c/shunsei         +
-           |         |          |         |       | shunsei=CTc/shunsei
-(3 rows)
-
-# データベースに接続
-psql postgres
-```
-
-実行したSQL文
-
-> [!important]
-> データベースユーザーのパスワードは全て`password`
+Supabase の SQL Editor で以下の SQL 文を実行する．
 
 ```sql
-CREATE DATABASE dreamsink;
-
--- Connect to the database
-\c dreamsink;
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -71,31 +31,18 @@ CREATE TABLE dreams (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+```
 
--- Trigger function to update updated_at field
-CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = CURRENT_TIMESTAMP;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+SQL Editor で `seeds` 以下の SQL文を実行してサンプルデータを追加する．
 
--- Trigger to call the function before update
-CREATE TRIGGER update_dream_updated_at
-BEFORE UPDATE ON dreams
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at();
+> [!important]
+> ユーザーのパスワードは全て`password`
 
--- Insert sample data
-\i seeds/users.sql
-\i seeds/dreams.sql
+`.env.sample` をコピーして `.env` を作成し，
+Supabase の Project URL と API Key を記述する．
 
--- Create a test user
-CREATE USER test WITH PASSWORD 'password';
-
--- Grant superuser privileges to the test user
-ALTER USER test WITH SUPERUSER;
+```sh
+cp .env.sample .env
 ```
 
 ## 起動方法
