@@ -31,6 +31,20 @@ CREATE TABLE dreams (
     updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Trigger function to update updated_at field
+CREATE OR REPLACE FUNCTION update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger to call the function before update
+CREATE TRIGGER update_dream_updated_at
+BEFORE UPDATE ON dreams
+FOR EACH ROW
 ```
 
 SQL Editor で `seeds` 以下の SQL文を実行してサンプルデータを追加する．
