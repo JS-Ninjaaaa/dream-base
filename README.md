@@ -4,8 +4,11 @@
 
 - [API 仕様書](https://kimurash.github.io/prtimes-hackathon-2025-winter/)
 - テストユーザー
-    - メールアドレス: `testuser1@example.com`
-    - パスワード: `password`
+
+| 項目         | 値                        |
+|------------|-------------------------|
+| メールアドレス | `testuser1@example.com` |
+| パスワード   | `password`                |
 
 ## 機能一覧
 
