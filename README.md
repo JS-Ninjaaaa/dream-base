@@ -30,7 +30,7 @@ WIP
 | -------------- | ------------------------------------------- | 
 | フロントエンド | React, React Router, Tailwind CSS, Radix UI, Jotai | 
 | バックエンド   | Flask                                       | 
-| データベース   | PostgreSQL                                  | 
+| データベース   | Supabase                                  | 
 
 ## ER図
 

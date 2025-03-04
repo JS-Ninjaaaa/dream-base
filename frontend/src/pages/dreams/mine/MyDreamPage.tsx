@@ -3,9 +3,9 @@ import { Dream } from "@/types/dream";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Header from "../components/Header";
+import SakuraScatterEffect from "../components/SakuraScatterEffect";
 import MyDreamCards from "./MyDreamCards";
 import MyDreamInput from "./MyDreamInput";
-import SakuraEffect from "../components/SakuraEffect";
 
 const MyDreamPage = () => {
   const [myDreams, setMyDreams] = useState<Dream[]>([]);
@@ -33,7 +33,7 @@ const MyDreamPage = () => {
   return (
     <div>
       <Header />
-      <SakuraEffect />
+      <SakuraScatterEffect />
       <MyDreamInput setMyDreams={setMyDreams} />
       <MyDreamCards myDreams={myDreams} setMyDreams={setMyDreams} />
     </div>

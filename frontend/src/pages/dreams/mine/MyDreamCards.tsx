@@ -1,12 +1,13 @@
-import { deleteDream, fetchMyDreams } from "@/api/dreams/mine";
 import { Dream } from "@/types/dream";
-import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import { AlertDialog, Flex } from "@radix-ui/themes";
 import {
   FacebookIcon,
   FacebookShareButton,
   TwitterShareButton,
   XIcon,
 } from "react-share";
+import MyDreamDeleteButton from "./MyDreamDeleteButton";
+import MyDreamPrivacyButton from "./MyDreamPrivacyButton";
 
 interface MyDreamCardsProps {
   myDreams: Dream[];
@@ -30,98 +31,71 @@ const getPinkGradientClass = (likes: number): string => {
 };
 
 const MyDreamCards = ({ myDreams, setMyDreams }: MyDreamCardsProps) => {
-  const handleDeleteButtonClick = async (dreamId: number) => {
-    await deleteDream(dreamId);
-    const myDreams = await fetchMyDreams();
-    setMyDreams(myDreams);
-  };
-
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-8">
-        {myDreams.map((dream, index) => (
-          <AlertDialog.Root key={index}>
-            <div className="relative">
-              <AlertDialog.Trigger>
-                <div
-                  // prettier-ignore
-                  className={`
-                    border rounded-xl shadow-lg p-4 min-h-48 py-6 bg-gradient-to-b from-white
-                    ${getPinkGradientClass(dream.likes)}
-                  `}
-                >
-                  <Flex justify="between">
-                    <div className="mt-7 text-gray-800 overflow-hidden line-clamp-2">
-                      {dream.content}
-                    </div>
-                  </Flex>
-                  {dream.is_public && (
-                    <div className="text-green-500 font-medium mt-2 text-sm border-t pt-5 text-center">
-                      いいね {dream.likes}
-                    </div>
-                  )}
-                </div>
-              </AlertDialog.Trigger>
-              <button
-                className="absolute top-5 right-5 z-10"
-                onClick={() => {
-                  handleDeleteButtonClick(dream.id!);
-                }}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-8">
+      {myDreams.map((dream, index) => (
+        <AlertDialog.Root key={index}>
+          <div className="relative transition-transform transform hover:scale-105">
+            <AlertDialog.Trigger>
+              <div
+                // prettier-ignore
+                className={`
+                  border rounded-xl shadow-lg p-5 min-h-48 bg-gradient-to-b from-white
+                  flex flex-col justify-between
+                  ${getPinkGradientClass(dream.likes)}
+                `}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <AlertDialog.Content className="flex flex-col min-h-[300px] max-w-[400px]">
-              <AlertDialog.Title>{dream.title}</AlertDialog.Title>
-              <div className="mb-auto">
-                <AlertDialog.Description size="4">
+                <div className="mt-8 text-gray-800 overflow-hidden line-clamp-2">
                   {dream.content}
-                </AlertDialog.Description>
+                </div>
+                <div className="font-medium mt-5 mb-2 text-base text-center">
+                  {dream.likes} いいね
+                </div>
               </div>
-              <Flex gap="3" justify="center" direction="column" align="center">
-                <p className="text-center font-bold mt-3">
-                  ＼発信して夢を叶えよう！／
-                </p>
-                <Flex gap="2" justify="center">
-                  <FacebookShareButton
-                    url={window.location.href}
-                    title={dream.content}
-                    hashtag="#AprilDream"
-                  >
-                    <FacebookIcon size={40} round />
-                  </FacebookShareButton>
-                  <TwitterShareButton
-                    url={window.location.href}
-                    title={dream.content}
-                    hashtags={["AprilDream"]}
-                  >
-                    <XIcon size={40} round />
-                  </TwitterShareButton>
-                </Flex>
-                <AlertDialog.Cancel>
-                  <Button variant="soft" color="gray">
-                    閉じる
-                  </Button>
-                </AlertDialog.Cancel>
+            </AlertDialog.Trigger>
+            <div className="absolute top-5 left-5 z-10">
+              <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
+            </div>
+            <div className="absolute top-5 right-5 z-10">
+              <MyDreamDeleteButton dream={dream} setMyDreams={setMyDreams} />
+            </div>
+          </div>
+
+          <AlertDialog.Content className="flex flex-col h-full min-h-[300px] max-w-[400px]">
+            <AlertDialog.Title></AlertDialog.Title>
+            <AlertDialog.Description size="4" className="flex-grow">
+              {dream.content}
+            </AlertDialog.Description>
+            <Flex gap="3" direction="column" justify="end" align="center">
+              <p className="text-center font-bold mt-3">
+                ＼発信して夢を叶えよう！／
+              </p>
+              <Flex gap="2" justify="center">
+                <FacebookShareButton
+                  url={window.location.href}
+                  title={dream.content}
+                  hashtag="#AprilDream"
+                >
+                  <FacebookIcon size={40} round />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={window.location.href}
+                  title={dream.content}
+                  hashtags={["AprilDream"]}
+                >
+                  <XIcon size={40} round />
+                </TwitterShareButton>
               </Flex>
-            </AlertDialog.Content>
-          </AlertDialog.Root>
-        ))}
-      </div>
-    </>
+              <AlertDialog.Cancel>
+                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-5 rounded max-w-[100px]">
+                  閉じる
+                </button>
+              </AlertDialog.Cancel>
+            </Flex>
+          </AlertDialog.Content>
+        </AlertDialog.Root>
+      ))}
+    </div>
   );
 };
 
