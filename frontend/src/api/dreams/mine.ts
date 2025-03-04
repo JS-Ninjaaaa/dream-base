@@ -8,7 +8,7 @@ export const fetchMyDreams = async () => {
     throw new Error("ログインしていません");
   }
 
-  const response = await fetch(`${ENDPOINT}/dreams`, {
+  const response = await fetch(`${ENDPOINT}/dreams/mine`, {
     method: "GET",
     headers: {
       Authorization: `${token}`,
@@ -29,7 +29,7 @@ export const createDream = async (dream: Dream) => {
     throw new Error("ログインしていません");
   }
 
-  const response = await fetch(`${ENDPOINT}/dreams`, {
+  const response = await fetch(`${ENDPOINT}/dreams/mine`, {
     method: "POST",
     headers: {
       Authorization: `${token}`,
@@ -51,7 +51,7 @@ export const deleteDream = async (dreamId: number) => {
     throw new Error("ログインしていません");
   }
 
-  const response = await fetch(`${ENDPOINT}/dreams/${dreamId}`, {
+  const response = await fetch(`${ENDPOINT}/dreams/mine/${dreamId}`, {
     method: "DELETE",
     headers: {
       Authorization: `${token}`,

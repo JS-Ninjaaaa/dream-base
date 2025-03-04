@@ -4,7 +4,9 @@ const ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 export const fetchPublicDreams = async (): Promise<Dream[]> => {
   try {
-    const response = await fetch(`${ENDPOINT}/public/dream`, { method: "GET" });
+    const response = await fetch(`${ENDPOINT}/dreams/public`, {
+      method: "GET",
+    });
     if (!response.ok) {
       throw new Error("データ取得エラー");
     }
@@ -17,12 +19,11 @@ export const fetchPublicDreams = async (): Promise<Dream[]> => {
   }
 };
 
-// **「いいね！」を更新 **
 export const increasePublicDreamLikes = async (
   dreamId: number
 ): Promise<Dream[]> => {
   try {
-    await fetch(`${ENDPOINT}/public/like/${dreamId}`, { method: "POST" }); // いいね更新をPOSTメソッドに変更
+    await fetch(`${ENDPOINT}/dreams/public/${dreamId}`, { method: "POST" }); // いいね更新をPOSTメソッドに変更
     const publicDreams = await fetchPublicDreams();
     return publicDreams;
   } catch (error) {
