@@ -35,7 +35,7 @@ WIP
 erDiagram
     USERS {
         INTEGER id PK "Primary Key"
-        VARCHAR username "ユーザー名"
+        VARCHAR name "ユーザー名"
         VARCHAR email "メールアドレス"
         VARCHAR password_hash "パスワードハッシュ"
         TIMESTAMP created_at "作成日時"
@@ -44,7 +44,6 @@ erDiagram
     DREAMS {
         INTEGER id PK "Primary Key"
         INTEGER user_id FK "Foreign Key to USERS"
-        TEXT title "タイトル"
         TEXT content "内容"
         BOOLEAN is_public "公開フラグ"
         INTEGER likes "いいね数"
