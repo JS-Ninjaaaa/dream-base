@@ -45,6 +45,26 @@ export const createDream = async (dream: Dream) => {
   return;
 };
 
+export const toggleVisibility = async (dreamId: number) => {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
+    throw new Error("ログインしていません");
+  }
+
+  const response = await fetch(`${ENDPOINT}/dreams/mine/${dreamId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("夢の公開設定の変更に失敗しました");
+  }
+
+  return;
+};
+
 export const deleteDream = async (dreamId: number) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
