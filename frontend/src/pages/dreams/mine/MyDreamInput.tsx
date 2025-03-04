@@ -41,6 +41,7 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
           value={dream}
           onChange={(e) => setDream(e.target.value)}
           placeholder="夢を書き込んでください"
+          maxLength={100}
           className="w-full h-40 resize-none p-2 border-none focus:outline-none"
         />
       </div>
