@@ -1,44 +1,49 @@
-import psycopg2
-from flask_login import UserMixin
+from __future__ import annotations
+
+from models.db import get_supabase_client
+from supabase import Client
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
-class User(UserMixin):
-    def __init__(self, id, username, email, password_hash):
+class User:
+    def __init__(
+        self,
+        id: int,
+        name: str,
+        email: str,
+        password_hash: str,
+        created_at: str,
+        updated_at: str,
+    ):
         self.id = id
-        self.username = username
+        self.name = name
         self.email = email
         self.password_hash = password_hash
+        self.created_at = created_at
+        self.updated_at = updated_at
 
     @classmethod
-    def get_user_by_email(cls, email):
-        conn = psycopg2.connect("dbname=dreamsink user=test password=password host=localhost port=5432")
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM users WHERE email = %s', (email,))
-        user_data = cur.fetchone()
-        conn.close()
-        print(user_data)  # デバッグ用に確認
+    def get_user_by_email(cls, email: str) -> User | None:
+        supabase: Client = get_supabase_client()
+        response = (
+            supabase.table("users")
+            .select("*")
+            .eq("email", email)
+            .execute()
+        )  # fmt: skip
+        if len(response.data) == 0:
+            return None
 
-        if user_data:
-            return cls(id=user_data[0], username=user_data[1], email=user_data[2], password_hash=user_data[3])
-        return None
+        return cls(**response.data[0])
 
     @classmethod
-    def get_user_by_id(cls, user_id):
-        # **** user_id必要 ****
-        conn = psycopg2.connect("dbname=dreamsink user=test password=password host=localhost port=5432")
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM users WHERE id = %s', (user_id,))
-        user_data = cur.fetchone()
-        conn.close()
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM users WHERE id = %s', (user_id,))
-        user_data = cur.fetchone()
-        conn.close()
+    def get_user_by_id(cls, user_id: int) -> User | None:
+        supabase: Client = get_supabase_client()
+        response = supabase.table("users").select("*").eq("id", user_id).execute()
+        if len(response.data) == 0:
+            return None
 
-        if user_data:
-            return cls(id=user_data[0], username=user_data[1], email=user_data[2], password_hash=user_data[3])  # 修正
-        return None
+        return cls(**response.data[0])
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -46,9 +51,11 @@ class User(UserMixin):
     @classmethod
     def create_user(cls, username, email, password):
         password_hash = generate_password_hash(password)
-        conn = psycopg2.connect("dbname=dreamsink user=test password=password host=localhost port=5432")
-        cur = conn.cursor()
-        cur.execute('INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)',
-                    (username, email, password_hash))  # 修正
-        conn.commit()
-        conn.close()
+
+        supabase: Client = get_supabase_client()
+        response = (
+            supabase.table("users")
+            .insert({"username": username, "email": email, "password_hash": password_hash})
+            .execute()
+        )  # fmt: skip
+        return cls(**response.data[0])

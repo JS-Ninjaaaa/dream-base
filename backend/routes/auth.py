@@ -1,36 +1,31 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
-from models.user import User  # userモデル読み込み
+from models.user import User
 
-# ブループリント作成
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint("auth", __name__)
+
 
 # ログイン機能
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route("/login", methods=["POST"])
 def login():
-    if request.method == 'POST':
+    if request.method == "POST":
         # データ取得
         credentials = request.get_json()
-        email = credentials['email']
-        password = credentials['password']
+        email = credentials["email"]
+        password = credentials["password"]
         # ユーザー情報を取得
         user = User.get_user_by_email(email)
         if user and user.check_password(password):
             access_token = create_access_token(identity=str(user.id))
-            response_data = { # return user info
+            # ユーザー情報を返す
+            response_data = {
                 "id": "{}".format(user.id),
-                "name": "{}".format(user.username),
-                "email": "{}".format(user.email)
+                "name": "{}".format(user.name),
+                "email": "{}".format(user.email),
             }
             response = jsonify(response_data)
-            # headerにjwt tokenを仕込む
-            # print(response)
+            # header に JWT を仕込む
             response.headers["Authorization"] = "Bearer {}".format(access_token)
             return response
         else:
-            return "",401 #failed
-
-@auth_bp.route('/test', methods=['GET'])
-def test(): # 生存確認API
-    if request.method == 'GET':
-        return jsonify({"message": "Hello"}), 200
+            return "", 401  # failed

@@ -1,15 +1,20 @@
-import psycopg2
+from __future__ import annotations
 
-DB_CONFIG = {  # connect info
-    "dbname": "dreamsink",
-    "user": "test",
-    "password": "password",
-    "host": "localhost",
-    "port": "5432"
-}
+from models.db import get_supabase_client
+from supabase import Client
+
 
 class Dream:
-    def __init__(self, id, user_id, content, is_public,likes,created_at,updated_at):
+    def __init__(
+        self,
+        id: int,
+        user_id: int,
+        content: str,
+        is_public: bool,
+        likes: int,
+        created_at: str,
+        updated_at: str,
+    ):
         self.id = id
         self.user_id = user_id
         self.content = content
@@ -19,117 +24,87 @@ class Dream:
         self.updated_at = updated_at
 
     @classmethod
-    def get_all_by_user(cls, user_id):
-        # ユーザーのメモ一覧を取得
-        # **** user_id必要 ****
-        try:
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            # user_idに該当するメモデータを取得、id順
-            cur.execute("SELECT id, user_id, content, is_public, likes, created_at, updated_at FROM dreams WHERE user_id = %s ORDER BY id DESC", (user_id,))
-            dreams = [cls(*row) for row in cur.fetchall()]
-            cur.close()
-            conn.close()
-            return dreams
-        except Exception as e:
-            print(f"Error occurred while fetching user dreams: {e}")
-            return None
+    def get_all_by_user(cls, user_id: int) -> list[Dream]:
+        # ユーザーの夢を全て取得
+        supabase: Client = get_supabase_client()
+
+        response = (
+            supabase.table("dreams")
+            .select("*")
+            .eq("user_id", user_id)
+            # 更新日時の降順で取得
+            .order("updated_at", desc=True)
+            .execute()
+        )
+        my_dreams = [cls(**dream) for dream in response.data]
+        return my_dreams
 
     @classmethod
-    def create(cls, user_id, content, is_public=False):
-        # 新しいメモの作成 ****user_id必要****
-        try:
-            likes = 0 # 作成時はlikesは0
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            cur.execute(
-                # "returning * " でカラム全て返す
-                "INSERT INTO dreams (user_id, content, is_public, likes) VALUES (%s, %s, %s, %s) RETURNING *",
-                (user_id, content, is_public, likes)
-            )
-            created_dream = cur.fetchone()  # 新規作成したメモを返す
-            conn.commit()  # 変更をコミット
-            cur.close()
-            conn.close()
-            return created_dream
-        except Exception as e:
-            print(f"Error occurred while creating dream: {e}")
-            return None
+    def create(cls, user_id: int, content: str, is_public=False) -> Dream:
+        # 新しい夢の作成
+        supabase: Client = get_supabase_client()
+
+        response = (
+            supabase.table("dreams")
+            .insert({"user_id": user_id, "content": content, "is_public": is_public})
+            .execute()
+        )
+        created_dream = response.data[0]
+        return cls(**created_dream)
 
     @classmethod
-    def delete(cls, dream_id):
-        # ドリームを削除
-        try:
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            cur.execute("DELETE FROM dreams WHERE id = %s", (dream_id,))
-            conn.commit()  # 変更をコミット
-            cur.close()
-            conn.close()
-            if cur.rowcount == 0:
-                print(f"Dream with id {dream_id} not found.")
-                return False
+    def delete(cls, dream_id: int) -> bool:
+        # 夢を削除
+        supabase: Client = get_supabase_client()
 
-            return True
-        except Exception as e:
-            print(f"Error occurred while deleting Dream: {e}")
+        response = supabase.table("dreams").delete().eq("id", dream_id).execute()
+        if len(response.data) == 0:  # 削除対象の夢が無かった場合
             return False
 
-    @classmethod
-    def get_all_public_dreams(cls):
-        # 公開設定がtrueな夢データを全て送信
-        try:
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            # 並び順を一定にするためidの照準にソート
-            cur.execute(
-                "SELECT id, user_id, content, is_public, likes, created_at, updated_at  FROM dreams WHERE is_public = TRUE ORDER BY id DESC")
-            dreams = [cls(*row) for row in cur.fetchall()]
-            cur.close()
-            conn.close()
-            return dreams
-        except Exception as e:
-            print(f"Error occurred while fetching public dreams: {e}")
-            return None
+        return True
 
     @classmethod
-    def update_likes(cls, dream_id, likes):
-        # likeを指定してデータを更新
-        try:
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            cur.execute(
-                "UPDATE dreams SET likes = %s WHERE id = %s",
-                (likes, dream_id)
-            )
-            conn.commit()  # 変更をコミット
-            cur.close()
-            conn.close()
-            if cur.rowcount == 0:
-                print(f"Dream with id {dream_id} not found.")
-                return False
-            return True
-        except Exception as e:
-            print(f"Error occurred while updating dream: {e}")
-            return None
+    def get_all_public_dreams(cls) -> list[Dream]:
+        # 公開されている夢を全て取得
+        supabase: Client = get_supabase_client()
+        response = (
+            supabase.table("dreams")
+            .select("*")
+            .eq("is_public", True)
+            # 更新日時の降順で取得
+            .order("updated_at", desc=True)
+            .execute()
+        )
+        public_dreams = [cls(**dream) for dream in response.data]
+        return public_dreams
 
     @classmethod
-    def get_by_id(cls, id):
-        # メモのidに基づいて、特定のメモを取得
-        try:
-            conn = psycopg2.connect(**DB_CONFIG)
-            cur = conn.cursor()
-            cur.execute("SELECT id, user_id, content, is_public, likes, created_at, updated_at FROM dreams WHERE id = %s", (id,))
-            result = cur.fetchone()
-            if result:
-                cur.close()
-                conn.close()
-                return cls(*result)
-            else:
-                cur.close()
-                conn.close()
-                print(f"Error occurred getting dream with id {id}")
-                return None  # メモが見つからなかった場合
-        except Exception as e:
-            print(f"Error occurred while fetching dream by id: {e}")
+    def update_likes(cls, dream_id: int, likes: int) -> Dream | None:
+        # 夢のいいね数を更新
+        supabase: Client = get_supabase_client()
+
+        response = (
+            supabase.table("dreams")
+            .update({"likes": likes})
+            .eq("id", dream_id)
+            .execute()
+        )
+        if len(response.data) == 0:
             return None
+
+        return cls(**response.data[0])
+
+    @classmethod
+    def get_by_id(cls, id: int) -> Dream | None:
+        # idに基づいて特定の夢を取得
+        supabase: Client = get_supabase_client()
+        response = (
+            supabase.table("dreams")
+            .select("*")
+            .eq("id", id)
+            .execute()
+        )  # fmt: skip
+        if len(response.data) == 0:
+            return None
+
+        return cls(**response.data[0])
