@@ -5,3 +5,5 @@ include/
 lib/
 .idea/
 pyvenv.cfg
+
+.env
