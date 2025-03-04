@@ -2,6 +2,7 @@ import { increasePublicDreamLikes } from "@/api/dreams/public";
 import { userAtom } from "@/atoms/userAtom";
 import { Dream } from "@/types/dream";
 import { useAtom } from "jotai";
+import { HiThumbUp } from "react-icons/hi";
 
 interface PublicDreamLikeButtonProps {
   dream: Dream;
@@ -24,10 +25,12 @@ const PublicDreamLikeButton = ({
   return (
     <button
       className="text-yellow-500 text-3xl hover:scale-110 transition-transform cursor-pointer"
-      onClick={() => handleLikeAddButtonClick(dream.id!)}
+      onClick={() => {
+        handleLikeAddButtonClick(dream.id!);
+      }}
       disabled={!likable}
     >
-      {likable ? "👍" : ""}
+      <HiThumbUp size={35} className="text-pink-300" />
     </button>
   );
 };
