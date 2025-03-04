@@ -2,7 +2,7 @@
 
 書き溜めた夢を公開して「いいね！」がもらえるWebサービス
 
-- [API 仕様書](https://kimurash.github.io/prtimes-hackathon-2025-winter/)
+- [API 仕様書](https://js-ninjaaaa.github.io/dreamsink/)
 - テストユーザー
 
 | 項目         | 値                        |
