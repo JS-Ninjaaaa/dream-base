@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
 .sakura {
-    position: fixed; /* 画面全体に適用 */
+	/* 画面全体に適用 */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* 横幅いっぱい */
-    height: 100vh; /* 高さを画面全体に */
-    z-index: -1; /* 全ての要素の下に配置 */
-    pointer-events: none; /* クリックを邪魔しない */
-  }
-  
+	/* 横幅いっぱい */
+    width: 100vw;
+	/* 高さを画面全体に */
+    height: 100vh;
+    /* 全ての要素の下に配置 */
+	z-index: -1;
+	/* クリックを邪魔しない */
+    pointer-events: none;
+}
+
 .sakura li {
 	width: 18px;
 	position: absolute;
