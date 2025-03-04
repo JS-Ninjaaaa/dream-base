@@ -3,7 +3,13 @@
 ### 仮想環境
 
 ```sh
+# 仮想環境を作成
 python -m venv .
+
+# 仮想環境を有効か
+source ./bin/activate
+
+# 必要なパッケージをインストール
 pip install -r requirements.txt
 ```
 
