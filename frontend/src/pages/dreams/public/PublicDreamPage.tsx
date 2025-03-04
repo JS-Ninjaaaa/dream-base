@@ -36,7 +36,7 @@ const DreamCards = () => {
               key={dream.id}
               className="bg-yellow-100 rounded-2xl p-6 shadow-lg border border-gray-300 flex flex-col justify-between items-center transition-transform transform hover:scale-105"
             >
-              <p className="mb-4 text-gray-700">{dream.content}</p>
+              <p className="mb-4 text-gray-700 line-clamp-2">{dream.content}</p>
               <PublicDreamLikeButton
                 dream={dream}
                 setPublicDreams={setPublicDreams}

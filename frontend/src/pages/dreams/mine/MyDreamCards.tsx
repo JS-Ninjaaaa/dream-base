@@ -46,13 +46,13 @@ const MyDreamCards = ({ myDreams, setMyDreams }: MyDreamCardsProps) => {
                 <div
                   // prettier-ignore
                   className={`
-                  border rounded-xl shadow-lg p-4 min-h-48 py-6 bg-gradient-to-b from-white
-                  ${getPinkGradientClass(dream.likes)}
+                    border rounded-xl shadow-lg p-4 min-h-48 py-6 bg-gradient-to-b from-white
+                    ${getPinkGradientClass(dream.likes)}
                   `}
                 >
                   <Flex justify="between">
-                    <div className="text-gray-800 overflow-hidden text-ellipsis">
-                      {dream.title}
+                    <div className="mt-7 text-gray-800 overflow-hidden line-clamp-2">
+                      {dream.content}
                     </div>
                   </Flex>
                   {dream.is_public && (
@@ -92,7 +92,7 @@ const MyDreamCards = ({ myDreams, setMyDreams }: MyDreamCardsProps) => {
                 </AlertDialog.Description>
               </div>
               <Flex gap="3" justify="center" direction="column" align="center">
-                <p className="text-center font-bold">
+                <p className="text-center font-bold mt-3">
                   ＼発信して夢を叶えよう！／
                 </p>
                 <Flex gap="2" justify="center">
