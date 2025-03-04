@@ -27,9 +27,11 @@ const DreamCards = () => {
     <>
       <Header />
       <SakuraEffect />
-        <h2 className="text-xl font-bold mb-6 flex items-center">
-          みんなの夢を見よう！🌸
-        </h2>
+        <div className="flex flex-col items-center p-6">
+          <h2 className="text-xl font-bold mb-6 flex items-center">
+            みんなの夢を見よう！🌸
+          </h2>
+        </div>
         {loading ? <p>読み込み中...</p> : null}
         <div className="max-w-screen-lg mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
