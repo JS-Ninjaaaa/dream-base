@@ -23,7 +23,7 @@ CORS(
 
 # JWTの設定
 app.config["JWT_SECRET_KEY"] = "my-jwt-key"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config["JWT_TOKEN_LOCATION"] = ["headers"]
 app.config["JWT_HEADER_TYPE"] = "Bearer"
 app.config["JWT_COOKIE_SAMESITE"] = "Strict"
