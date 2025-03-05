@@ -4,19 +4,17 @@ services:
   backend:
     build: ./backend
     ports:
-      - "5001:5000"  # 本番用に
+      - "5001:5000"
     environment:
       - FLASK_APP=app.py
-      - FLASK_ENV=production  # 本番環境
-    # ボリューム追加
+      - FLASK_ENV=production
     volumes:
-      - ./backend:/app
+      - ./backend:/backend
   
   frontend:
     build: ./frontend
     ports:
-      - "5173:5173"  # 開発用のポート
-    # ボリューム追加
+      - "5173:5173"
     volumes:
-      - ./frontend:/app2
-      - /app2/node_modules
+      - ./frontend:/frontend
+      - /frontend/node_modules

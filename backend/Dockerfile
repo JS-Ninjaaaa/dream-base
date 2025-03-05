@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # 作業ディレクトリを設定
-WORKDIR /app
+WORKDIR /backend
 
 # 依存関係をコピーしてインストール
 COPY requirements.txt .

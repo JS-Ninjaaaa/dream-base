@@ -1,6 +1,6 @@
 # ベースイメージ
 FROM node:23 AS base
-WORKDIR /app2
+WORKDIR /frontend
 
 # package.json と pnpm-lock.yaml をコピー
 COPY package.json pnpm-lock.yaml ./
@@ -24,6 +24,6 @@ RUN pnpm install --prod --frozen-lockfile
 
 # distをコピー
 FROM base
-COPY --from=build /app2/dist /app2/dist
+COPY --from=build /frontend/dist /frontend/dist
 
 CMD ["pnpm", "run", "dev", "--", "--host", "0.0.0.0"]
