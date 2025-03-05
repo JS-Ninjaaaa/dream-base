@@ -1,16 +1,22 @@
 import { fetchPublicDreams } from "@/api/dreams/public";
+import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { AlertDialog, Flex } from "@radix-ui/themes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PublicDreamLikeButton from "./PublicDreamLikeButton";
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
+  const { setIsLoading } = useContext(LoadingContext);
 
   // 初回データ取得
   useEffect(() => {
     const loadPublicDreams = async () => {
+      setIsLoading(true);
+
       const dreams = await fetchPublicDreams();
+
+      setIsLoading(false);
       setPublicDreams(dreams);
     };
 

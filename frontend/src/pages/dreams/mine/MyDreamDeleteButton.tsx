@@ -1,5 +1,7 @@
-import { deleteDream, fetchMyDreams } from "@/api/dreams/mine";
+import { deleteMyDream, fetchMyDreams } from "@/api/dreams/mine";
+import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
+import { useContext } from "react";
 import { RxCross1 } from "react-icons/rx";
 
 interface MyDreamDeleteButtonProps {
@@ -11,9 +13,15 @@ const MyDreamDeleteButton = ({
   dream,
   setMyDreams,
 }: MyDreamDeleteButtonProps) => {
+  const { setIsLoading } = useContext(LoadingContext);
+
   const handleDeleteButtonClick = async (dreamId: number) => {
-    await deleteDream(dreamId);
+    setIsLoading(true);
+
+    await deleteMyDream(dreamId);
     const myDreams = await fetchMyDreams();
+
+    setIsLoading(false);
     setMyDreams(myDreams);
   };
 

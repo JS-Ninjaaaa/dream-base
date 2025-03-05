@@ -1,5 +1,7 @@
-import { fetchMyDreams, toggleVisibility } from "@/api/dreams/mine";
+import { fetchMyDreams, toggleMyDreamVisibility } from "@/api/dreams/mine";
+import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
+import { useContext } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 interface MyDreamPrivacyButtonProps {
@@ -11,9 +13,15 @@ const MyDreamPrivacyButton = ({
   dream,
   setMyDreams,
 }: MyDreamPrivacyButtonProps) => {
+  const { setIsLoading } = useContext(LoadingContext);
+
   const handlePrivacyButtonClick = async (dreamId: number) => {
-    await toggleVisibility(dreamId);
+    setIsLoading(true);
+
+    await toggleMyDreamVisibility(dreamId);
     const newDreams = await fetchMyDreams();
+
+    setIsLoading(false);
     setMyDreams(newDreams);
   };
 
