@@ -26,11 +26,11 @@ const MyDreamPage = () => {
         setIsLoading(true);
 
         const dreams: Dream[] = await fetchMyDreams();
-
-        setIsLoading(false);
         setMyDreams(dreams);
       } catch (e) {
         console.error(e);
+      } finally {
+        setIsLoading(false);
       }
     };
 

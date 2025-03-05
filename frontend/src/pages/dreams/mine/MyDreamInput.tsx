@@ -30,13 +30,13 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
       await createMyDream(newDream);
       const myDreams: Dream[] = await fetchMyDreams();
 
-      setIsLoading(false);
       setMyDreams(myDreams);
-
       setDream("");
     } catch (e) {
       alert("夢の保存に失敗しました");
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 

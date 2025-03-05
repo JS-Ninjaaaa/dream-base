@@ -16,13 +16,19 @@ const MyDreamDeleteButton = ({
   const { setIsLoading } = useContext(LoadingContext);
 
   const handleDeleteButtonClick = async (dreamId: number) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    await deleteMyDream(dreamId);
-    const myDreams = await fetchMyDreams();
+      await deleteMyDream(dreamId);
+      const myDreams = await fetchMyDreams();
 
-    setIsLoading(false);
-    setMyDreams(myDreams);
+      setMyDreams(myDreams);
+    } catch (e) {
+      alert("夢の削除に失敗しました");
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

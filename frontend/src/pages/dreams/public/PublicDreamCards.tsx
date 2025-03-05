@@ -12,12 +12,16 @@ const PublicDreamCards = () => {
   // 初回データ取得
   useEffect(() => {
     const loadPublicDreams = async () => {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      const dreams = await fetchPublicDreams();
-
-      setIsLoading(false);
-      setPublicDreams(dreams);
+        const dreams = await fetchPublicDreams();
+        setPublicDreams(dreams);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadPublicDreams();

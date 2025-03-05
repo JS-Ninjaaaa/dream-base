@@ -22,13 +22,19 @@ const PublicDreamLikeButton = ({
   const [user] = useAtom(userAtom);
 
   const handleLikeAddButtonClick = async (id: number) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    await increasePublicDreamLikes(id);
-    const updatedPublicDreams = await fetchPublicDreams();
+      await increasePublicDreamLikes(id);
+      const updatedPublicDreams = await fetchPublicDreams();
 
-    setIsLoading(false);
-    setPublicDreams(updatedPublicDreams);
+      setPublicDreams(updatedPublicDreams);
+    } catch (e) {
+      alert("いいね数の更新に失敗しました");
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const likable = user && dream.user_id !== user.id;

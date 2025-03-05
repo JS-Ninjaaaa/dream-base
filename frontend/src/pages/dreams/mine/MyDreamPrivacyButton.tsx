@@ -16,13 +16,19 @@ const MyDreamPrivacyButton = ({
   const { setIsLoading } = useContext(LoadingContext);
 
   const handlePrivacyButtonClick = async (dreamId: number) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    await toggleMyDreamVisibility(dreamId);
-    const newDreams = await fetchMyDreams();
+      await toggleMyDreamVisibility(dreamId);
+      const newDreams = await fetchMyDreams();
 
-    setIsLoading(false);
-    setMyDreams(newDreams);
+      setMyDreams(newDreams);
+    } catch (e) {
+      alert("夢の公開設定の変更に失敗しました");
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
