@@ -84,6 +84,5 @@ export const deleteMyDream = async (dreamId: number) => {
     throw new Error("夢の削除に失敗しました");
   }
 
-  const deletedDream = await response.json();
-  return deletedDream;
+  return;
 };
