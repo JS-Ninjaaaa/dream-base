@@ -1,7 +1,8 @@
 import { login } from "@/api/auth/auth";
 import { userAtom } from "@/atoms/userAtom";
+import { LoadingContext } from "@/contexts/LoadingContext";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
 const LoginPage = () => {
@@ -9,11 +10,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   const [, setUser] = useAtom(userAtom);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const userInfo = await login(email, password);
@@ -22,6 +25,8 @@ const LoginPage = () => {
     } catch (error) {
       alert("ログインに失敗しました");
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

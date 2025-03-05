@@ -1,6 +1,7 @@
-import { createDream, fetchMyDreams } from "@/api/dreams/mine";
+import { createMyDream, fetchMyDreams } from "@/api/dreams/mine";
+import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface MyDreamInputProps {
   setMyDreams: (dreams: Dream[]) => void;
@@ -9,6 +10,8 @@ interface MyDreamInputProps {
 const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
   const [dream, setDream] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+
+  const { setIsLoading } = useContext(LoadingContext);
 
   const handlePrivacyToggleClick = () => {
     setIsPublic((prev) => !prev);
@@ -22,15 +25,18 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
         is_public: isPublic,
         likes: 0,
       };
-      await createDream(newDream);
+      setIsLoading(true);
 
+      await createMyDream(newDream);
       const myDreams: Dream[] = await fetchMyDreams();
-      setMyDreams(myDreams);
 
+      setMyDreams(myDreams);
       setDream("");
     } catch (e) {
       alert("夢の保存に失敗しました");
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
