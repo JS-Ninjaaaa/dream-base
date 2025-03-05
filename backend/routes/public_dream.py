@@ -12,7 +12,7 @@ def get_public_dreams():
 
 
 # いいね数をインクリメントする
-@public_dream_bp.route("/dreams/public/<int:dream_id>", methods=["POST"])
+@public_dream_bp.route("/dreams/public/<int:dream_id>", methods=["PATCH"])
 def increment_like_count(dream_id):
     # 該当の夢を取得
     dream = Dream.get_by_id(dream_id)

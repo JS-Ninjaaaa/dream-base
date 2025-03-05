@@ -19,11 +19,11 @@ export const fetchMyDreams = async () => {
     throw new Error("夢の取得に失敗しました");
   }
 
-  const dreams = await response.json();
-  return dreams;
+  const myDreams = await response.json();
+  return myDreams;
 };
 
-export const createDream = async (dream: Dream) => {
+export const createMyDream = async (dream: Dream) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("ログインしていません");
@@ -42,10 +42,11 @@ export const createDream = async (dream: Dream) => {
     throw new Error("夢の保存に失敗しました");
   }
 
-  return;
+  const newDream = await response.json();
+  return newDream;
 };
 
-export const toggleVisibility = async (dreamId: number) => {
+export const toggleMyDreamVisibility = async (dreamId: number) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("ログインしていません");
@@ -62,10 +63,11 @@ export const toggleVisibility = async (dreamId: number) => {
     throw new Error("夢の公開設定の変更に失敗しました");
   }
 
-  return;
+  const updatedDream = await response.json();
+  return updatedDream;
 };
 
-export const deleteDream = async (dreamId: number) => {
+export const deleteMyDream = async (dreamId: number) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("ログインしていません");
@@ -82,5 +84,6 @@ export const deleteDream = async (dreamId: number) => {
     throw new Error("夢の削除に失敗しました");
   }
 
-  return;
+  const deletedDream = await response.json();
+  return deletedDream;
 };
