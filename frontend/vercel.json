@@ -1,0 +1,16 @@
+{ 
+    "rewrites" :  [
+        {
+            "source": "/login",
+            "destination": "/"
+        },
+        {
+            "source": "/dreams/mine",
+            "destination": "/"
+        },
+        {
+            "source": "/dreams/public",
+            "destination": "/" 
+        }
+    ]
+}
