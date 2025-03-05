@@ -18,9 +18,6 @@ const LoginPage = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
-    await sleep(3000);
-
     try {
       const userInfo = await login(email, password);
       setUser(userInfo);
