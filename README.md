@@ -2,6 +2,7 @@
 
 書き溜めた夢を公開して「いいね！」がもらえるWebサービス
 
+- [サービスのリンク](https://dreamsink.vercel.app/)
 - [API 仕様書](https://js-ninjaaaa.github.io/dreamsink/)
 - テストユーザー
 
@@ -25,7 +26,15 @@
 
 ## 画面
 
-WIP
+<details>
+<summary>自分の夢画面</summary>
+<image src="https://github.com/user-attachments/assets/9ba573db-10b1-422a-bb93-8c848bd5ab35" width="700">
+</details>
+
+<details>
+<summary>みんなの夢画面</summary>
+<image src="https://github.com/user-attachments/assets/e6e237da-abbd-4704-8b09-a3105d8e335d" width="700">
+</details>
 
 ## 技術スタック
 
