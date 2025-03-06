@@ -7,7 +7,7 @@ const DreamCards = () => {
     <>
       <Header />
       <SakuraScatterEffect />
-      <div className="flex flex-col items-center p-6">
+      <div className="flex flex-col items-center py-6">
         <h1 className="text-2xl font-bold mb-6 flex items-center">
           みんなの夢を見よう！🌸
         </h1>
