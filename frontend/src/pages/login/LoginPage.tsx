@@ -4,6 +4,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { useAtom } from "jotai";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -67,14 +68,19 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center justify-between">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               ログイン
             </button>
           </div>
+          <div className="flex flex-col items-center">
+            <h1 className="mt-4">アカウントをお持ちでない方</h1>
+            <Link to="/signup" className="text-blue-600 font-bold underline">アカウントの作成</Link>
+          </div>
+
         </form>
       </div>
     </div>

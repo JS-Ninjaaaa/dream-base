@@ -7,6 +7,7 @@ import { LoadingContext } from "./contexts/LoadingContext";
 import MyDreamPage from "./pages/dreams/mine/MyDreamPage";
 import PublicDreamPage from "./pages/dreams/public/PublicDreamPage";
 import LoginPage from "./pages/login/LoginPage";
+import SignUpPage from "./pages/login/SignUpPage";
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MyDreamPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/dreams/mine" element={<MyDreamPage />} />
           <Route path="/dreams/public" element={<PublicDreamPage />} />
         </Routes>
