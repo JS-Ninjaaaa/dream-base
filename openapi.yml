@@ -39,7 +39,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: integer
+                  email:
+                    type: string
+                    format: email
         '401':
           description: Unauthorized
 
@@ -212,12 +219,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: integer
+                  email:
+                    type: string
+                    format: email
         '400':
           description: BadRequest
-        '404':
-          description: Not Found
-
 
 components:
   schemas:
