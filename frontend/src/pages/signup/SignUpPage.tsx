@@ -1,7 +1,5 @@
 import { createUser } from "@/api/users/user";
-import { userAtom } from "@/atoms/userAtom";
 import { LoadingContext } from "@/contexts/LoadingContext";
-import { useAtom } from "jotai";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -9,7 +7,6 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setIsLoading } = useContext(LoadingContext);
-  const [, setUser] = useAtom(userAtom);
 
   const navigate = useNavigate();
 
@@ -36,11 +33,14 @@ const SignUpPage = () => {
     setIsLoading(true);
 
     try {
-      const userInfo = await createUser(email, password);
-      setUser(userInfo);
-      navigate("/dreams/mine");
+      await createUser(email, password);
+      navigate("/login");
     } catch (error) {
-      alert("新規登録に失敗しました");
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("新規登録に失敗しました");
+      }
       console.error(error);
     } finally {
       setIsLoading(false);
