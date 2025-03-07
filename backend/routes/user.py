@@ -1,0 +1,20 @@
+from flask import Blueprint, jsonify, request
+from models.user import User
+
+user_bp = Blueprint("user", __name__)
+
+
+@user_bp.route("/users", methods=["POST"])
+def create_user():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+
+    if email is None:
+        return "Email is required", 400
+
+    if password is None:
+        return "Password is required", 400
+
+    new_user = User.create_user(email, password)
+    return jsonify(new_user.__dict__), 201

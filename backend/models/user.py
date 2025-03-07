@@ -47,7 +47,7 @@ class User:
         return check_password_hash(self.password_hash, password)
 
     @classmethod
-    def create_user(cls, email, password):
+    def create_user(cls, email: str, password: str) -> User:
         password_hash = generate_password_hash(password)
 
         supabase: Client = get_supabase_client()
