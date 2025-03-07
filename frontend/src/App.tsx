@@ -7,7 +7,7 @@ import { LoadingContext } from "./contexts/LoadingContext";
 import MyDreamPage from "./pages/dreams/mine/MyDreamPage";
 import PublicDreamPage from "./pages/dreams/public/PublicDreamPage";
 import LoginPage from "./pages/login/LoginPage";
-import SignUpPage from "./pages/login/SignUpPage";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
