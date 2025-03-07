@@ -18,6 +18,11 @@ const SignUpPage = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    if (!email) {
+      alert("メールアドレスを入力してください");
+      return;
+    }
+
     if (password.length < 6) {
       alert("パスワードは6文字以上にしてください");
       return;
