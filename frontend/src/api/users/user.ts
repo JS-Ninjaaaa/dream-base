@@ -29,6 +29,5 @@ export const createUser = async (
   }
 
   const userInfo: User = await response.json();
-  console.log(userInfo);
   return userInfo;
 };
