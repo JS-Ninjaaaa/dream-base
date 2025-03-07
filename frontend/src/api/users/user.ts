@@ -18,9 +18,17 @@ export const createUser = async (
   });
 
   if (!response.ok) {
-    throw new Error("ユーザー登録に失敗しました");
+    switch (response.status) {
+      case 400:
+        throw new Error("メールアドレスとパスワードを入力してください");
+      case 409:
+        throw new Error("メールアドレスが既に登録されています");
+      default:
+        throw new Error("新規登録に失敗しました");
+    }
   }
 
   const userInfo: User = await response.json();
+  console.log(userInfo);
   return userInfo;
 };
