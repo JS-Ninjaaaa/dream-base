@@ -1,13 +1,14 @@
 import os
 from datetime import timedelta
 
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from routes.auth import auth_bp
 from routes.my_dream import my_dream_bp
 from routes.public_dream import public_dream_bp
-from dotenv import load_dotenv
+from routes.user import user_bp
 
 load_dotenv()
 app = Flask(__name__)
@@ -38,6 +39,7 @@ jwt = JWTManager(app)  # init_app(app) は不要
 app.register_blueprint(auth_bp)
 app.register_blueprint(my_dream_bp)
 app.register_blueprint(public_dream_bp)
+app.register_blueprint(user_bp)
 
 
 @app.route("/test", methods=["GET"])

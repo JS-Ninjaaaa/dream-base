@@ -7,6 +7,8 @@ servers:
 tags: 
   - name: dreams
     description: 夢に関するAPI
+  - name: users
+    description: ユーザーに関するAPI
   - name: auth
     description: 認証に関するAPI
 paths:
@@ -37,7 +39,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: integer
+                  email:
+                    type: string
+                    format: email
         '401':
           description: Unauthorized
 
@@ -184,6 +193,44 @@ paths:
         '404':
           description: Not Found
 
+  /users:
+    post: 
+      tags: 
+        -  users
+      summary: ユーザーを作成する
+      operationId: createUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: integer
+                  email:
+                    type: string
+                    format: email
+        '400':
+          description: BadRequest
+
 components:
   schemas:
     Dream:
@@ -215,11 +262,17 @@ components:
         id:
           type: string
           format: integer
-        name:
-          type: string
         email:
           type: string
           format: email
+        password_hash:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
 
   securitySchemes:
     BearerAuth:

@@ -9,14 +9,12 @@ class User:
     def __init__(
         self,
         id: int,
-        name: str,
         email: str,
         password_hash: str,
         created_at: str,
         updated_at: str,
     ):
         self.id = id
-        self.name = name
         self.email = email
         self.password_hash = password_hash
         self.created_at = created_at
@@ -49,13 +47,13 @@ class User:
         return check_password_hash(self.password_hash, password)
 
     @classmethod
-    def create_user(cls, username, email, password):
+    def create_user(cls, email: str, password: str) -> User:
         password_hash = generate_password_hash(password)
 
         supabase: Client = get_supabase_client()
         response = (
             supabase.table("users")
-            .insert({"username": username, "email": email, "password_hash": password_hash})
+            .insert({"email": email, "password_hash": password_hash})
             .execute()
         )  # fmt: skip
         return cls(**response.data[0])
