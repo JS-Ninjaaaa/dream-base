@@ -2,8 +2,12 @@ import { login } from "@/api/auth/auth";
 import { userAtom } from "@/atoms/userAtom";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { useAtom } from "jotai";
-import { useContext, useState } from "react";
+import { cache, useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { createClient } from "@supabase/supabase-js"
+
+// supabaseのアクセス
+export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL,import.meta.env.VITE_SUPABASE_TOKEN);
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +28,23 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       alert("ログインに失敗しました");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  // Twitter login（サンプル）
+  const handleTwitterLogin = async () =>{
+    setIsLoading(true);
+
+    try{
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "twitter"
+      });
+      if (error) throw error;
+    }
+    catch (error){
+      alert("Twitter ログインに失敗しました");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -73,6 +94,13 @@ const LoginPage = () => {
               type="submit"
             >
               ログイン
+            </button>
+            <button
+              type="button"
+              onClick={handleTwitterLogin}
+              className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Twitterでログイン
             </button>
           </div>
         </form>
