@@ -192,6 +192,7 @@ paths:
                 $ref: '#/components/schemas/Dream'
         '404':
           description: Not Found
+
   /users:
     post: 
       tags: 

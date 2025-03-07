@@ -17,4 +17,4 @@ def create_user():
         return "Password is required", 400
 
     new_user = User.create_user(email, password)
-    return jsonify(new_user.__dict__), 201
+    return jsonify({"id": new_user.id, "email": new_user.email}), 201

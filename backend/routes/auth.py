@@ -19,7 +19,6 @@ def login():
         # ユーザー情報を返す
         response_data = {
             "id": "{}".format(user.id),
-            "name": "{}".format(user.name),
             "email": "{}".format(user.email),
         }
         response = jsonify(response_data)
