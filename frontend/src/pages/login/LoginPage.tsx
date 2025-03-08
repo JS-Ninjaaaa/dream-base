@@ -2,7 +2,7 @@ import { login } from "@/api/auth/auth";
 import { userAtom } from "@/atoms/userAtom";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { useAtom } from "jotai";
-import { cache, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { supabase } from "@/lib/supabase";
 
