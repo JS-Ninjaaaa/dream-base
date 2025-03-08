@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { supabase } from "@/lib/supabase";
 import { Link } from "react-router-dom";
+import SakuraScatterEffect from "../dreams/components/SakuraScatterEffect"
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -52,7 +53,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-pink-50">
+    <>
+    <SakuraScatterEffect/>
+    <div className="flex justify-center items-center h-screen">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 border border-pink-300">
         <h2 className="text-3xl font-bold text-center mb-6 text-pink-600">🌸ログイン</h2>
         <form onSubmit={handleSubmit}>
@@ -90,7 +93,7 @@ const LoginPage = () => {
           </div>
           <div className="flex flex-col gap-4">
             <button
-              className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="bg-pink-400 hover:bg-pink-500 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               type="submit"
             >
               ログイン
@@ -112,6 +115,7 @@ const LoginPage = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

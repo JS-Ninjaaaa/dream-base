@@ -1,5 +1,5 @@
 const SakuraScatterEffect = () => {
-  const sakuraImagePaths = Array(10)
+  const sakuraImagePaths = Array(100)
     .fill([
       "/assets/s1.png",
       "/assets/s2.png",
