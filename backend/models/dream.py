@@ -40,7 +40,7 @@ class Dream:
         return my_dreams
 
     @classmethod
-    def create(cls, user_id: int, content: str, is_public=False) -> Dream:
+    def create(cls, user_id: uuid, content: str, is_public=False) -> Dream:
         # 新しい夢の作成
         supabase: Client = get_supabase_client()
 
