@@ -1,4 +1,4 @@
-import { Dream } from "@/types/dream";
+import { RequestDream } from "@/types/dream";
 
 const ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string;
 
@@ -23,7 +23,7 @@ export const fetchMyDreams = async () => {
   return myDreams;
 };
 
-export const createMyDream = async (dream: Dream) => {
+export const createMyDream = async (dream: RequestDream) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("ログインしていません");

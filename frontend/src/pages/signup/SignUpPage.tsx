@@ -1,51 +1,46 @@
-import { login } from "@/api/auth/auth";
-import { userAtom } from "@/atoms/userAtom";
+import { createUser } from "@/api/users/user";
 import { LoadingContext } from "@/contexts/LoadingContext";
-import { useAtom } from "jotai";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import { supabase } from "@/lib/supabase";
-import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [, setUser] = useAtom(userAtom);
   const { setIsLoading } = useContext(LoadingContext);
 
   const navigate = useNavigate();
 
+  const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (!email) {
+      alert("メールアドレスを入力してください");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("パスワードは6文字以上にしてください");
+      return;
+    }
+
+    if (!PASSWORD_REGEX.test(password)) {
+      alert("パスワードはアルファベットと数字を含めてください");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const userInfo = await login(email, password);
-      setUser(userInfo);
-      navigate("/");
+      await createUser(email, password);
+      navigate("/login");
     } catch (error) {
-      alert("ログインに失敗しました");
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  // Twitter login（サンプル）
-  const handleTwitterLogin = async () =>{
-    setIsLoading(true);
-
-    try{
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "twitter",
-        options: {
-          redirectTo: "http://localhost:5173/auth/callback", // 絶対URLを指定
-        },
-      });
-      if (error) throw error;
-    }
-    catch (error){
-      alert("Twitter ログインに失敗しました");
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("新規登録に失敗しました");
+      }
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -55,7 +50,7 @@ const LoginPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-4">ログイン</h2>
+        <h2 className="text-2xl font-bold mb-4">新規登録</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -68,7 +63,7 @@ const LoginPage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
-              placeholder="メールアドレス"
+              placeholder="user@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -84,35 +79,27 @@ const LoginPage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
-              placeholder="パスワード"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
-          <div className="flex flex-col items-center justify-between">
-            <button
-              className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              ログイン
-            </button>
-            <button
-              type="button"
-              onClick={handleTwitterLogin}
-              className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Twitterでログイン
-            </button>
-          </div>
-          <div className="flex flex-col items-center">
-            <h1 className="mt-4">アカウントをお持ちでない方</h1>
-            <Link to="/signup" className="text-blue-600 font-bold underline">アカウントの作成</Link>
+            <ul className="list-disc text-sm text-gray-500 mt-2 ml-6">
+              <li>6文字以上</li>
+              <li>アルファベットと数字を含む</li>
+            </ul>
           </div>
 
+          <div className="flex flex-col items-center justify-between">
+            <button
+              className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              新規登録
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default SignUpPage;
