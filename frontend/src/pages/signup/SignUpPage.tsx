@@ -3,7 +3,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import SakuraScatterEffect from "../dreams/components/SakuraScatterEffect"
+import SakuraScatterEffect from "../dreams/components/SakuraScatterEffect";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
@@ -21,12 +21,10 @@ const SignUpPage = () => {
       alert("メールアドレスを入力してください");
       return;
     }
-
     if (password.length < 6) {
       alert("パスワードは6文字以上にしてください");
       return;
     }
-
     if (!PASSWORD_REGEX.test(password)) {
       alert("パスワードはアルファベットと数字を含めてください");
       return;
@@ -51,10 +49,12 @@ const SignUpPage = () => {
 
   return (
     <>
-      <SakuraScatterEffect /> {/* 桜エフェクト */}
+      <SakuraScatterEffect />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-white p-8 rounded-lg shadow-lg w-96 border border-pink-300">
-          <h2 className="text-3xl font-bold text-center mb-6 text-pink-600">🌸新規登録</h2>
+          <h2 className="text-3xl font-bold text-center mb-6 text-pink-600">
+            🌸新規登録
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-medium mb-2">
@@ -95,8 +95,13 @@ const SignUpPage = () => {
             </div>
 
             <div className="flex flex-col items-center mt-6">
-              <h1 className="text-sm text-gray-600">すでにアカウントをお持ちの方</h1>
-              <Link to="/login" className="text-pink-600 font-semibold underline">
+              <h1 className="text-sm text-gray-600">
+                すでにアカウントをお持ちの方
+              </h1>
+              <Link
+                to="/login"
+                className="text-pink-600 font-semibold underline"
+              >
                 ログインページへ
               </Link>
             </div>
