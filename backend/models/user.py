@@ -2,12 +2,12 @@ from __future__ import annotations
 import uuid # uuid
 from models.db import get_supabase_client
 from supabase import Client
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User:
     def __init__(
         self,
-        id: uuid, # idはUUID型
+        id: uuid.UUID, # idはUUID型
         email: str,
         created_at: None,
         updated_at: None,
