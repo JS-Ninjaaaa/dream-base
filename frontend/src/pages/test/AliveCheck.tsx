@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase"; // Supabaseクライアント
 
+const ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string;
+
 const AuthCallback = () => {
   const [message, setMessage] = useState("認証中...");
 
@@ -12,11 +14,37 @@ const AuthCallback = () => {
       if (error) {
         console.error("認証エラー", error);
         setMessage("❌ ログインに失敗しました");
-      } else if (data.session) {
-        console.log("ログイン成功", data);
-        setMessage("✅ Twitterログイン成功！");
-      } else {
+        return;
+      }
+
+      if (!data.session) {
         setMessage("❌ 認証情報が見つかりません");
+        return;
+      }
+
+      const token = data.session.access_token; // JWT トークン
+      console.log("JWT トークン:", token);
+
+      // Flask に JWT を送信
+      try {
+        const response = await fetch(ENDPOINT +  "/jwtest", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log("Flask レスポンス:", result);
+          setMessage(`✅ 認証成功！UUID: ${result.uuid}`);
+        } else {
+          setMessage(`❌ 認証エラー: ${result.error}`);
+        }
+      } catch (err) {
+        console.error("サーバーエラー", err);
+        setMessage("❌ サーバー通信に失敗しました");
       }
     };
 
