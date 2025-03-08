@@ -16,5 +16,9 @@ def create_user():
     if password is None:
         return "Password is required", 400
 
+    user = User.get_user_by_email(email)
+    if user is not None:
+        return "Email is already taken", 409
+
     new_user = User.create_user(email, password)
     return jsonify({"id": new_user.id, "email": new_user.email}), 201

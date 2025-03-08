@@ -37,7 +37,12 @@ class User:
     @classmethod
     def get_user_by_id(cls, user_id: int) -> User | None:
         supabase: Client = get_supabase_client()
-        response = supabase.table("users").select("*").eq("id", user_id).execute()
+        response = (
+            supabase.table("users")
+            .select("*")
+            .eq("id", user_id)
+            .execute()
+        )  # fmt: skip
         if len(response.data) == 0:
             return None
 

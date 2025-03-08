@@ -230,6 +230,8 @@ paths:
                     format: email
         '400':
           description: BadRequest
+        '409':
+          description: Conflict
 
 components:
   schemas:
