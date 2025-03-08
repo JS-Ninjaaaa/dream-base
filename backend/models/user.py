@@ -1,13 +1,11 @@
 from __future__ import annotations
-import uuid # uuid
 from models.db import get_supabase_client
 from supabase import Client
-from werkzeug.security import generate_password_hash, check_password_hash
 
 class User:
     def __init__(
         self,
-        id: uuid.UUID, # idはUUID型
+        id: str,
         email: str,
         created_at: None,
         updated_at: None,
@@ -31,7 +29,7 @@ class User:
         return cls(**response.data[0])
 
     @classmethod
-    def get_user_by_id(cls, user_id: uuid) -> User | None:
+    def get_user_by_id(cls, user_id: str) -> User | None:
         supabase: Client = get_supabase_client()
         response = (
             supabase.auth.api.get_user(user_id)

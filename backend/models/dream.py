@@ -1,5 +1,4 @@
 from __future__ import annotations
-import uuid
 from models.db import get_supabase_client
 from supabase import Client
 
@@ -8,7 +7,7 @@ class Dream:
     def __init__(
         self,
         id: int,
-        user_id: uuid.UUID, # 変更
+        user_id: str, # 変更
         content: str,
         is_public: bool,
         likes: int,
@@ -24,7 +23,7 @@ class Dream:
         self.updated_at = updated_at
 
     @classmethod
-    def get_all_by_user(cls, user_id: uuid) -> list[Dream]:
+    def get_all_by_user(cls, user_id: str) -> list[Dream]:
         # ユーザーの夢を全て取得
         supabase: Client = get_supabase_client()
 
@@ -40,7 +39,7 @@ class Dream:
         return my_dreams
 
     @classmethod
-    def create(cls, user_id: uuid, content: str, is_public=False) -> Dream:
+    def create(cls, user_id: str, content: str, is_public=False) -> Dream:
         # 新しい夢の作成
         supabase: Client = get_supabase_client()
 

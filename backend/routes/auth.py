@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 
 from models.db import get_supabase_client
-from models.user import User
 from supabase import Client
 
 auth_bp = Blueprint("auth", __name__)
