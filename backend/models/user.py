@@ -19,14 +19,15 @@ class User:
     def get_user_by_email(cls, email: str) -> User | None:
         supabase: Client = get_supabase_client()
         response = (
-            supabase.auth.api.list_users()
-            .filter("email", "eq", email)
+            supabase.table("auth.users")
+            .select("*")
+            .eq("email", email)
             .execute()
-        )  # fmt: skip
-        if len(response.data) == 0:
+        )
+        if not response.data:  # データが空なら None を返す
             return None
 
-        return cls(**response.data[0])
+        return cls(**response.data[0])  # ユーザー情報をクラスにマッピング
 
     @classmethod
     def get_user_by_id(cls, user_id: str) -> User | None:
