@@ -4,10 +4,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { useAtom } from "jotai";
 import { cache, useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import { createClient } from "@supabase/supabase-js"
-
-// supabaseのアクセス
-export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL,import.meta.env.VITE_SUPABASE_TOKEN);
+import { supabase } from "@/lib/supabase";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +36,10 @@ const LoginPage = () => {
 
     try{
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: "twitter"
+        provider: "twitter",
+        options: {
+          redirectTo: "http://localhost:5173/auth/callback", // 絶対URLを指定
+        },
       });
       if (error) throw error;
     }

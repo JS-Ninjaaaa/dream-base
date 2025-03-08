@@ -21,7 +21,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dreams/mine" element={<MyDreamPage />} />
           <Route path="/dreams/public" element={<PublicDreamPage />} />
-          <Route path="/test" element={<AliveCheck/>}/>
+          <Route path="/auth/callback" element={<AliveCheck/>}/>
         </Routes>
       </BrowserRouter>
     </LoadingContext.Provider>

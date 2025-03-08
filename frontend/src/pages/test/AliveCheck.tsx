@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../login/LoginPage"; // Supabaseインスタンスを適宜変更
+import { supabase } from "@/lib/supabase";
 
 const AliveCheck = () => {
   const [message, setMessage] = useState("認証中...");
@@ -11,9 +11,11 @@ const AliveCheck = () => {
       if (error) {
         console.error("認証エラー", error);
         setMessage("❌ ログインに失敗しました");
-      } else {
+      } else if (data.session) {
         console.log("ログイン成功", data);
         setMessage("✅ Twitterログイン成功！");
+      } else {
+        setMessage("❌ 認証情報が見つかりません");
       }
     };
 
