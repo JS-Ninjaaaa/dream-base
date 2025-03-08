@@ -36,5 +36,5 @@ def login():
             return "", 401  # ログイン失敗
     except Exception as e:
         # 予期せぬエラー
-        return jsonify({"error": str(e)}), 500
+        return "", 500
 

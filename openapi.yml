@@ -69,6 +69,8 @@ paths:
                   $ref: '#/components/schemas/Dream'
         '401':
           description: Unauthorized
+        '500':
+          description: InternalServerError
 
     post:
       tags: 
