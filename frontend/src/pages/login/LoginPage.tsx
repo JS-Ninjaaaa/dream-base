@@ -9,7 +9,7 @@ const LoginPage = () => {
       <div className="flex justify-center items-center h-screen">
         <div className="bg-white p-8 rounded-lg shadow-lg w-96 border border-pink-300">
           <h2 className="text-3xl font-bold text-center mb-6 text-pink-600">
-            🌸ログイン
+            🌸 ログイン
           </h2>
 
           <LoginForm />
