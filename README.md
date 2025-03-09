@@ -9,10 +9,14 @@
 | 項目         | 値                        |
 |------------|-------------------------|
 | メールアドレス | `testuser1@example.com` |
-| パスワード   | `password`                |
+| パスワード   | `password1`                |
 
 ## 機能一覧
 
+- ログイン
+    - [x] メールアドレス & パスワード
+    - [x] Xアカウント
+        - メールアドレス登録済み
 - 自分の夢
     - [x] 夢の作成
     - [x] 夢の閲覧
@@ -49,14 +53,14 @@
 ```mermaid
 erDiagram
     USERS {
-        INTEGER id PK "Primary Key"
+        UUID id PK "Primary Key"
         VARCHAR email "メールアドレス"
         TIMESTAMP created_at "作成日時"
         TIMESTAMP updated_at "更新日時"
     }
     DREAMS {
         INTEGER id PK "Primary Key"
-        INTEGER user_id FK "Foreign Key to USERS"
+        UUID user_id FK "Foreign Key to USERS"
         TEXT content "内容"
         BOOLEAN is_public "公開フラグ"
         INTEGER likes "いいね数"
