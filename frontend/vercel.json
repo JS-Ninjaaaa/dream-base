@@ -1,7 +1,15 @@
 { 
     "rewrites" :  [
         {
+            "source": "/signup",
+            "destination": "/"
+        },
+        {
             "source": "/login",
+            "destination": "/"
+        },
+        {
+            "source": "/login/oauth",
             "destination": "/"
         },
         {

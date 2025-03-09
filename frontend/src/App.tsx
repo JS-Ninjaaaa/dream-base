@@ -19,9 +19,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MyDreamPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/login/oauth" element={<OAuthLoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/dreams/mine" element={<MyDreamPage />} />
           <Route path="/dreams/public" element={<PublicDreamPage />} />
         </Routes>
