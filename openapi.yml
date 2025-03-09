@@ -3,7 +3,7 @@ info:
   title: Dream Sink API
   version: v1
 servers:
-  - url: http://localhost:5000
+  - url: https://dreamsink-backend.onrender.com
 tags: 
   - name: dreams
     description: 夢に関するAPI
@@ -13,7 +13,7 @@ tags:
     description: 認証に関するAPI
 paths:
   /login:
-    post: 
+    post:
       tags:
         - auth
       summary: ログイン
@@ -43,7 +43,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: integer
+                    format: uuid
                   email:
                     type: string
                     format: email
@@ -69,8 +69,6 @@ paths:
                   $ref: '#/components/schemas/Dream'
         '401':
           description: Unauthorized
-        '500':
-          description: InternalServerError
 
     post:
       tags: 
@@ -101,7 +99,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Dream'
         '400':
-          description: BadRequest
+          description: Bad Request
         '401':
           description: Unauthorized
 
@@ -226,14 +224,16 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: integer
+                    format: uuid
                   email:
                     type: string
                     format: email
         '400':
-          description: BadRequest
+          description: Bad Request
         '409':
           description: Conflict
+        '500':
+          description: Internal Server Error
 
 components:
   schemas:
@@ -245,7 +245,7 @@ components:
           format: integer
         user_id:
           type: string
-          format: integer
+          format: uuid
         content:
           type: string
           format: date
@@ -265,7 +265,7 @@ components:
       properties:
         id:
           type: string
-          format: integer
+          format: uuid
         email:
           type: string
           format: email
