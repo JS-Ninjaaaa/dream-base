@@ -32,8 +32,8 @@ class Dream:
             supabase.table("dreams")
             .select("*")
             .eq("user_id", user_id)
-            # 更新日時の降順で取得
-            .order("updated_at", desc=True)
+            # id順で取得
+            .order("id", desc=True)
             .execute()
         )
         my_dreams = [cls(**dream) for dream in response.data]
@@ -76,8 +76,8 @@ class Dream:
             supabase.table("dreams")
             .select("*")
             .eq("is_public", True)
-            # 更新日時の降順で取得
-            .order("updated_at", desc=True)
+            # id順で取得
+            .order("id", desc=True)
             .execute()
         )
         public_dreams = [cls(**dream) for dream in response.data]
