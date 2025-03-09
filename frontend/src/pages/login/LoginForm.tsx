@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import XLoginButton from "./XLoginButton";
 
-export let userInfo: any = null;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +21,7 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      userInfo = await login(email, password);
+      const userInfo = await login(email, password);
       setUser(userInfo);
       navigate("/");
     } catch (error) {

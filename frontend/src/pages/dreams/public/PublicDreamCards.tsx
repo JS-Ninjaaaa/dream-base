@@ -7,7 +7,6 @@ import PublicDreamLikeButton from "./PublicDreamLikeButton";
 import { useAtom } from "jotai";
 import { userAtom } from "@/atoms/userAtom";
 
-
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
   const { setIsLoading } = useContext(LoadingContext);
