@@ -1,5 +1,6 @@
 import "./App.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import LoadingOverlay from "./components/loading/LoadingOverlay";
@@ -14,19 +15,22 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
-    <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-      <LoadingOverlay />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MyDreamPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/login/oauth" element={<OAuthLoginPage />} />
-          <Route path="/dreams/mine" element={<MyDreamPage />} />
-          <Route path="/dreams/public" element={<PublicDreamPage />} />
-        </Routes>
-      </BrowserRouter>
-    </LoadingContext.Provider>
+    <div>
+      <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+        <LoadingOverlay />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MyDreamPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login/oauth" element={<OAuthLoginPage />} />
+            <Route path="/dreams/mine" element={<MyDreamPage />} />
+            <Route path="/dreams/public" element={<PublicDreamPage />} />
+          </Routes>
+        </BrowserRouter>
+      </LoadingContext.Provider>
+      <Analytics />
+    </div>
   );
 }
 
