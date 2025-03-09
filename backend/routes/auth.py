@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, make_response, request
 from flask_jwt_extended import create_access_token
 from models.db import get_supabase_client
 from supabase import Client
@@ -31,6 +31,22 @@ def login():
         "email": user.email,
     }
     response = jsonify(response_data)
+    # header に JWT を仕込む
+    response.headers["Authorization"] = f"Bearer {access_token}"
+    return response
+
+
+@auth_bp.route("/login/oauth", methods=["POST"])
+def login_with_oauth():
+    # データ取得
+    credentials = request.get_json()
+    user_id = credentials["userId"]
+    if user_id is None:
+        return "User ID is required", 401
+
+    response = make_response("", 200)
+    # ユーザーID から JWT を生成
+    access_token = create_access_token(identity=user_id)
     # header に JWT を仕込む
     response.headers["Authorization"] = f"Bearer {access_token}"
     return response
