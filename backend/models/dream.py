@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from models.db import get_supabase_client
 from supabase import Client
 
@@ -7,7 +8,7 @@ class Dream:
     def __init__(
         self,
         id: int,
-        user_id: str, # 変更
+        user_id: str,
         content: str,
         is_public: bool,
         likes: int,
@@ -56,7 +57,12 @@ class Dream:
         # 夢を削除
         supabase: Client = get_supabase_client()
 
-        response = supabase.table("dreams").delete().eq("id", dream_id).execute()
+        response = (
+            supabase.table("dreams")
+            .delete()
+            .eq("id", dream_id)
+            .execute()
+        )  # fmt: skip
         if len(response.data) == 0:  # 削除対象の夢が無かった場合
             return False
 
