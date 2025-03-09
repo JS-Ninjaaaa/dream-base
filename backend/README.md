@@ -28,14 +28,14 @@ CREATE TABLE users (
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE dreams (
-    id SERIAL PRIMARY KEY,
-    user_id UUID NOT NULL,
-    content TEXT NOT NULL,
-    is_public BOOLEAN DEFAULT FALSE,
-    likes INTEGER DEFAULT 0,
-    created_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  content TEXT NOT NULL,
+  is_public BOOLEAN DEFAULT FALSE,
+  likes INTEGER DEFAULT 0,
+  created_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 --- Function to sync auth.users to public.users
@@ -64,9 +64,9 @@ END;
 $$;
 
 -- Trigger to call the above function
-CREATE TRIGGER sync_auth_users
-AFTER INSERT OR UPDATE OR DELETE ON auth.users
-FOR EACH ROW EXECUTE PROCEDURE public.sync_auth_users_to_public_users();
+CCREATE TRIGGER sync_auth_users
+  AFTER INSERT OR UPDATE OR DELETE ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.sync_auth_users_to_public_users();
 ```
 
 `seeds` 以下のスクリプトを実行してサンプルデータを追加する．
