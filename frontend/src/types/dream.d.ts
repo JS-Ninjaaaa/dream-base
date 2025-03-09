@@ -1,5 +1,5 @@
 export interface RequestDream {
-  user_id?: number;
+  user_id?: string;
   title: string;
   content: string;
   is_public: boolean;
@@ -7,7 +7,7 @@ export interface RequestDream {
 
 export interface Dream {
   id: number;
-  user_id: number;
+  user_id: string;
   title: string;
   content: string;
   is_public: boolean;
