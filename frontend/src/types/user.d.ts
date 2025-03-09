@@ -4,9 +4,8 @@ export interface RequestUser {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
-  password_hash: string;
   created_at: string;
   updated_at: string;
 }
