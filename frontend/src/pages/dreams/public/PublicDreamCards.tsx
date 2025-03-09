@@ -9,9 +9,8 @@ import { userAtom } from "@/atoms/userAtom";
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
+  const [user] = useAtom(userAtom);
   const { setIsLoading } = useContext(LoadingContext);
-
-  const [userInfo] = useAtom(userAtom);
 
   // 初回データ取得
   useEffect(() => {
@@ -29,11 +28,11 @@ const PublicDreamCards = () => {
 
     loadPublicDreams();
   }, []);
-  
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-8">
       {publicDreams.map((dream, index) => {
-        const isMyDream = userInfo?.id === dream.user_id;
+        const isMyDream = user?.id === dream.user_id;
         return (
           <AlertDialog.Root key={index}>
             <div className="relative transition-transform transform bg-green-100 border-gray-300 hover:scale-105 rounded-xl">
@@ -52,8 +51,6 @@ const PublicDreamCards = () => {
                 <PublicDreamLikeButton
                   dream={dream}
                   setPublicDreams={setPublicDreams}
-                  disabled={isMyDream}
-                  style={{ cursor: isMyDream ? "default" : "pointer" }}
                 />
               </div>
             )}

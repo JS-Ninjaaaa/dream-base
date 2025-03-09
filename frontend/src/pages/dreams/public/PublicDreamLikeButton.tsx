@@ -12,8 +12,6 @@ import { HiThumbUp } from "react-icons/hi";
 interface PublicDreamLikeButtonProps {
   dream: Dream;
   setPublicDreams: (dreams: Dream[]) => void;
-  disabled?: boolean;
-  style?: React.CSSProperties; 
 }
 
 const PublicDreamLikeButton = ({

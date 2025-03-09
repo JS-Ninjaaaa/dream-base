@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import XLoginButton from "./XLoginButton";
 
-
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
