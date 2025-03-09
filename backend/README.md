@@ -19,46 +19,59 @@ Supabase の SQL Editor で以下の SQL 文を実行する．
 
 ```sql
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP(0) WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP(0) WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  id UUID PRIMARY KEY,
+  email VARCHAR(255) NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE dreams (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
-    content TEXT NOT NULL,
-    is_public BOOLEAN DEFAULT FALSE,
-    likes INTEGER DEFAULT 0,
-    created_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  content TEXT NOT NULL,
+  is_public BOOLEAN DEFAULT FALSE,
+  likes INTEGER DEFAULT 0,
+  created_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Trigger function to update updated_at field
-CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
+--- Function to sync auth.users to public.users
+CREATE OR REPLACE FUNCTION public.sync_auth_users_to_public_users()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 BEGIN
-    NEW.updated_at = CURRENT_TIMESTAMP;
+  IF TG_OP = 'INSERT' THEN
+    INSERT INTO public.users (id, email, created_at, updated_at)
+    VALUES (NEW.id, NEW.email, NEW.created_at, NEW.updated_at);
     RETURN NEW;
+  ELSIF TG_OP = 'UPDATE' THEN
+    UPDATE public.users
+    SET email = NEW.email,
+        updated_at = NEW.updated_at
+    WHERE id = OLD.id;
+    RETURN NEW;
+  ELSIF TG_OP = 'DELETE' THEN
+    DELETE FROM public.users
+    WHERE id = OLD.id;
+    RETURN OLD;
+  END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
--- Trigger to call the function before update
-CREATE TRIGGER update_dream_updated_at
-BEFORE UPDATE ON dreams
-FOR EACH ROW
+-- Trigger to call the above function
+CCREATE TRIGGER sync_auth_users
+  AFTER INSERT OR UPDATE OR DELETE ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.sync_auth_users_to_public_users();
 ```
 
-SQL Editor で `seeds` 以下の SQL文を実行してサンプルデータを追加する．
+`seeds` 以下のスクリプトを実行してサンプルデータを追加する．
 
-> [!important]
-> ユーザーのパスワードは全て`password`
-
-`.env.sample` をコピーして `.env` を作成し，
-Supabase の Project URL と API Key を記述する．
+`.env.sample` をコピーして `.env` を作成し，内容を記述する
 
 ```sh
 cp .env.sample .env

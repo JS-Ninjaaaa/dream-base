@@ -8,7 +8,7 @@ class Dream:
     def __init__(
         self,
         id: int,
-        user_id: int,
+        user_id: str,
         content: str,
         is_public: bool,
         likes: int,
@@ -24,7 +24,7 @@ class Dream:
         self.updated_at = updated_at
 
     @classmethod
-    def get_all_by_user(cls, user_id: int) -> list[Dream]:
+    def get_all_by_user(cls, user_id: str) -> list[Dream]:
         # ユーザーの夢を全て取得
         supabase: Client = get_supabase_client()
 
@@ -40,7 +40,7 @@ class Dream:
         return my_dreams
 
     @classmethod
-    def create(cls, user_id: int, content: str, is_public=False) -> Dream:
+    def create(cls, user_id: str, content: str, is_public=False) -> Dream:
         # 新しい夢の作成
         supabase: Client = get_supabase_client()
 
@@ -57,7 +57,12 @@ class Dream:
         # 夢を削除
         supabase: Client = get_supabase_client()
 
-        response = supabase.table("dreams").delete().eq("id", dream_id).execute()
+        response = (
+            supabase.table("dreams")
+            .delete()
+            .eq("id", dream_id)
+            .execute()
+        )  # fmt: skip
         if len(response.data) == 0:  # 削除対象の夢が無かった場合
             return False
 

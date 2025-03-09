@@ -16,7 +16,7 @@ def get_public_dreams():
 def increment_like_count(dream_id):
     # 該当の夢を取得
     dream = Dream.get_by_id(dream_id)
-    # インクリメントした「いいね数」に更新
+    # インクリメントしたいいね数に更新
     likes_count = dream.likes + 1
     updated_dream = Dream.update_likes(dream_id=dream_id, likes=likes_count)
     if updated_dream is None:

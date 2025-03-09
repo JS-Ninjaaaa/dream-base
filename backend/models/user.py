@@ -2,21 +2,18 @@ from __future__ import annotations
 
 from models.db import get_supabase_client
 from supabase import Client
-from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class User:
     def __init__(
         self,
-        id: int,
+        id: str,
         email: str,
-        password_hash: str,
-        created_at: str,
-        updated_at: str,
+        created_at=None,
+        updated_at=None,
     ):
         self.id = id
         self.email = email
-        self.password_hash = password_hash
         self.created_at = created_at
         self.updated_at = updated_at
 
@@ -29,13 +26,13 @@ class User:
             .eq("email", email)
             .execute()
         )  # fmt: skip
-        if len(response.data) == 0:
+        if not response.data:  # データが空なら None を返す
             return None
 
-        return cls(**response.data[0])
+        return cls(**response.data[0])  # ユーザー情報をクラスにマッピング
 
     @classmethod
-    def get_user_by_id(cls, user_id: int) -> User | None:
+    def get_user_by_id(cls, user_id: str) -> User | None:
         supabase: Client = get_supabase_client()
         response = (
             supabase.table("users")
@@ -48,17 +45,22 @@ class User:
 
         return cls(**response.data[0])
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
     @classmethod
-    def create_user(cls, email: str, password: str) -> User:
-        password_hash = generate_password_hash(password)
-
+    def create_user(cls, email: str, password: str) -> User | None:
         supabase: Client = get_supabase_client()
-        response = (
-            supabase.table("users")
-            .insert({"email": email, "password_hash": password_hash})
-            .execute()
-        )  # fmt: skip
-        return cls(**response.data[0])
+        response = supabase.auth.sign_up(
+            {
+                "email": email,
+                "password": password,
+            }
+        )
+        new_user = response.user
+        if new_user is None:
+            return None
+
+        return cls(
+            id=new_user.id,
+            email=new_user.email,
+            created_at=new_user.created_at,
+            updated_at=new_user.updated_at,
+        )

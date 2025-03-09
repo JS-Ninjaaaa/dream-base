@@ -15,10 +15,6 @@ const SignUpForm = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!email) {
-      alert("メールアドレスを入力してください");
-      return;
-    }
     if (password.length < 6) {
       alert("パスワードは6文字以上にしてください");
       return;
@@ -34,11 +30,7 @@ const SignUpForm = () => {
       await createUser(email, password);
       navigate("/login");
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert("新規登録に失敗しました");
-      }
+      alert("新規登録に失敗しました");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -56,6 +48,7 @@ const SignUpForm = () => {
           type="email"
           placeholder="user@example.com"
           value={email}
+          required
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -68,6 +61,7 @@ const SignUpForm = () => {
           type="password"
           placeholder="パスワード"
           value={password}
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
         <ul className="list-disc text-sm text-gray-500 mt-2 ml-6">

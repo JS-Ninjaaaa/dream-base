@@ -51,7 +51,6 @@ erDiagram
     USERS {
         INTEGER id PK "Primary Key"
         VARCHAR email "メールアドレス"
-        VARCHAR password_hash "パスワードハッシュ"
         TIMESTAMP created_at "作成日時"
         TIMESTAMP updated_at "更新日時"
     }
