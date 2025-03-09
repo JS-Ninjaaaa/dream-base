@@ -4,20 +4,19 @@ import { useContext } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 
 const XLoginButton = () => {
+  const APP_URL = import.meta.env.VITE_APP_URL;
   const { setIsLoading } = useContext(LoadingContext);
 
   const handleXLoginButtonClick = async () => {
     setIsLoading(true);
 
     try {
-      const { error: signUpError } = await supabase.auth.signInWithOAuth({
+      await supabase.auth.signInWithOAuth({
         provider: "twitter",
+        options: {
+          redirectTo: `${APP_URL}/login/oauth`,
+        },
       });
-      if (signUpError) {
-        throw signUpError;
-      }
-
-      // TODO: XログインのAPIを叩く
     } catch (error) {
       alert("X ログインに失敗しました");
       console.error(error);

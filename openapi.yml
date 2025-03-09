@@ -54,7 +54,7 @@ paths:
     post:
       tags:
         - auth
-      summary: ログイン
+      summary: OAuthを利用したログイン
       operationId: loginWithOAuth
       security: []
       requestBody:
@@ -66,22 +66,12 @@ paths:
               properties:
                 userId:
                   type: string
+                  format: uuid
               required:
                 - userId
       responses:
         '200':
           description: ログイン成功
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  email:
-                    type: string
-                    format: email
         '401':
           description: Unauthorized
 

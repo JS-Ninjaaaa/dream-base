@@ -7,6 +7,7 @@ import { LoadingContext } from "./contexts/LoadingContext";
 import MyDreamPage from "./pages/dreams/mine/MyDreamPage";
 import PublicDreamPage from "./pages/dreams/public/PublicDreamPage";
 import LoginPage from "./pages/login/LoginPage";
+import OAuthLoginPage from "./pages/login/oauth/OAuthLoginPage";
 import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MyDreamPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/oauth" element={<OAuthLoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/dreams/mine" element={<MyDreamPage />} />
           <Route path="/dreams/public" element={<PublicDreamPage />} />
