@@ -43,7 +43,7 @@ dreams_data = []
 # dreams_list のメールアドレスに紐づく user_id を取得して dreams_data に追加
 for email, content, is_public, likes in dreams_list:
     # ユーザーIDをゲット
-    response = supabase.table("users").select("id").eq("email", email.lower()).execute()
+    response = supabase.table("users").select("id").eq("email", email).execute()
 
 
     if response.data:
