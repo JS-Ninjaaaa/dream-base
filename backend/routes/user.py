@@ -21,4 +21,7 @@ def create_user():
         return "Email is already taken", 409
 
     new_user = User.create_user(email, password)
+    if new_user is None:
+        return "Failed to create user", 500
+
     return jsonify({"id": new_user.id, "email": new_user.email}), 201
