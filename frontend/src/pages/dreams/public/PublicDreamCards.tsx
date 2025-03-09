@@ -29,12 +29,7 @@ const PublicDreamCards = () => {
 
     loadPublicDreams();
   }, []);
-
-  useEffect(() => {
-    console.log("Updated publicDreams:", publicDreams);
-  }, [publicDreams]);
   
-
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-8">
       {publicDreams.map((dream, index) => {
