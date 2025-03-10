@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .sakura {
     position: fixed;
     top: 0;
@@ -43,10 +45,10 @@
 
     @for $i from 1 through 24 {
         li:nth-child(#{$i}) {
-            $left: random(95) * 1vw;
-            $fall-duration: random(20) + 8s;
-            $rotate-duration: random(2) + 2s;
-            $delay: random(12) + 1s;
+            $left: math.random(95) * 1vw;
+            $fall-duration: math.random(20) + 8s;
+            $rotate-duration: math.random(2) + 2s;
+            $delay: math.random(12) + 1s;
             $rotate: if($i % 2 == 0, rotate1, rotate2);
 
             left: $left;
