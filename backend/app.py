@@ -11,18 +11,19 @@ from routes.public_dream import public_dream_bp
 from routes.user import user_bp
 
 load_dotenv()
+
 app = Flask(__name__)
 
 # CORSのセットアップ
 CORS(
     app,
-    resources={r"/*": {"origins": "{}".format(os.getenv("FRONTEND_URL"))}},
+    resources={r"/*": {"origins": os.getenv("FRONTEND_URL")}},
     # クライアントが設置できるヘッダー
     allow_headers=["Content-Type", "Authorization"],
     # クライアントが取得できるヘッダー
     expose_headers=["Content-Type", "Authorization"],
     # クライアントが送信できるメソッド
-    methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    methods=["HEAD", "GET", "POST", "PATCH", "DELETE", "OPTIONS"],
 )
 
 # JWTの設定
@@ -31,7 +32,7 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config["JWT_TOKEN_LOCATION"] = ["headers"]
 app.config["JWT_HEADER_TYPE"] = "Bearer"
 app.config["JWT_COOKIE_SAMESITE"] = "Strict"
-app.config["JWT_COOKIE_SECURE"] = False  # ローカル環境ではFalse
+app.config["JWT_COOKIE_SECURE"] = not app.debug
 
 jwt = JWTManager(app)  # init_app(app) は不要
 
@@ -42,9 +43,11 @@ app.register_blueprint(public_dream_bp)
 app.register_blueprint(user_bp)
 
 
-@app.route("/test", methods=["GET"])
+@app.route("/test", methods=["HEAD", "GET"])
 def test():  # 生存確認API
-    if request.method == "GET":
+    if request.method == "HEAD":
+        return "", 200
+    elif request.method == "GET":
         return "Hello", 200
 
 
