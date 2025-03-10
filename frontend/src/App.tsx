@@ -1,4 +1,5 @@
 import "./App.css";
+import "./sakura.scss";
 
 import { Analytics } from "@vercel/analytics/react";
 import { useState } from "react";
