@@ -2,13 +2,13 @@ import { RequestDream } from "@/types/dream";
 
 const ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string;
 
-export const fetchMyDreams = async () => {
+export const fetchMyDreams = async ( sortBy = "updated_at" ) => {
   const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("ログインしていません");
   }
 
-  const response = await fetch(`${ENDPOINT}/dreams/mine`, {
+  const response = await fetch(`${ENDPOINT}/dreams/mine?sort_by=${sortBy}`, {
     method: "GET",
     headers: {
       Authorization: `${token}`,

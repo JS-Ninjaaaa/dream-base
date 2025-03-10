@@ -80,6 +80,17 @@ paths:
       tags: 
         - dreams
       summary: 自分の夢を取得する
+      parameters:
+        - name: sort_by
+          in: query
+          description: ソート順を指定するクエリ
+          required: true
+          schema:
+            type: string
+            enum: 
+              - updated_at
+              - likes
+            default: updated_at
       operationId: getMyDreams
       security:
         - BearerAuth: []

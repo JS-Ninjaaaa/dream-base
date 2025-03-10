@@ -10,7 +10,16 @@ my_dream_bp = Blueprint("my_dream", __name__)
 @jwt_required()
 def get_my_dreams():
     user_id = get_jwt_identity()
-    dreams = Dream.get_all_by_user(user_id)
+    # クエリパラメータの受け取り
+    # デフォルトは作成日時順
+    sort_by = request.args.get("sort_by","updated_at")
+    # ソート条件に使えるカラム指定
+    valid_sort_val = {"likes","updated_at"}
+
+    if sort_by not in valid_sort_val:
+        return jsonify({"error": "Invalid sort_by field"}), 400
+
+    dreams = Dream.get_all_by_user(user_id,sort_by)
     return jsonify([dream.__dict__ for dream in dreams]), 200
 
 
