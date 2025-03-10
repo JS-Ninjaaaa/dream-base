@@ -44,13 +44,14 @@ const MyDreamPage = () => {
       <div className="p-4">
         <MyDreamInput setMyDreams={setMyDreams} />
 
-        {/* ソート選択 */}
-        <div className="mt-3 flex items-center gap-2">
-          <span className="text-gray-600 text-sm">並び替え:</span>
+        <div className="mt-3 ml-5 flex items-center gap-2">
+          <span className="text-gray-600">並び替え:</span>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "updated_at" | "likes")}
-            className="border rounded px-3 py-1 bg-white text-gray-800 text-sm shadow-sm"
+            onChange={(e) => {
+              setSortBy(e.target.value as "updated_at" | "likes");
+            }}
+            className="border rounded px-3 py-1 bg-white text-gray-800 shadow-sm"
           >
             <option value="updated_at">更新日順</option>
             <option value="likes">いいね順</option>
