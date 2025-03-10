@@ -10,8 +10,8 @@ import MyDreamInput from "./MyDreamInput";
 
 const MyDreamPage = () => {
   const [myDreams, setMyDreams] = useState<Dream[]>([]);
+  const [sortBy, setSortBy] = useState<"updated_at" | "likes">("updated_at");
   const { setIsLoading } = useContext(LoadingContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,8 +24,7 @@ const MyDreamPage = () => {
     const loadMyDreams = async () => {
       try {
         setIsLoading(true);
-
-        const dreams: Dream[] = await fetchMyDreams();
+        const dreams: Dream[] = await fetchMyDreams(sortBy);
         setMyDreams(dreams);
       } catch (e) {
         console.error(e);
@@ -35,13 +34,30 @@ const MyDreamPage = () => {
     };
 
     loadMyDreams();
-  }, []);
+  }, [sortBy]);
 
   return (
     <div>
       <Header />
       <SakuraScatterEffect />
-      <MyDreamInput setMyDreams={setMyDreams} />
+
+      <div className="p-4">
+        <MyDreamInput setMyDreams={setMyDreams} />
+
+        {/* ソート選択 */}
+        <div className="mt-3 flex items-center gap-2">
+          <span className="text-gray-600 text-sm">並び替え:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as "updated_at" | "likes")}
+            className="border rounded px-3 py-1 bg-white text-gray-800 text-sm shadow-sm"
+          >
+            <option value="updated_at">更新日順</option>
+            <option value="likes">いいね順</option>
+          </select>
+        </div>
+      </div>
+
       <MyDreamCards myDreams={myDreams} setMyDreams={setMyDreams} />
     </div>
   );

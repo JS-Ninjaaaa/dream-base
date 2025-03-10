@@ -24,7 +24,7 @@ class Dream:
         self.updated_at = updated_at
 
     @classmethod
-    def get_all_by_user(cls, user_id: str) -> list[Dream]:
+    def get_all_by_user(cls, user_id: str, sort: str) -> list[Dream]:
         # ユーザーの夢を全て取得
         supabase: Client = get_supabase_client()
 
@@ -32,8 +32,8 @@ class Dream:
             supabase.table("dreams")
             .select("*")
             .eq("user_id", user_id)
-            # id順で取得
-            .order("id", desc=True)
+            # ソート条件を受け取って適用
+            .order(sort, desc=True)
             .execute()
         )
         my_dreams = [cls(**dream) for dream in response.data]
