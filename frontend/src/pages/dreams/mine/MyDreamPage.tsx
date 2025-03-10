@@ -8,9 +8,11 @@ import SakuraScatterEffect from "../components/SakuraScatterEffect";
 import MyDreamCards from "./MyDreamCards";
 import MyDreamInput from "./MyDreamInput";
 
+export type MyDreamSortKey = "updated_at" | "likes";
+
 const MyDreamPage = () => {
   const [myDreams, setMyDreams] = useState<Dream[]>([]);
-  const [sortBy, setSortBy] = useState<"updated_at" | "likes">("updated_at");
+  const [sortKey, setSortKey] = useState<MyDreamSortKey>("updated_at");
   const { setIsLoading } = useContext(LoadingContext);
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const MyDreamPage = () => {
     const loadMyDreams = async () => {
       try {
         setIsLoading(true);
-        const dreams: Dream[] = await fetchMyDreams(sortBy);
+        const dreams: Dream[] = await fetchMyDreams(sortKey);
         setMyDreams(dreams);
       } catch (e) {
         console.error(e);
@@ -34,7 +36,7 @@ const MyDreamPage = () => {
     };
 
     loadMyDreams();
-  }, [sortBy]);
+  }, [sortKey]);
 
   return (
     <div>
@@ -47,9 +49,9 @@ const MyDreamPage = () => {
         <div className="mt-3 ml-5 flex items-center gap-2">
           <span className="text-gray-600">並び替え:</span>
           <select
-            value={sortBy}
-            onChange={(e) => {
-              setSortBy(e.target.value as "updated_at" | "likes");
+            value={sortKey}
+            onChange={(event) => {
+              setSortKey(event.target.value as MyDreamSortKey);
             }}
             className="border rounded px-3 py-1 bg-white text-gray-800 shadow-sm"
           >
