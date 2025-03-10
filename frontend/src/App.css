@@ -16,7 +16,7 @@
 }
 
 .sakura li {
-	width: 18px;
+	width: 14px;
 	position: absolute;
 	list-style: none;
 	top: -50px;
@@ -45,33 +45,121 @@
 }
 .sakura li:nth-child(1) {
 	left: 0;
-	animation: fall 10s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation: fall 30s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 3s;
 }
 .sakura li:nth-child(2) {
 	left: 5vw;
-	animation: fall 15s linear infinite, rotate1 2s ease-in-out infinite alternate;
+	animation: fall 12s linear infinite, rotate1 2s ease-in-out infinite alternate;
+	animation-delay: 7s;
 }
 .sakura li:nth-child(3) {
 	left: 15vw;
-	animation: fall 9s linear infinite, rotate1 3.5s ease-in-out infinite alternate;
+	animation: fall 20s linear infinite, rotate1 3.5s ease-in-out infinite alternate;
+	animation-delay: 9s;
 }
 .sakura li:nth-child(4) {
 	left: 30vw;
-	animation: fall 8s linear infinite, rotate2 4s ease-in-out infinite alternate;
+	animation: fall 18s linear infinite, rotate2 4s ease-in-out infinite alternate;
+	animation-delay: 1s;
 }
 .sakura li:nth-child(5) {
 	left: 40vw;
-	animation: fall 10s linear infinite, rotate1 4s ease-in-out infinite alternate;
+	animation: fall 16s linear infinite, rotate1 4s ease-in-out infinite alternate;
+	animation-delay: 3s;
 }
 .sakura li:nth-child(6) {
 	left: 55vw;
-	animation: fall 11s linear infinite, rotate2 3s ease-in-out infinite alternate;
+	animation: fall 14s linear infinite, rotate2 3s ease-in-out infinite alternate;
+	animation-delay: 5s;
 }
 .sakura li:nth-child(7) {
 	left: 65vw;
-	animation: fall 7s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation: fall 10s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation-delay: 11s;
 }
 .sakura li:nth-child(8) {
+	left: 80vw;
+	animation: fall 8s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 3s;
+}
+.sakura li:nth-child(9) {
+	left: 40vw;
+	animation: fall 16s linear infinite, rotate2 2.5s ease-in-out infinite alternate;
+	animation-delay: 9s;
+}
+.sakura li:nth-child(10) {
+	left: 45vw;
+	animation: fall 24s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 7s;
+}
+.sakura li:nth-child(11) {
 	left: 50vw;
-	animation: fall 7s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation: fall 14s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation-delay: 5s;
+}
+.sakura li:nth-child(12) {
+	left: 55vw;
+	animation: fall 10s linear infinite, rotate1 4s ease-in-out infinite alternate;
+	animation-delay: 3s;
+}
+.sakura li:nth-child(13) {
+	left: 60vw;
+	animation: fall 28s linear infinite, rotate2 4s ease-in-out infinite alternate;
+	animation-delay: 11s;
+}
+.sakura li:nth-child(14) {
+	left: 65vw;
+	animation: fall 24s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 3s;
+}
+.sakura li:nth-child(15) {
+	left: 70vw;
+	animation: fall 20s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation-delay: 0s;
+}
+.sakura li:nth-child(16) {
+	left: 75vw;
+	animation: fall 16s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 3s;
+}
+.sakura li:nth-child(17) {
+	left: 80vw;
+	animation: fall 8s linear infinite, rotate2 2.5s ease-in-out infinite alternate;
+	animation-delay: 7s;
+}
+.sakura li:nth-child(18) {
+	left: 85vw;
+	animation: fall 24s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 5s;
+}
+.sakura li:nth-child(19) {
+	left: 90vw;
+	animation: fall 18s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation-delay: 11s;
+}
+.sakura li:nth-child(20) {
+	left: 95vw;
+	animation: fall 8s linear infinite, rotate1 4s ease-in-out infinite alternate;
+	animation-delay: 3s;
+}
+.sakura li:nth-child(21) {
+	left: 70vw;
+	animation: fall 14s linear infinite, rotate2 4s ease-in-out infinite alternate;
+	animation-delay: 9s;
+}
+.sakura li:nth-child(22) {
+	left: 50vw;
+	animation: fall 10s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 1s;
+}
+.sakura li:nth-child(23) {
+	left: 30vw;
+	animation: fall 16s linear infinite, rotate2 3.5s ease-in-out infinite alternate;
+	animation-delay: 7s;
+}
+.sakura li:nth-child(24) {
+	left: 10vw;
+	animation: fall 28s linear infinite, rotate1 3s ease-in-out infinite alternate;
+	animation-delay: 5s;
 }
