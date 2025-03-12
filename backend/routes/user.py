@@ -12,7 +12,7 @@ def create_user():
     try:
         body = CreateUserBody(**body)
     except ValidationError:
-        return "Email and password are required", 400
+        return "Invalid request body", 400
 
     user = User.get_user_by_email(body.email)
     if user is not None:

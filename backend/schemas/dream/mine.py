@@ -2,14 +2,13 @@ from datetime import datetime
 
 from pydantic import (
     BaseModel,
-    Field,
     ValidationError,
     field_serializer,
     field_validator,
 )
 
 
-class DreamResponse(BaseModel):
+class MyDreamResponse(BaseModel):
     id: int
     user_id: str
     content: str
@@ -27,7 +26,7 @@ class DreamResponse(BaseModel):
 
 
 class GetMyDreamsParams(BaseModel):
-    sort_by: str = Field(default="updated_at")
+    sort_by: str = "updated_at"
 
     @field_validator("sort_by")
     def validate_sort_by(cls, sort_by: str) -> str:
@@ -35,3 +34,15 @@ class GetMyDreamsParams(BaseModel):
             raise ValidationError("Invalid sort_by value")
 
         return sort_by
+
+
+class CreateMyDreamRequest(BaseModel):
+    content: str
+    is_public: bool = False
+
+    @field_validator("content")
+    def validate_content(cls, content: str) -> str:
+        if len(content) == 0:
+            raise ValidationError("Content is required")
+
+        return content
