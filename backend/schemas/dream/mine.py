@@ -13,6 +13,7 @@ class MyDreamResponse(BaseModel):
     user_id: str
     content: str
     is_public: bool
+    likes: int
     created_at: datetime
     updated_at: datetime
 
