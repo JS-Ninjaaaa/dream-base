@@ -4,12 +4,7 @@ from typing import Optional
 from pydantic import BaseModel, field_serializer
 
 
-class CreateUserBody(BaseModel):
-    email: str
-    password: str
-
-
-class CreateUserResponse(BaseModel):
+class UserResponse(BaseModel):
     id: str
     email: str
     created_at: Optional[datetime]
@@ -22,3 +17,8 @@ class CreateUserResponse(BaseModel):
     @field_serializer("updated_at")
     def serialize_updated_at(self, updated_at: datetime) -> str:
         return updated_at.isoformat()
+
+
+class CreateUserBody(BaseModel):
+    email: str
+    password: str

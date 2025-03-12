@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.user import User
 from pydantic import ValidationError
-from schemas.user import CreateUserBody, CreateUserResponse
+from schemas.user import CreateUserBody, UserResponse
 
 user_bp = Blueprint("user", __name__)
 
@@ -23,8 +23,8 @@ def create_user():
         return "Failed to create user", 500
 
     try:
-        response = CreateUserResponse(**new_user.__dict__)
+        new_user = UserResponse(**new_user.__dict__)
     except ValidationError:
         return "Response Validation Error", 500
 
-    return jsonify(response.model_dump()), 201
+    return jsonify(new_user.model_dump()), 201
