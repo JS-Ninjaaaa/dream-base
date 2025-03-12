@@ -9,8 +9,8 @@ class User:
         self,
         id: str,
         email: str,
-        created_at=None,
-        updated_at=None,
+        created_at: str = None,
+        updated_at: str = None,
     ):
         self.id = id
         self.email = email
@@ -26,7 +26,7 @@ class User:
             .eq("email", email)
             .execute()
         )  # fmt: skip
-        if not response.data:  # データが空なら None を返す
+        if len(response.data) == 0:  # データが空なら None を返す
             return None
 
         return cls(**response.data[0])  # ユーザー情報をクラスにマッピング
