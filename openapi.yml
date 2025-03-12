@@ -256,14 +256,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  email:
-                    type: string
-                    format: email
+                $ref: '#/components/schemas/User'
         '400':
           description: Bad Request
         '409':
@@ -305,8 +298,6 @@ components:
         email:
           type: string
           format: email
-        password_hash:
-          type: string
         created_at:
           type: string
           format: date-time
