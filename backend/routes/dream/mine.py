@@ -51,6 +51,7 @@ def create_my_dream():
 
 
 @my_dream_bp.route("/dreams/mine/<int:dream_id>", methods=["PATCH"])
+@jwt_required()
 def toggle_visibility(dream_id: int):
     updated_dream = Dream.toggle_visibility(dream_id)
     if updated_dream is None:
