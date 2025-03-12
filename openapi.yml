@@ -103,8 +103,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
+        '400':
+          description: Bad Request
         '401':
           description: Unauthorized
+        '500':
+          description: Internal Server Error
 
     post:
       tags: 
@@ -138,6 +142,8 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+        '500':
+          description: Internal Server Error
 
   /dreams/mine/{dream_id}:
     patch: 
@@ -204,6 +210,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dream'
+        '500':
+          description: Internal Server Error
 
   /dreams/public/{dream_id}:
     patch:
@@ -228,6 +236,8 @@ paths:
                 $ref: '#/components/schemas/Dream'
         '404':
           description: Not Found
+        '500':
+          description: Internal Server Error
 
   /users:
     post: 
