@@ -45,7 +45,7 @@
 | カテゴリ       | 技術                                        | 
 | -------------- | ------------------------------------------- | 
 | フロントエンド | React, React Router, Tailwind CSS, Radix UI, Jotai | 
-| バックエンド   | Flask                                       | 
+| バックエンド   | Flask, Pydantic                                    | 
 | データベース   | Supabase                                  | 
 
 ## ER図
