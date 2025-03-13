@@ -6,8 +6,8 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from routes.auth import auth_bp
-from routes.my_dream import my_dream_bp
-from routes.public_dream import public_dream_bp
+from routes.dream.mine import my_dream_bp
+from routes.dream.public import public_dream_bp
 from routes.user import user_bp
 
 load_dotenv()

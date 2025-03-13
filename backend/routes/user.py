@@ -1,27 +1,30 @@
 from flask import Blueprint, jsonify, request
 from models.user import User
+from pydantic import ValidationError
+from schemas.user import CreateUserBody, UserResponse
 
 user_bp = Blueprint("user", __name__)
 
 
 @user_bp.route("/users", methods=["POST"])
 def create_user():
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    body = request.get_json()
+    try:
+        body = CreateUserBody(**body)
+    except ValidationError:
+        return "Invalid request body", 400
 
-    if email is None:
-        return "Email is required", 400
-
-    if password is None:
-        return "Password is required", 400
-
-    user = User.get_user_by_email(email)
+    user = User.get_user_by_email(body.email)
     if user is not None:
         return "Email is already taken", 409
 
-    new_user = User.create_user(email, password)
+    new_user = User.create_user(body.email, body.password)
     if new_user is None:
         return "Failed to create user", 500
 
-    return jsonify({"id": new_user.id, "email": new_user.email}), 201
+    try:
+        new_user = UserResponse(**new_user.__dict__)
+    except ValidationError:
+        return "Response Validation Error", 500
+
+    return jsonify(new_user.model_dump()), 201
