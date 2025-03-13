@@ -128,9 +128,14 @@ paths:
                   type: string
                 is_public:
                   type: boolean
+                hashtags:
+                  type: array
+                  items:
+                    type: string
               required:
                 - content
                 - is_public
+                - hashtags
       responses:
         '201':
           description: Created
@@ -293,6 +298,10 @@ components:
         likes:
           type: integer
           minimum: 0
+        hashtags:
+          type: array
+          items:
+            type: string
         created_at:
           type: string
           format: date-time
