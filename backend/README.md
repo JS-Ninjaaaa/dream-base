@@ -45,6 +45,80 @@ CREATE TABLE hashtags (
   updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 夢とハッシュタグをトランザクション内で追加する関数
+CREATE OR REPLACE FUNCTION create_dream_with_hashtags(
+    user_id UUID,
+    content TEXT,
+    is_public BOOLEAN,
+    hashtag_names TEXT[]
+)
+RETURNS TABLE (
+    dream_id INTEGER,
+    dream_user_id UUID,
+    dream_content TEXT,
+    dream_is_public BOOLEAN,
+    dream_likes INTEGER,
+    dream_created_at TIMESTAMP,
+    dream_updated_at TIMESTAMP,
+    hashtags JSONB
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- 夢をテーブルに追加
+  INSERT INTO dreams (user_id, content, is_public)
+  VALUES (user_id, content, is_public)
+  RETURNING id, user_id, content, is_public, likes, created_at, updated_at
+  INTO dream_id, dream_user_id, dream_content, dream_is_public, dream_likes, dream_created_at, dream_updated_at;
+
+  -- ハッシュタグが存在しない場合は追加
+  INSERT INTO hashtags (name)
+  SELECT DISTINCT name
+  -- unnestで配列を展開
+  FROM unnest(hashtag_names) AS hn(name)
+  ON CONFLICT (name)
+      DO NOTHING;
+
+  -- 中間テーブルに関連を追加
+  INSERT INTO dream_hashtags (dream_id, hashtag_id)
+  SELECT dream_id, h.id
+  FROM dreams
+      CROSS JOIN unnest(hashtag_names) AS hn(name)
+      INNER JOIN hashtags h
+          ON hn.name = h.name
+  WHERE dreams.id = dream_id
+  ON CONFLICT (dream_id, hashtag_id)
+      DO NOTHING;
+
+  -- ハッシュタグをJSONで取得
+  SELECT jsonb_agg(row_to_json(hashtag_rows))
+  INTO hashtags
+  FROM (
+    SELECT h.id, h.name
+    FROM hashtags h
+      INNER JOIN dream_hashtags dh
+        ON h.id = dh.hashtag_id
+    WHERE
+      dh.dream_id = dream_id
+  ) AS hashtag_rows;
+
+  -- 作成した夢とハッシュタグを返す
+  RETURN QUERY SELECT
+    dream_id, 
+    dream_user_id, 
+    dream_content, 
+    dream_is_public, 
+    dream_likes, 
+    dream_created_at, 
+    dream_updated_at,
+    hashtags;
+
+  EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
+    RAISE;
+END;
+$$;
+
 CREATE TABLE dream_hashtags (
     id SERIAL PRIMARY KEY,
     dream_id INTEGER NOT NULL,
