@@ -20,47 +20,36 @@ class User:
     @classmethod
     def get_user_by_email(cls, email: str) -> User | None:
         supabase: Client = get_supabase_client()
-        response = (
-            supabase.table("users")
-            .select("*")
-            .eq("email", email)
-            .execute()
-        )  # fmt: skip
-        if len(response.data) == 0:  # データが空なら None を返す
-            return None
 
-        return cls(**response.data[0])  # ユーザー情報をクラスにマッピング
+        response = supabase.table("users").select("*").eq("email", email).execute()
+
+        user = response.data[0]
+        return cls(**user)
 
     @classmethod
     def get_user_by_id(cls, user_id: str) -> User | None:
         supabase: Client = get_supabase_client()
-        response = (
-            supabase.table("users")
-            .select("*")
-            .eq("id", user_id)
-            .execute()
-        )  # fmt: skip
-        if len(response.data) == 0:
-            return None
 
-        return cls(**response.data[0])
+        response = supabase.table("users").select("*").eq("id", user_id).execute()
+
+        user = response.data[0]
+        return cls(**user)
 
     @classmethod
     def create_user(cls, email: str, password: str) -> User | None:
         supabase: Client = get_supabase_client()
+
         response = supabase.auth.sign_up(
             {
                 "email": email,
                 "password": password,
             }
         )
-        new_user = response.user
-        if new_user is None:
-            return None
 
+        created_user = response.user
         return cls(
-            id=new_user.id,
-            email=new_user.email,
-            created_at=new_user.created_at,
-            updated_at=new_user.updated_at,
+            id=created_user.id,
+            email=created_user.email,
+            created_at=created_user.created_at,
+            updated_at=created_user.updated_at,
         )
