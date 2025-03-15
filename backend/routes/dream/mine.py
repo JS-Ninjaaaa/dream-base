@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from models.dream import Dream
+from models.hashtag import Hashtag
 from pydantic import ValidationError
 from schemas.dream.mine import CreateMyDreamRequest, GetMyDreamsParams, MyDreamResponse
 
@@ -43,12 +44,14 @@ def create_my_dream():
 
     # 夢のテーブルにデータを追加
     created_dream = Dream.create(user_id, body.content, body.is_public)
-
     # TODO: ハッシュタグのテーブルにデータを追加
     # ハッシュタグのテーブルからIDを取得
     # テーブルに存在しない場合は新規作成
-
+    hashtags = Hashtag.get_id_from_hashtag(body.hashtags)
     # TODO: 中間テーブルにデータを追加
+    insert_middle_table = Hashtag.add_hashtags_to_dream(created_dream.id, hashtags)
+    if insert_middle_table is False:
+        return "Insert Data Error", 500
 
     try:
         created_dream = MyDreamResponse(**created_dream.__dict__)
