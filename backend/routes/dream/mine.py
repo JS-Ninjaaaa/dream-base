@@ -38,9 +38,17 @@ def create_my_dream():
     except ValidationError:
         return "Invalid request body", 400
 
-    user_id = get_jwt_identity()  # JWTのヘッダからユーザーIDを取得
+    # JWTのヘッダからユーザーIDを取得
+    user_id = get_jwt_identity()
 
+    # 夢のテーブルにデータを追加
     created_dream = Dream.create(user_id, body.content, body.is_public)
+
+    # TODO: ハッシュタグのテーブルにデータを追加
+    # ハッシュタグのテーブルからIDを取得
+    # テーブルに存在しない場合は新規作成
+
+    # TODO: 中間テーブルにデータを追加
 
     try:
         created_dream = MyDreamResponse(**created_dream.__dict__)
