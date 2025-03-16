@@ -101,6 +101,7 @@ BEGIN
   -- ハッシュタグをテーブルに存在しない場合のみ追加
   INSERT INTO hashtags (name)
   SELECT DISTINCT name
+  -- 引数のハッシュタグ名の配列を展開
   FROM unnest(param_hashtag_names) AS hn(name)
   ON CONFLICT (name)
       DO NOTHING;
@@ -112,7 +113,7 @@ BEGIN
     local_dream_id,
     -- ハッシュタグのID
     h.id
-    -- 引数のハッシュタグ名の配列を展開
+  -- 引数のハッシュタグ名の配列を展開
   FROM unnest(param_hashtag_names) AS hn(name)
   -- ハッシュタグ名で hashtags テーブルと結合
   INNER JOIN hashtags h
