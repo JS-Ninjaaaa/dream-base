@@ -45,6 +45,15 @@ CREATE TABLE hashtags (
   updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE dream_hashtags (
+    id SERIAL PRIMARY KEY,
+    dream_id INTEGER NOT NULL,
+    hashtag_id INTEGER NOT NULL,
+    FOREIGN KEY (dream_id) REFERENCES dreams(id) ON DELETE CASCADE,
+    FOREIGN KEY (hashtag_id) REFERENCES hashtags(id) ON DELETE CASCADE,
+    UNIQUE (dream_id, hashtag_id)
+);
+
 -- 夢とハッシュタグをトランザクション内で追加する関数
 CREATE OR REPLACE FUNCTION create_dream_with_hashtags(
     user_id UUID,
@@ -118,15 +127,6 @@ BEGIN
     RAISE;
 END;
 $$;
-
-CREATE TABLE dream_hashtags (
-    id SERIAL PRIMARY KEY,
-    dream_id INTEGER NOT NULL,
-    hashtag_id INTEGER NOT NULL,
-    FOREIGN KEY (dream_id) REFERENCES dreams(id),
-    FOREIGN KEY (hashtag_id) REFERENCES hashtags(id),
-    UNIQUE (dream_id, hashtag_id)
-);
 
 --- Function to sync auth.users to public.users
 CREATE OR REPLACE FUNCTION public.sync_auth_users_to_public_users()
