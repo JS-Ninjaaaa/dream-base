@@ -180,7 +180,7 @@ END;
 $$;
 
 -- Trigger to call the above function
-CCREATE TRIGGER sync_auth_users
+CREATE TRIGGER sync_auth_users
   AFTER INSERT OR UPDATE OR DELETE ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.sync_auth_users_to_public_users();
 ```
