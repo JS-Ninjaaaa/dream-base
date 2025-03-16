@@ -74,7 +74,7 @@ erDiagram
         TIMESTAMP updated_at "更新日時"
     }
     DREAM_HASHTAGS {
-		    INTEGER id PK "中間テーブルID"
+		INTEGER id PK "中間テーブルID"
         INTEGER dream_id FK "夢ID"
         INTEGER hashtag_id FK "ハッシュタグID"
     }
