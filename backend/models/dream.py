@@ -33,7 +33,7 @@ class Dream:
         supabase: Client = get_supabase_client()
 
         response = (
-            supabase.table("dreams, hashtags(*)").select("*").eq("id", id).execute()
+            supabase.table("dreams").select("*, hashtags(*)").eq("id", id).execute()
         )
 
         dream = response.data[0]
