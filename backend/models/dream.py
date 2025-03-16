@@ -76,16 +76,16 @@ class Dream:
         cls,
         user_id: str,
         body: CreateMyDreamRequest,
-    ) -> Dream | None:
+    ) -> Dream:
         supabase: Client = get_supabase_client()
 
         response = supabase.rpc(
             "create_dream_with_hashtags",
             {
-                "user_id": user_id,
-                "content": body.content,
-                "is_public": body.is_public,
-                "hashtags": body.hashtags,
+                "param_user_id": user_id,
+                "param_content": body.content,
+                "param_is_public": body.is_public,
+                "param_hashtag_names": body.hashtags,
             },
         ).execute()
 
@@ -131,7 +131,7 @@ class Dream:
 
     # 夢の公開状態を切り替える
     @classmethod
-    def toggle_visibility(cls, dream_id: int) -> Dream | None:
+    def toggle_visibility(cls, dream_id: int) -> Dream:
         supabase: Client = get_supabase_client()
 
         response = (
@@ -152,7 +152,7 @@ class Dream:
 
     # 夢のいいね数を更新
     @classmethod
-    def update_likes(cls, dream_id: int, likes: int) -> Dream | None:
+    def update_likes(cls, dream_id: int, likes: int) -> Dream:
         supabase: Client = get_supabase_client()
 
         response = (

@@ -56,10 +56,10 @@ CREATE TABLE dream_hashtags (
 
 -- 夢とハッシュタグをトランザクション内で追加する関数
 CREATE OR REPLACE FUNCTION create_dream_with_hashtags(
-    user_id UUID,
-    content TEXT,
-    is_public BOOLEAN,
-    hashtag_names TEXT[]
+    param_user_id UUID,
+    param_content TEXT,
+    param_is_public BOOLEAN,
+    param_hashtag_names TEXT[]
 )
 RETURNS TABLE (
     dream_id INTEGER,
@@ -73,58 +73,83 @@ RETURNS TABLE (
 )
 LANGUAGE plpgsql
 AS $$
+#variable_conflict use_column
+DECLARE
+  local_dream_id INTEGER;
+  local_dream_user_id UUID;
+  local_dream_content TEXT;
+  local_dream_is_public BOOLEAN;
+  local_dream_likes INTEGER;
+  local_dream_created_at TIMESTAMP;
+  local_dream_updated_at TIMESTAMP;
+  local_hashtags JSONB;
 BEGIN
   -- 夢をテーブルに追加
   INSERT INTO dreams (user_id, content, is_public)
-  VALUES (user_id, content, is_public)
-  RETURNING id, user_id, content, is_public, likes, created_at, updated_at
-  INTO dream_id, dream_user_id, dream_content, dream_is_public, dream_likes, dream_created_at, dream_updated_at;
+  VALUES (param_user_id, param_content, param_is_public)
+  RETURNING
+    id, user_id, content, is_public, likes, created_at, updated_at
+  INTO
+    local_dream_id,
+    local_dream_user_id,
+    local_dream_content,
+    local_dream_is_public,
+    local_dream_likes,
+    local_dream_created_at,
+    local_dream_updated_at;
 
-  -- ハッシュタグが存在しない場合は追加
+  -- ハッシュタグをテーブルに存在しない場合のみ追加
   INSERT INTO hashtags (name)
   SELECT DISTINCT name
-  -- unnestで配列を展開
-  FROM unnest(hashtag_names) AS hn(name)
+  FROM unnest(param_hashtag_names) AS hn(name)
   ON CONFLICT (name)
       DO NOTHING;
 
-  -- 中間テーブルに関連を追加
+  -- 夢とハッシュタグの中間テーブルに関連を追加
   INSERT INTO dream_hashtags (dream_id, hashtag_id)
-  SELECT dream_id, h.id
-  FROM dreams
-      CROSS JOIN unnest(hashtag_names) AS hn(name)
-      INNER JOIN hashtags h
-          ON hn.name = h.name
-  WHERE dreams.id = dream_id
+  SELECT
+    -- 作成した夢のID
+    local_dream_id,
+    -- ハッシュタグのID
+    h.id
+    -- 引数のハッシュタグ名の配列を展開
+  FROM unnest(param_hashtag_names) AS hn(name)
+  -- ハッシュタグ名で hashtags テーブルと結合
+  INNER JOIN hashtags h
+      ON hn.name = h.name
   ON CONFLICT (dream_id, hashtag_id)
       DO NOTHING;
 
-  -- ハッシュタグをJSONで取得
-  SELECT jsonb_agg(row_to_json(hashtag_rows))
-  INTO hashtags
+  -- 作成した夢に付けられたハッシュタグを JSON 形式で取得
+  SELECT jsonb_agg(row_to_json(ht))
+  INTO local_hashtags
   FROM (
-    SELECT h.id, h.name
+    -- 作成した夢に付けられたハッシュタグを取得
+    SELECT
+      h.id,
+      h.name
     FROM hashtags h
-      INNER JOIN dream_hashtags dh
-        ON h.id = dh.hashtag_id
+    INNER JOIN dream_hashtags AS dh
+      ON h.id = dh.hashtag_id
     WHERE
-      dh.dream_id = dream_id
-  ) AS hashtag_rows;
+      -- 作成した夢のIDでフィルタリング
+      dh.dream_id = local_dream_id
+  ) AS ht;
 
   -- 作成した夢とハッシュタグを返す
   RETURN QUERY SELECT
-    dream_id, 
-    dream_user_id, 
-    dream_content, 
-    dream_is_public, 
-    dream_likes, 
-    dream_created_at, 
-    dream_updated_at,
-    hashtags;
+    local_dream_id,
+    local_dream_user_id,
+    local_dream_content,
+    local_dream_is_public,
+    local_dream_likes,
+    local_dream_created_at,
+    local_dream_updated_at,
+    local_hashtags;
 
-  EXCEPTION WHEN OTHERS THEN
-    ROLLBACK;
-    RAISE;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RAISE;
 END;
 $$;
 

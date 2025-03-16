@@ -18,7 +18,7 @@ class User:
         self.updated_at = updated_at
 
     @classmethod
-    def get_user_by_email(cls, email: str) -> User | None:
+    def get_user_by_email(cls, email: str) -> User:
         supabase: Client = get_supabase_client()
 
         response = supabase.table("users").select("*").eq("email", email).execute()
@@ -27,7 +27,7 @@ class User:
         return cls(**user)
 
     @classmethod
-    def get_user_by_id(cls, user_id: str) -> User | None:
+    def get_user_by_id(cls, user_id: str) -> User:
         supabase: Client = get_supabase_client()
 
         response = supabase.table("users").select("*").eq("id", user_id).execute()
@@ -36,7 +36,7 @@ class User:
         return cls(**user)
 
     @classmethod
-    def create_user(cls, email: str, password: str) -> User | None:
+    def create_user(cls, email: str, password: str) -> User:
         supabase: Client = get_supabase_client()
 
         response = supabase.auth.sign_up(
