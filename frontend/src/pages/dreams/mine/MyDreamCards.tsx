@@ -66,6 +66,15 @@ const MyDreamCards = ({ myDreams, setMyDreams }: MyDreamCardsProps) => {
             <AlertDialog.Description size="4" className="flex-grow">
               {dream.content}
             </AlertDialog.Description>
+            {dream.hashtags?.length? (
+              <div className="text-center my-2 text-pink-500">
+                {dream.hashtags.map((tag, i) => (
+                  <span key={i} className="mr-2 text-sm font-semibold underline">
+                    {"# " + tag.name}
+                  </span>
+                ))}
+              </div>
+            ) : null}
             <Flex gap="3" direction="column" justify="end" align="center">
               <p className="text-center font-bold mt-3">
                 ＼発信して夢を叶えよう！／
