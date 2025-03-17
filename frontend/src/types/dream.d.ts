@@ -1,8 +1,7 @@
 export interface RequestDream {
-  user_id?: string;
-  title: string;
   content: string;
   is_public: boolean;
+  hashtags: string[];
 }
 
 export interface Dream {
@@ -16,7 +15,7 @@ export interface Dream {
   hashtags: Hashtag[];
 }
 
-export interface Hashtag {
+interface Hashtag {
   id: number; 
   name: string;
 }
