@@ -4,6 +4,7 @@ from pydantic import (
     BaseModel,
     field_serializer,
 )
+from schemas.hashtag import HashtagResponse
 
 
 class PublicDreamResponse(BaseModel):
@@ -12,6 +13,7 @@ class PublicDreamResponse(BaseModel):
     content: str
     is_public: bool
     likes: int
+    hashtags: list[HashtagResponse]
     created_at: datetime
     updated_at: datetime
 
