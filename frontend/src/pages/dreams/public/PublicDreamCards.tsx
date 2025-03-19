@@ -61,15 +61,15 @@ const PublicDreamCards = () => {
               <AlertDialog.Description size="4" className="flex-grow">
                 {dream.content}
               </AlertDialog.Description>
-              {dream.hashtags?.length? (
+              {0 < dream.hashtags.length && (
                 <div className="text-center my-2 text-pink-500">
                   {dream.hashtags.map((tag, i) => (
-                    <span key={i} className="mr-2 text-sm font-semibold underline">
+                    <span key={i} className="mr-6 text-sm font-semibold underline">
                       {"# " + tag.name}
                     </span>
                   ))}
                 </div>
-              ) : null}
+              )}
               <Flex direction="column" justify="end" align="center">
                 <AlertDialog.Cancel>
                   <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-5 rounded max-w-[100px]">
