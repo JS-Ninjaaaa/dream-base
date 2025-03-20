@@ -9,17 +9,17 @@ const MyDreamFormPrivacyToggle = ({
 }: MyDreamFormPrivacyToggleProps) => {
   return (
     <>
-      <span className="text-gray-600">close</span>
-      <label className="relative inline-flex cursor-pointer items-center">
+      <span className="text-lg text-gray-600">非公開</span>
+      <label className="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
           checked={isPublic}
           onChange={togglePrivacy}
           className="sr-only peer"
         />
-        <div className="w-10 h-5 bg-gray-300 peer-focus:ring-4 peer-focus:ring-pink-200 rounded-full peer peer-checked:bg-pink-400 after:content-[''] after:absolute after:w-4 after:h-4 after:bg-white after:border after:rounded-full after:transition-all after:left-1 after:top-0.5 peer-checked:after:translate-x-5"></div>
+        <div className="relative w-11 h-6 bg-gray-400 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-400"></div>
       </label>
-      <span className="text-pink-500">open</span>
+      <span className="text-lg text-pink-500">公開</span>
     </>
   );
 };

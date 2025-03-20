@@ -43,7 +43,10 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
 
   return (
     <div className="flex flex-col items-center my-8">
-      <div className="flex w-full flex-col sm:flex-row px-4">
+      <h2 className="text-xl font-semibold mb-2 ml-3">
+        あなたの夢を教えてください
+      </h2>
+      <div className="flex w-full flex-col md:flex-row justify-start items-center md:justify-center md:items-start px-8">
         <MyDreamFormInput content={content} setContent={setContent} />
         <MyDreamFormHashtagList hashtags={hashtags} setHashtags={setHashtags} />
       </div>
@@ -59,7 +62,7 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
         />
         <button
           onClick={handleSaveButtonClick}
-          className="px-6 py-2 rounded-md bg-pink-400 hover:bg-green-400 text-white mt-4 hover:bg-pink-500  transition"
+          className="px-6 py-2 rounded-md bg-pink-400 hover:bg-green-400 text-white hover:bg-pink-500  transition text-lg font-semibold"
         >
           保存する
         </button>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { GoPlus } from "react-icons/go";
+import { RxCross1 } from "react-icons/rx";
 
 interface MyDreamFormHashtagListProps {
   hashtags: string[];
@@ -28,9 +30,8 @@ const MyDreamFormHashtagList = ({
   };
 
   return (
-    <div className="md:flex-row  bg-gray-100 p-4 m-4 rounded-lg shadow">
-      <h3 className="text-sm font-semibold">ハッシュタグの追加</h3>
-      <div className="flex gap-2 mt-2">
+    <div className="min-w-xs bg-gray-100 pt-5 p-5 mx-4 my-3 rounded-lg shadow">
+      <div className="flex gap-2 mb-3">
         <input
           type="text"
           value={hashtag}
@@ -41,24 +42,27 @@ const MyDreamFormHashtagList = ({
           className="w-full p-2 border rounded focus:outline-none text-gray-700"
         />
         <button
-          onClick={addHashtag}
-          className="px-3 py-2 bg-pink-400 text-white rounded hover:bg-pink-500 transition"
+          onClick={() => {
+            addHashtag();
+          }}
+          className="p-2 bg-pink-400 text-white rounded hover:bg-pink-500 transition"
         >
-          +
+          <GoPlus size={25} />
         </button>
       </div>
       <div className="mt-2">
         {hashtags.map((hashtag, index) => (
           <div
             key={index}
-            className="flex justify-between items-center bg-white px-3 py-1 rounded shadow mt-2"
+            className="flex justify-between items-center bg-white px-3 py-2 rounded shadow mt-2.5"
           >
             <span className="text-gray-700"># {hashtag}</span>
             <button
-              onClick={() => removeHashtag(hashtag)}
-              className="text-red-400 hover:text-red-600"
+              onClick={() => {
+                removeHashtag(hashtag);
+              }}
             >
-              ×
+              <RxCross1 size={15} />
             </button>
           </div>
         ))}

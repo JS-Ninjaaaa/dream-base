@@ -10,7 +10,7 @@ const MyDreamSortKeySelectBox = ({
   setMyDreamSortKey,
 }: MyDreamSortKeySelectBoxProps) => {
   return (
-    <div className="mt-3 ml-5 flex items-center gap-2">
+    <div className="my-5 ml-10 flex items-center gap-2">
       <span className="text-gray-600">並び替え:</span>
       <select
         value={myDreamSortKey}
