@@ -16,6 +16,8 @@ export interface Dream {
 }
 
 interface Hashtag {
-  id: number; 
+  id: number;
   name: string;
 }
+
+export type MyDreamSortKey = "updated_at" | "likes";
