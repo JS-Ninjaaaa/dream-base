@@ -69,7 +69,10 @@ const MyDreamCards = ({ myDreams, setMyDreams }: MyDreamCardsProps) => {
             {0 < dream.hashtags.length && (
               <div className="text-center my-2 text-pink-500">
                 {dream.hashtags.map((tag, i) => (
-                  <span key={i} className="mr-4 text-sm font-semibold underline">
+                  <span
+                    key={i}
+                    className="mr-3 text-sm font-semibold underline"
+                  >
                     {"# " + tag.name}
                   </span>
                 ))}

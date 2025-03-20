@@ -1,11 +1,11 @@
 import { fetchPublicDreams } from "@/api/dreams/public";
+import { userAtom } from "@/atoms/userAtom";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { AlertDialog, Flex } from "@radix-ui/themes";
+import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
 import PublicDreamLikeButton from "./PublicDreamLikeButton";
-import { useAtom } from "jotai";
-import { userAtom } from "@/atoms/userAtom";
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
@@ -48,12 +48,12 @@ const PublicDreamCards = () => {
               </AlertDialog.Trigger>
               {!isMyDream && (
                 <div className="absolute top-24 z-10 left-1/2 transform -translate-x-1/2">
-                <PublicDreamLikeButton
-                  dream={dream}
-                  setPublicDreams={setPublicDreams}
-                />
-              </div>
-            )}
+                  <PublicDreamLikeButton
+                    dream={dream}
+                    setPublicDreams={setPublicDreams}
+                  />
+                </div>
+              )}
             </div>
 
             <AlertDialog.Content className="flex flex-col h-full min-h-[300px] max-w-[400px]">
@@ -62,9 +62,12 @@ const PublicDreamCards = () => {
                 {dream.content}
               </AlertDialog.Description>
               {0 < dream.hashtags.length && (
-                <div className="text-center my-2 text-pink-500">
+                <div className="text-center my-4 text-pink-500">
                   {dream.hashtags.map((tag, i) => (
-                    <span key={i} className="mr-6 text-sm font-semibold underline">
+                    <span
+                      key={i}
+                      className="mr-3 text-sm font-semibold underline"
+                    >
                       {"# " + tag.name}
                     </span>
                   ))}
