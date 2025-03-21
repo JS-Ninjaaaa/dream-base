@@ -170,5 +170,4 @@ class Dream:
             return None
 
         updated_dream = response.data[0]
-        print(updated_dream)
         return cls(**updated_dream)
