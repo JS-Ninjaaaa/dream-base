@@ -2,28 +2,28 @@ import { createMyDream, fetchMyDreams } from "@/api/dreams/mine";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext, useState } from "react";
+import MyDreamFormHashtagList from "./MyDreamFormHashtagList";
+import MyDreamFormInput from "./MyDreamFormInput";
+import MyDreamFormPrivacyToggle from "./MyDreamFormPrivacyToggle";
 
 interface MyDreamInputProps {
   setMyDreams: (dreams: Dream[]) => void;
 }
 
 const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
-  const [dream, setDream] = useState("");
+  const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [hashtags, setHashtags] = useState<string[]>([]);
 
   const { setIsLoading } = useContext(LoadingContext);
-
-  const handlePrivacyToggleClick = () => {
-    setIsPublic((prev) => !prev);
-  };
 
   const handleSaveButtonClick = async () => {
     try {
       const newDream = {
-        title: dream,
-        content: dream,
+        content: content,
         is_public: isPublic,
         likes: 0,
+        hashtags: hashtags,
       };
       setIsLoading(true);
 
@@ -31,7 +31,8 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
       const myDreams: Dream[] = await fetchMyDreams();
 
       setMyDreams(myDreams);
-      setDream("");
+      setContent("");
+      setHashtags([]);
     } catch (e) {
       alert("夢の保存に失敗しました");
       console.error(e);
@@ -42,27 +43,26 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
 
   return (
     <div className="flex flex-col items-center my-8">
-      <div className="w-3/4 md:w-2/3 lg:w-1/2 border border-black rounded-lg p-4 min-h-[200px] flex items-center justify-center">
-        <textarea
-          value={dream}
-          onChange={(e) => setDream(e.target.value)}
-          placeholder="夢を書き込んでください"
-          maxLength={100}
-          className="w-full h-40 resize-none p-2 border-none focus:outline-none"
-        />
+      <h2 className="text-xl font-semibold mb-2 ml-3">
+        あなたの夢を教えてください
+      </h2>
+      <div className="flex w-full flex-col md:flex-row justify-start items-center md:justify-center md:items-start px-8">
+        <MyDreamFormInput content={content} setContent={setContent} />
+        <MyDreamFormHashtagList hashtags={hashtags} setHashtags={setHashtags} />
       </div>
+
       <div className="flex items-center gap-4 mt-4">
-        <button
-          onClick={handlePrivacyToggleClick}
-          className={`px-6 py-2 rounded-full text-white ${
-            isPublic ? "bg-green-500" : "bg-gray-500"
-          }`}
-        >
-          {isPublic ? "公開" : "非公開"}
-        </button>
+        <MyDreamFormPrivacyToggle
+          isPublic={isPublic}
+          togglePrivacy={() => {
+            setIsPublic((prev) => {
+              return !prev;
+            });
+          }}
+        />
         <button
           onClick={handleSaveButtonClick}
-          className="px-6 py-2 rounded-md bg-green-300 hover:bg-green-400 transition"
+          className="px-6 py-2 rounded-md bg-pink-400 hover:bg-green-400 text-white hover:bg-pink-500  transition text-lg font-semibold"
         >
           保存する
         </button>
