@@ -10,7 +10,7 @@ const MyDreamFormInput = ({ content, setContent }: MyDreamFormInputProps) => {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="ダンスの全国大会で優勝する"
+          placeholder="ハッカソンで入賞する"
           maxLength={100}
           className="w-full h-40 resize-none px-2 pt-2 pb-6 border-none focus:outline-none text-gray-700"
         />

@@ -30,15 +30,16 @@ const MyDreamFormHashtagList = ({
   };
 
   return (
-    <div className="min-w-xs bg-gray-100 pt-5 p-5 mx-4 my-3 rounded-lg shadow">
+    <div className="min-w-sm bg-gray-100 pt-5 p-5 mx-4 my-3 rounded-lg shadow">
       <div className="flex gap-2 mb-3">
+        <span className="text-xl text-gray-700 my-2 ml-2">#</span>
         <input
           type="text"
           value={hashtag}
           onChange={(e) => {
             setHashtag(e.target.value);
           }}
-          placeholder="# ハッシュタグ"
+          placeholder="ハッカソン"
           className="w-full p-2 border rounded focus:outline-none text-gray-700"
         />
         <button
