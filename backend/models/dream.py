@@ -29,12 +29,14 @@ class Dream:
 
     # idに基づいて特定の夢を取得
     @classmethod
-    def get_by_id(cls, id: int) -> Dream:
+    def get_by_id(cls, id: int) -> Dream | None:
         supabase: Client = get_supabase_client()
 
         response = (
             supabase.table("dreams").select("*, hashtags(*)").eq("id", id).execute()
         )
+        if len(response.data) == 0:
+            return None
 
         dream = response.data[0]
         return cls(**dream)
@@ -131,7 +133,7 @@ class Dream:
 
     # 夢の公開状態を切り替える
     @classmethod
-    def toggle_visibility(cls, dream_id: int) -> Dream:
+    def toggle_visibility(cls, dream_id: int) -> Dream | None:
         supabase: Client = get_supabase_client()
 
         response = (
@@ -140,6 +142,9 @@ class Dream:
             .eq("id", dream_id)
             .execute()
         )  # fmt: skip
+        if len(response.data) == 0:
+            return None
+
         visibility = response.data[0]["is_public"]
         response = (
             supabase.table("dreams")
@@ -152,7 +157,7 @@ class Dream:
 
     # 夢のいいね数を更新
     @classmethod
-    def update_likes(cls, dream_id: int, likes: int) -> Dream:
+    def update_likes(cls, dream_id: int, likes: int) -> Dream | None:
         supabase: Client = get_supabase_client()
 
         response = (
@@ -161,6 +166,8 @@ class Dream:
             .eq("id", dream_id)
             .execute()
         )
+        if len(response.data) == 0:
+            return None
 
         updated_dream = response.data[0]
         return cls(**updated_dream)

@@ -18,19 +18,23 @@ class User:
         self.updated_at = updated_at
 
     @classmethod
-    def get_user_by_email(cls, email: str) -> User:
+    def get_user_by_email(cls, email: str) -> User | None:
         supabase: Client = get_supabase_client()
 
         response = supabase.table("users").select("*").eq("email", email).execute()
+        if len(response.data) == 0:
+            return None
 
         user = response.data[0]
         return cls(**user)
 
     @classmethod
-    def get_user_by_id(cls, user_id: str) -> User:
+    def get_user_by_id(cls, user_id: str) -> User | None:
         supabase: Client = get_supabase_client()
 
         response = supabase.table("users").select("*").eq("id", user_id).execute()
+        if len(response.data) == 0:
+            return None
 
         user = response.data[0]
         return cls(**user)
