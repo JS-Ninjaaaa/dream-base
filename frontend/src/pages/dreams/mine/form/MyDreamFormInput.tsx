@@ -1,12 +1,12 @@
 interface MyDreamFormInputProps {
   content: string;
-  setContent: (conent: string) => void;
+  setContent: (content: string) => void;
 }
 
 const MyDreamFormInput = ({ content, setContent }: MyDreamFormInputProps) => {
   return (
     <div className="my-3 w-full min-w-sm max-w-lg">
-      <div className="w-full h-hull border border-gray-300 rounded-lg p-4 flex items-center justify-center relative bg-white shadow">
+      <div className="w-full h-full border border-gray-300 rounded-lg p-4 flex items-center justify-center relative bg-white shadow">
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
