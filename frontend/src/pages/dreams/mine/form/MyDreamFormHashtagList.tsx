@@ -39,7 +39,7 @@ const MyDreamFormHashtagList = ({
           onChange={(e) => {
             setHashtag(e.target.value);
           }}
-          placeholder="ハッカソン"
+          placeholder="ハッシュタグを入力"
           className="w-full p-2 border rounded focus:outline-none text-gray-700"
         />
         <button
