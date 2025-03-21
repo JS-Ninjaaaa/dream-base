@@ -16,9 +16,9 @@ class MyDreamResponse(BaseModel):
     content: str
     is_public: bool
     likes: int
-    hashtags: Optional[list[HashtagResponse]]
     created_at: datetime
     updated_at: datetime
+    hashtags: Optional[list[HashtagResponse]]
 
     @field_serializer("created_at")
     def serialize_created_at(self, created_at: datetime) -> str:

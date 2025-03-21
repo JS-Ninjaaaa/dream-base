@@ -16,16 +16,16 @@ class Dream:
         likes: int,
         created_at: str,
         updated_at: str,
-        hashtags: list[dict] = None,
+        hashtags: list[dict] = [],
     ):
         self.id = id
         self.user_id = user_id
         self.content = content
         self.is_public = is_public
         self.likes = likes
-        self.hashtags = hashtags
         self.created_at = created_at
         self.updated_at = updated_at
+        self.hashtags = hashtags
 
     # idに基づいて特定の夢を取得
     @classmethod
@@ -98,9 +98,9 @@ class Dream:
             dream_data["dream_content"],
             dream_data["dream_is_public"],
             dream_data["dream_likes"],
-            dream_data["hashtags"],
             dream_data["dream_created_at"],
             dream_data["dream_updated_at"],
+            dream_data["hashtags"],
         )
 
     # 夢を削除
