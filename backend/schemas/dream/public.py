@@ -1,9 +1,11 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import (
     BaseModel,
     field_serializer,
 )
+from schemas.hashtag import HashtagResponse
 
 
 class PublicDreamResponse(BaseModel):
@@ -14,6 +16,7 @@ class PublicDreamResponse(BaseModel):
     likes: int
     created_at: datetime
     updated_at: datetime
+    hashtags: Optional[list[HashtagResponse]]
 
     @field_serializer("created_at")
     def serialize_created_at(self, created_at: datetime) -> str:

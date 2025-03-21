@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import (
     BaseModel,
@@ -6,6 +7,7 @@ from pydantic import (
     field_serializer,
     field_validator,
 )
+from schemas.hashtag import HashtagResponse
 
 
 class MyDreamResponse(BaseModel):
@@ -16,6 +18,7 @@ class MyDreamResponse(BaseModel):
     likes: int
     created_at: datetime
     updated_at: datetime
+    hashtags: Optional[list[HashtagResponse]]
 
     @field_serializer("created_at")
     def serialize_created_at(self, created_at: datetime) -> str:
@@ -40,6 +43,7 @@ class GetMyDreamsParams(BaseModel):
 class CreateMyDreamRequest(BaseModel):
     content: str
     is_public: bool = False
+    hashtags: list[str]
 
     @field_validator("content")
     def validate_content(cls, content: str) -> str:
