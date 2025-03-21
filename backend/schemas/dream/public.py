@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import (
     BaseModel,
@@ -13,7 +14,7 @@ class PublicDreamResponse(BaseModel):
     content: str
     is_public: bool
     likes: int
-    hashtags: list[HashtagResponse]
+    hashtags: Optional[list[HashtagResponse]]
     created_at: datetime
     updated_at: datetime
 

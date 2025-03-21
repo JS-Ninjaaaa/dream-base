@@ -14,9 +14,9 @@ class Dream:
         content: str,
         is_public: bool,
         likes: int,
-        hashtags: list[dict],
         created_at: str,
         updated_at: str,
+        hashtags: list[dict] = None,
     ):
         self.id = id
         self.user_id = user_id
@@ -170,4 +170,5 @@ class Dream:
             return None
 
         updated_dream = response.data[0]
+        print(updated_dream)
         return cls(**updated_dream)
