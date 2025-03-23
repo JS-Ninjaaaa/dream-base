@@ -14,9 +14,6 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Write user_map.json from Secret
-        run: echo '${{ secrets.DISCORD_USER_MAP_JSON }}' > user_map.json
-
       - name: Read user_map and notify Discord
         env:
           DISCORD_PR_WEBHOOK: ${{ secrets.DISCORD_PR_WEBHOOK }}
@@ -42,8 +39,8 @@ jobs:
             ACTION="👀レビューがリクエストされました"
           fi
 
-          # ユーザーマッピング読み込み
-          DISCORD_ID=$(jq -r --arg user "$USER" '.[$user]' .github/user_map.json)
+          # ユーザーマッピング読み込み, secretから
+          DISCORD_ID=$(jq -r --arg user "$USER" '.[$user]' secrets.DISCORD_USER_MAP_JSON)
 
           if [ "$DISCORD_ID" != "null" ] && [ -n "$DISCORD_ID" ]; then
             MENTION="<@$DISCORD_ID>"
