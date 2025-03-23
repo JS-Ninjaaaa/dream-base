@@ -1,0 +1,57 @@
+name: Notify Discord on PR Assign/Review
+
+on:
+  pull_request:
+    types: [assigned, review_requested]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Read user_map and notify Discord
+        env:
+          DISCORD_PR_WEBHOOK: ${{ secrets.DISCORD_PR_WEBHOOK }}
+          EVENT_TYPE: ${{ github.event.action }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          # ASSIGNEE / REVIEWER を null-safe に取得
+          ASSIGNEE="${{ github.event.pull_request.assignee && github.event.pull_request.assignee.login || '' }}"
+          REVIEWER="${{ github.event.requested_reviewer && github.event.requested_reviewer.login || '' }}"
+
+          # デフォルト設定
+          USER=""
+          MENTION="@here"
+          ACTION=""
+
+          # イベントタイプによって処理分岐
+          if [ "$EVENT_TYPE" = "assigned" ]; then
+            USER="$ASSIGNEE"
+            ACTION="アサインされました"
+          elif [ "$EVENT_TYPE" = "review_requested" ]; then
+            USER="$REVIEWER"
+            ACTION="レビューがリクエストされました"
+          fi
+
+          # ユーザーマッピング読み込み
+          DISCORD_ID=$(jq -r --arg user "$USER" '.[$user]' .github/user_map.json)
+
+          if [ "$DISCORD_ID" != "null" ] && [ -n "$DISCORD_ID" ]; then
+            MENTION="<@$DISCORD_ID>"
+          fi
+
+          # Discord通知メッセージ作成
+          cat <<EOF > message.json
+          {
+            "content": "$MENTION プルリクが$ACTION: [$PR_TITLE]($PR_URL)"
+          }
+          EOF
+
+          # Discordに送信
+          curl -H "Content-Type: application/json" -X POST -d @message.json "$DISCORD_PR_WEBHOOK"
