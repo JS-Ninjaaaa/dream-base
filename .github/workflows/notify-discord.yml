@@ -14,6 +14,9 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
+      - name: Write user_map.json from Secret
+        run: echo '${{ secrets.DISCORD_USER_MAP_JSON }}' > user_map.json
+
       - name: Read user_map and notify Discord
         env:
           DISCORD_PR_WEBHOOK: ${{ secrets.DISCORD_PR_WEBHOOK }}
@@ -33,10 +36,10 @@ jobs:
           # イベントタイプによって処理分岐
           if [ "$EVENT_TYPE" = "assigned" ]; then
             USER="$ASSIGNEE"
-            ACTION="アサインされました"
+            ACTION="✅アサインされました"
           elif [ "$EVENT_TYPE" = "review_requested" ]; then
             USER="$REVIEWER"
-            ACTION="レビューがリクエストされました"
+            ACTION="👀レビューがリクエストされました"
           fi
 
           # ユーザーマッピング読み込み
@@ -49,7 +52,7 @@ jobs:
           # Discord通知メッセージ作成
           cat <<EOF > message.json
           {
-            "content": "$MENTION プルリクが$ACTION: [$PR_TITLE]($PR_URL)"
+            "content": "$MENTION PullRequestが$ACTION: [$PR_TITLE]($PR_URL)"
           }
           EOF
 
