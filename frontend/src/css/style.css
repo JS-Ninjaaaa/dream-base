@@ -1,17 +1,15 @@
-
-
 @font-face {
     font-family: Ubuntu;
-    src: url("../../public/assets/fonts/Ubuntu-Regular.ttf");
+    src: url("/assets/fonts/Ubuntu-Regular.ttf");
 }
 
 @font-face {
     font-family: Mpulus;
-    src: url("../../public/assets/fonts/MPLUSRounded1c-Regular.ttf");
+    src: url("/assets/fonts/MPLUSRounded1c-Regular.ttf");
 }
 @font-face {
     font-family: Josefin;
-    src: url("../../public/assets/fonts/JosefinSans-Regular.ttf");
+    src: url("/assets/fonts/JosefinSans-Regular.ttf");
 }
 
 @import "tailwindcss";

@@ -12,7 +12,7 @@ const MyDreamFormInput = ({ content, setContent }: MyDreamFormInputProps) => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="ハッカソンで入賞する"
           maxLength={100}
-          className="w-full h-40 resize-none px-2 pt-2 pb-6 border-none focus:outline-none text-gray-700"
+          className="font-mpulus w-full h-40 resize-none px-2 pt-2 pb-6 border-none focus:outline-none text-gray-700"
         />
         <div className="absolute bottom-3 right-3 text-gray-400 text-base">
           {content.length} / 100

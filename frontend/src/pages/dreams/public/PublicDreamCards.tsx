@@ -41,8 +41,9 @@ const PublicDreamCards = () => {
                   <div className="font-mpulus text-gray-800 overflow-hidden line-clamp-2 break-all">
                     {dream.content}
                   </div>
-                  <div className="font-midium font-ubuntu font-bold mt-5 text-xs text-center">
-                    {dream.likes}
+                  <div className="flex items-center text-base font-ubuntu font-bold gap-1 mt-5">
+                    <span>{dream.likes}</span>
+                    <span className="font-thin text-sm">いいね</span>
                   </div>
                 </div>
               </AlertDialog.Trigger>
