@@ -1,0 +1,21 @@
+@font-face {
+    font-family: Ubuntu;
+    src: url("/assets/fonts/Ubuntu-Regular.ttf");
+}
+
+@font-face {
+    font-family: Mpulus;
+    src: url("/assets/fonts/MPLUSRounded1c-Regular.ttf");
+}
+@font-face {
+    font-family: Josefin;
+    src: url("/assets/fonts/JosefinSans-Regular.ttf");
+}
+
+@import "tailwindcss";
+
+@theme {
+    --font-ubuntu: Ubuntu, "sans-serif";
+    --font-mpulus: Mpulus, "sans-serif";
+    --font-josefin: Josefin, "sans-serif";
+}

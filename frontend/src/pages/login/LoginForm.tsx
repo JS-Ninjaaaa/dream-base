@@ -69,7 +69,7 @@ const LoginForm = () => {
       </div>
       <div className="flex flex-col gap-4">
         <button
-          className="bg-pink-400 hover:bg-pink-500 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+          className="bg-[#ff9bd1] hover:bg-pink-500 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
           type="submit"
         >
           ログイン

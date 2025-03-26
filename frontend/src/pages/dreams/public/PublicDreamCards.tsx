@@ -38,11 +38,12 @@ const PublicDreamCards = () => {
             <div className="relative transition-transform transform bg-green-100 border-gray-300 hover:scale-105 rounded-xl">
               <AlertDialog.Trigger>
                 <div className="border rounded-xl shadow-lg p-5 min-h-48 flex flex-col justify-between items-center">
-                  <div className="text-gray-800 overflow-hidden line-clamp-2 break-all">
+                  <div className="font-mpulus text-gray-800 overflow-hidden line-clamp-2 break-all">
                     {dream.content}
                   </div>
-                  <div className="font-medium mt-5 text-base text-center">
-                    {dream.likes} いいね
+                  <div className="flex items-center text-base font-ubuntu font-bold gap-1 mt-5">
+                    <span>{dream.likes}</span>
+                    <span className="font-thin text-sm">いいね</span>
                   </div>
                 </div>
               </AlertDialog.Trigger>

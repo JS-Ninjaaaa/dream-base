@@ -43,7 +43,7 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
 
   return (
     <div className="flex flex-col items-center my-8">
-      <h2 className="text-xl font-semibold mb-2 ml-3">
+      <h2 className="text-2xl font-mpulus mb-4 mt-2 ml-3">
         あなたの夢を教えてください
       </h2>
       <div className="flex w-full flex-col md:flex-row justify-start items-center md:justify-center md:items-start px-8">
