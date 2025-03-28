@@ -1,10 +1,13 @@
+# lib
 import os
 from datetime import timedelta
-
 from dotenv import load_dotenv
+# flask lib
 from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from logging_setup import setup_logger
+# blueprint
 from routes.auth import auth_bp
 from routes.dream.mine import my_dream_bp
 from routes.dream.public import public_dream_bp
@@ -13,7 +16,7 @@ from routes.user import user_bp
 load_dotenv()
 
 app = Flask(__name__)
-
+setup_logger(app)
 # CORSのセットアップ
 CORS(
     app,
@@ -52,4 +55,4 @@ def test():  # 生存確認API
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5001, debug=True)
