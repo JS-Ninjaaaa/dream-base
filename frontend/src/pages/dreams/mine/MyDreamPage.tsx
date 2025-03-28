@@ -43,10 +43,12 @@ const MyDreamPage = () => {
       <Header />
       <SakuraScatterEffect />
       <MyDreamInput setMyDreams={setMyDreams} />
-      <MyDreamCards
-        myDreams={{ myDreams, setMyDreams }}
-        sortKey={{ myDreamSortKey, setMyDreamSortKey }}
-      />
+      <div className="flex flex-col items-center py-6">
+        <MyDreamCards
+          myDreams={{ myDreams, setMyDreams }}
+          sortKey={{ myDreamSortKey, setMyDreamSortKey }}
+        />
+      </div>
     </>
   );
 };
