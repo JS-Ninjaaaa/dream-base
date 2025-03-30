@@ -17,7 +17,7 @@ load_dotenv()
 
 app = Flask(__name__)
 # ログの出力設定
-setup_logger(app,is_production=False)
+setup_logger(app,is_production=True)
 # CORSのセットアップ
 CORS(
     app,
