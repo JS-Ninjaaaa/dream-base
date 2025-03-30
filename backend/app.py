@@ -1,12 +1,15 @@
 # lib
 import os
 from datetime import timedelta
+
+from config.logging_setup import setup_logger
 from dotenv import load_dotenv
+
 # flask lib
 from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from logging_setup import setup_logger
+
 # blueprint
 from routes.auth import auth_bp
 from routes.dream.mine import my_dream_bp
@@ -17,7 +20,7 @@ load_dotenv()
 
 app = Flask(__name__)
 # ログの出力設定
-setup_logger(app,is_production=True)
+setup_logger(app)
 # CORSのセットアップ
 CORS(
     app,
