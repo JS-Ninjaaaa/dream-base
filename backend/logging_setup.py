@@ -1,18 +1,15 @@
 import logging
 from rich.logging import RichHandler
 
-def setup_logger(app):
+def setup_logger(app, is_production=False):
     # デフォルトハンドラを削除
-    if app.logger.hasHandlers():
-        app.logger.removeHandler(app.logger.handlers[0])
+    for h in app.logger.handlers[:]:
+        app.logger.removeHandler(h)
 
-    # RichHandler設定
+    # ロガーをセット
     handler = RichHandler(markup=True, rich_tracebacks=True)
-    formatter = logging.Formatter(
-        "%(asctime)s [%(levelname)s] %(name)s - %(message)s",
-        datefmt="[%X]"
-    )
-    handler.setFormatter(formatter)
-
-    app.logger.setLevel(logging.DEBUG)
+    app.logger.setLevel(logging.INFO)
     app.logger.addHandler(handler)
+    # 本番はwerkzeugのログ（標準）を無効
+    if is_production:
+        logging.getLogger('werkzeug').disabled = True

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, current_app
 from models.dream import Dream
 from pydantic import ValidationError
 from schemas.dream.public import PublicDreamResponse
@@ -15,6 +15,7 @@ def get_public_dreams():
             PublicDreamResponse(**dream.__dict__) for dream in public_dreams
         ]
     except ValidationError:
+        current_app.logger.exception("Validation error")
         return "Response Validation Error", 500
 
     return jsonify([dream.model_dump() for dream in public_dreams]), 200
@@ -29,11 +30,13 @@ def increment_like_count(dream_id: int):
     likes_count = dream.likes + 1
     updated_dream = Dream.update_likes(dream_id=dream_id, likes=likes_count)
     if updated_dream is None:
+        current_app.logger.exception("Failed to increment like count, no dreams")
         return "", 404
 
     try:
         updated_dream = PublicDreamResponse(**updated_dream.__dict__)
     except ValidationError:
+        current_app.logger.exception("Validation error")
         return "Response Validation Error", 500
 
     return jsonify(updated_dream.model_dump()), 200

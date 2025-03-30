@@ -16,7 +16,8 @@ from routes.user import user_bp
 load_dotenv()
 
 app = Flask(__name__)
-setup_logger(app)
+# 本番用の出力はTrue
+setup_logger(app,True)
 # CORSのセットアップ
 CORS(
     app,
