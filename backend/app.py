@@ -16,8 +16,8 @@ from routes.user import user_bp
 load_dotenv()
 
 app = Flask(__name__)
-# 本番用の出力はTrue
-setup_logger(app,True)
+# ログの出力設定
+setup_logger(app,is_production=False)
 # CORSのセットアップ
 CORS(
     app,
@@ -52,8 +52,9 @@ def test():  # 生存確認API
     if request.method == "HEAD":
         return "", 200
     elif request.method == "GET":
+        app.logger.info("GET request")
         return "Hello", 200
 
 
 if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+    app.run(port=5000, debug=True)
