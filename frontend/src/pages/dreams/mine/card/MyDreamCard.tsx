@@ -37,9 +37,9 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
             >
             <div className="text-base font-mpulus text-center px-6">{dream.content}</div>
             <div className="bg-white rounded-2xl px-4 py-2 flex flex-col items-center">
-              <div className="font-ubuntu flex gap-2 mb-2 items-center">
-                <span className="text-base font-bold">{dream.likes}</span>
-                <p className="text-sm">いいね</p>
+              <div className="font-ubuntu flex gap-2 items-center">
+                <span className="text-lg">{dream.likes}</span>
+                <p className="text-xs">いいね</p>
               </div>
               <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
             </div>
