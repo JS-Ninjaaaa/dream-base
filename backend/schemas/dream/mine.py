@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+from flask import current_app
 
 from pydantic import (
     BaseModel,
@@ -48,6 +49,8 @@ class CreateMyDreamRequest(BaseModel):
     @field_validator("content")
     def validate_content(cls, content: str) -> str:
         if len(content) == 0:
+            # 空白エラー
+            current_app.logger.error("Content is required")
             raise ValidationError("Content is required")
 
         return content
