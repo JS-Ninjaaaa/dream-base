@@ -42,7 +42,8 @@ const PublicDreamLikeButton = ({
   return (
     <button
       className="transition-transform cursor-pointer"
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         handleLikeAddButtonClick(dream.id!);
       }}
       disabled={!likable}
