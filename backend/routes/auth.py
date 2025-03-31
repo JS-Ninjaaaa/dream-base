@@ -43,7 +43,7 @@ def login_with_oauth():
     credentials = request.get_json()
     user_id = credentials["userId"]
     if user_id is None:
-        current_app.logger.error("Credentials are incorrect")
+        current_app.logger.error("User ID is required")
         return "User ID is required", 401
 
     response = make_response("", 200)
