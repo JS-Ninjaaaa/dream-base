@@ -1,5 +1,6 @@
 import { Dream, MyDreamSortKey } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
+import { useState } from "react"
 import MyDreamCardDialog from "./card/dialog/MyDreamCardDialog";
 import MyDreamCard from "./card/MyDreamCard"
 import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
@@ -20,6 +21,8 @@ const MyDreamCards = ({
   myDreams: { myDreams, setMyDreams },
   sortKey: { myDreamSortKey, setMyDreamSortKey },
 }: MyDreamCardsProps) => {
+  const [openedDreamId, setOpenedDreamId] = useState<number | null>(null);
+
   return (
     <>
       <MyDreamSortKeySelectBox
@@ -29,12 +32,26 @@ const MyDreamCards = ({
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {myDreams.map((dream, index) => (
-          <AlertDialog.Root key={index}>
-              <MyDreamCard
-                dream={dream}
-                setMyDreams={setMyDreams}
-              />
-            <MyDreamCardDialog dream={dream} />
+          <AlertDialog.Root 
+            key={index}
+            open={openedDreamId === dream.id}
+            onOpenChange={(isOpen) => {
+              if (isOpen) {
+                setOpenedDreamId(dream.id);
+              } else {
+                setOpenedDreamId(null);
+              }
+            }} 
+          >
+            <MyDreamCard
+              dream={dream}
+              setMyDreams={setMyDreams}
+            />
+            <MyDreamCardDialog 
+              dream={dream} 
+              setMyDreams={setMyDreams} 
+              onClose={() => setOpenedDreamId(null)}
+            />
           </AlertDialog.Root>
         ))}
       </div>

@@ -2,16 +2,17 @@ import { deleteMyDream, fetchMyDreams } from "@/api/dreams/mine";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext } from "react";
-import { RxCross1 } from "react-icons/rx";
 
 interface MyDreamDeleteButtonProps {
   dream: Dream;
   setMyDreams: (newMyDreams: Dream[]) => void;
+  onClose: () => void;
 }
 
 const MyDreamDeleteButton = ({
   dream,
   setMyDreams,
+  onClose,
 }: MyDreamDeleteButtonProps) => {
   const { setIsLoading } = useContext(LoadingContext);
 
@@ -24,6 +25,7 @@ const MyDreamDeleteButton = ({
         const myDreams = await fetchMyDreams();
 
         setMyDreams(myDreams);
+        onClose();
       } catch (e) {
         alert("夢の削除に失敗しました");
         console.error(e);
@@ -35,12 +37,12 @@ const MyDreamDeleteButton = ({
 
   return (
     <button
-      className=""
+      className="m-2 bg-red-400 hover:bg-gray-600 text-white font-bold py-2 px-5 rounded max-w-[100px]"
       onClick={() => {
         handleDeleteButtonClick(dream.id!);
       }}
     >
-      <RxCross1 size={20} />
+      削除
     </button>
   );
 };
