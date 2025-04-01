@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, make_response, request, current_app
 from flask_jwt_extended import create_access_token
 from models.db import get_supabase_client
 from supabase import Client
@@ -22,6 +22,7 @@ def login():
     user = response.user
     # userを取得できなかった場合
     if user is None:
+        current_app.logger.error("Credentials are incorrect")
         return "Credentials are incorrect", 401
 
     # ユーザーID から JWT を生成
@@ -42,6 +43,7 @@ def login_with_oauth():
     credentials = request.get_json()
     user_id = credentials["userId"]
     if user_id is None:
+        current_app.logger.error("User ID is required")
         return "User ID is required", 401
 
     response = make_response("", 200)

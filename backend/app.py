@@ -1,10 +1,16 @@
+# lib
 import os
 from datetime import timedelta
 
+from config.logging_setup import setup_logger
 from dotenv import load_dotenv
+
+# flask lib
 from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+
+# blueprint
 from routes.auth import auth_bp
 from routes.dream.mine import my_dream_bp
 from routes.dream.public import public_dream_bp
@@ -13,7 +19,8 @@ from routes.user import user_bp
 load_dotenv()
 
 app = Flask(__name__)
-
+# ログの出力設定
+setup_logger(app)
 # CORSのセットアップ
 CORS(
     app,
@@ -48,6 +55,7 @@ def test():  # 生存確認API
     if request.method == "HEAD":
         return "", 200
     elif request.method == "GET":
+        app.logger.info("GET request")
         return "Hello", 200
 
 
