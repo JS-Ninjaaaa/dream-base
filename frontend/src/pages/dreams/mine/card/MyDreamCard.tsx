@@ -21,7 +21,7 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
   return (
     <div className="relative transition-transform transform hover:scale-105">
       <AlertDialog.Trigger>
-        <div className="flex flex-col items-center m-6">
+        <div className="flex flex-col items-center sm:m-6 sm:scale-100 scale-[0.8] origin-top">
           {/* 突起 */}
           <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />
 

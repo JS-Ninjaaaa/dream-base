@@ -30,7 +30,7 @@ const MyDreamCards = ({
         setMyDreamSortKey={setMyDreamSortKey}
       />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="sm:m-4 mt-4 mb-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {myDreams.map((dream, index) => (
           <AlertDialog.Root 
             key={index}
