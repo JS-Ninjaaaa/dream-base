@@ -41,13 +41,14 @@ const PublicDreamLikeButton = ({
 
   return (
     <button
-      className="text-yellow-500 text-3xl hover:scale-110 transition-transform cursor-pointer"
-      onClick={() => {
+      className="transition-transform cursor-pointer"
+      onClick={(e) => {
+        e.stopPropagation();
         handleLikeAddButtonClick(dream.id!);
       }}
       disabled={!likable}
     >
-      <HiThumbUp size={35} className="text-pink-300" />
+      <HiThumbUp size={32} className="text-pink-300" />
     </button>
   );
 };

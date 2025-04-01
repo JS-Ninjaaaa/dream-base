@@ -2,7 +2,6 @@ import { fetchMyDreams, toggleMyDreamVisibility } from "@/api/dreams/mine";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext } from "react";
-import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 interface MyDreamPrivacyButtonProps {
   dream: Dream;
@@ -15,7 +14,7 @@ const MyDreamPrivacyButton = ({
 }: MyDreamPrivacyButtonProps) => {
   const { setIsLoading } = useContext(LoadingContext);
 
-  const handlePrivacyButtonClick = async (dreamId: number) => {
+  const handleToggle = async (dreamId: number) => {
     try {
       setIsLoading(true);
 
@@ -33,11 +32,24 @@ const MyDreamPrivacyButton = ({
 
   return (
     <button
-      onClick={() => {
-        handlePrivacyButtonClick(dream.id!);
+      onClick={(e) => {
+        e.stopPropagation();
+        handleToggle(dream.id!);
       }}
-    >
-      {dream.is_public ? <VscEye size={24} /> : <VscEyeClosed size={24} />}
+      className={`h-6 justify-between relative rounded-full flex items-center px-1 transition-colors duration-300 ${
+        dream.is_public ? "w-14 bg-[#f8a5d1]" : "w-16 bg-[#bcb9b9]"
+      }`}
+      >
+      <span className={`text-xs font-bold text-white z-10"${
+        dream.is_public ? "text-right pr-5" : "text-left pl-5"
+      }`}>
+        {dream.is_public ? "公開" : "非公開"}
+      </span>
+      <div
+        className={`w-5 h-5 bg-white rounded-full border-[1px] border-[#d1d5db] absolute transition-transform duration-300 ${
+          dream.is_public ? "translate-x-7.5" : "-translate-x-0.5"
+        }`}
+      ></div>
     </button>
   );
 };
