@@ -4,7 +4,7 @@ import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
 import { useContext, useEffect, useState } from "react";
 import PublicDreamCard from "./card/PublicDreamCard";
-import PublicDreamCardDialog from './dialog/PublicDreamDardDialog'
+import PublicDreamCardDialog from './card/dialog/PublicDreamDardDialog'
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
