@@ -1,8 +1,8 @@
 import { Dream, MyDreamSortKey } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
-import { useState } from "react"
+import { useState } from "react";
 import MyDreamCardDialog from "./card/dialog/MyDreamCardDialog";
-import MyDreamCard from "./card/MyDreamCard"
+import MyDreamCard from "./card/MyDreamCard";
 import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
 
 
@@ -29,8 +29,7 @@ const MyDreamCards = ({
         myDreamSortKey={myDreamSortKey}
         setMyDreamSortKey={setMyDreamSortKey}
       />
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid px-8 pb-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {myDreams.map((dream, index) => (
           <AlertDialog.Root 
             key={index}

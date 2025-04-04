@@ -11,7 +11,7 @@ interface MyDreamCardDialogProps {
 
 const MyDreamCardDialog = ({ dream, setMyDreams, onClose,  }: MyDreamCardDialogProps) => {
   return (
-    <AlertDialog.Content className="flex flex-col h-full min-h-[360px] max-w-[400px]">
+    <AlertDialog.Content className="flex flex-col h-full min-h-[320px] max-w-[400px]">
       <AlertDialog.Title></AlertDialog.Title>
       <AlertDialog.Description size="4" className="flex-grow">
         <div className="font-mpulus text-2xl text-center">{dream.content}</div>

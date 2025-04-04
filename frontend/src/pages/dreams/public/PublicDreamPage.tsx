@@ -9,11 +9,11 @@ const DreamCards = () => {
       <Header />
       <SakuraScatterEffect />
       <div className="flex flex-col items-center py-6">
-        <h1 className="text-2xl font-mpulus m-4 flex items-center">
+        <h1 className="text-2xl font-mpulus sm:m-4 mt-4 mb-8 flex items-center">
           みんなの夢を見よう！
         </h1>
-        <PublicDreamCards />
       </div>
+      <PublicDreamCards />
     </>
   );
 };

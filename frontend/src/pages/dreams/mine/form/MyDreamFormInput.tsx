@@ -5,7 +5,7 @@ interface MyDreamFormInputProps {
 
 const MyDreamFormInput = ({ content, setContent }: MyDreamFormInputProps) => {
   return (
-    <div className="my-3 w-full min-w-sm max-w-lg">
+    <div className="my-3 w-full min-w-xs max-w-xl">
       <div className="w-full h-full border border-gray-300 rounded-lg p-4 flex items-center justify-center relative bg-white shadow">
         <textarea
           value={content}
