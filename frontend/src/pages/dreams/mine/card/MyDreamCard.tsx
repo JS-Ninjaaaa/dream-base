@@ -30,7 +30,7 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
         {/* 本体 */}
         <div
             className={`
-              relative rounded-[70px] xl:w-[260px] xl:h-[260px] md:w-[220px] md:h-[220px] w-[220px] h-[220px] 
+              relative rounded-[70px] xl:w-[260px] xl:h-[260px] md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
               transform transition-transform duration-300
               flex flex-col items-center justify-center gap-2
               bg-gradient-to-b from-white border-2 border-gray-500
