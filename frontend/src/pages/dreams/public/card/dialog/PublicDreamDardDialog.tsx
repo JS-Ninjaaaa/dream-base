@@ -7,7 +7,7 @@ interface MyDreamCardDialogProps {
 
 const PublicDreamCardDialog = ({ dream }: MyDreamCardDialogProps) => {
   return (
-    <AlertDialog.Content className="flex flex-col h-full min-h-[300px] max-w-[400px]">
+    <AlertDialog.Content className="flex flex-col h-full min-h-[320px] max-w-[400px]">
       <AlertDialog.Title></AlertDialog.Title>
       <AlertDialog.Description size="4" className="flex-grow">
         <div className="font-mpulus text-2xl text-center">
