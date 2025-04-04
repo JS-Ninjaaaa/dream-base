@@ -19,35 +19,36 @@ const getPinkGradientClass = (likes: number = 0): string => {
 const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
   const gradientClass = getPinkGradientClass(dream.likes);
   return (
-    <div className="relative transition-transform transform hover:scale-105">
-      <AlertDialog.Trigger>
-        <div className="flex flex-col items-center sm:m-6 sm:scale-100 scale-[0.8] origin-top">
-          {/* 突起 */}
-          <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />
+    <AlertDialog.Trigger>
+      
+      <div className="flex flex-col items-center p-4">
+        {/* 突起 */}
+        <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />
 
-          {/* 軸 */}
-          <div className="w-[40px] h-[20px] bg-white border-l-2 border-r-2 border-gray-500 z-0" />
+        {/* 軸 */}
+        <div className="w-[40px] h-[20px] bg-white border-l-2 border-r-2 border-gray-500 z-0" />
 
-          {/* 本体 */}
-          <div
-              className={`
-                relative rounded-[70px] w-[260px] h-[260px] flex flex-col items-center justify-center gap-2 bg-gradient-to-b from-white border-2 border-gray-500
-                ${gradientClass} 
-              `}
-            >
-            <div className="text-base font-mpulus text-center px-6">{dream.content}</div>
-            <div className="bg-white rounded-2xl px-4 py-2 flex flex-col items-center">
-              <div className="font-mpulus flex gap-2 items-center">
-                <span className="text-lg">{dream.likes}</span>
-                <p className="text-xs">いいね</p>
-              </div>
-              <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
+        {/* 本体 */}
+        <div
+            className={`
+              relative rounded-[70px] xl:w-[260px] xl:h-[260px] md:w-[220px] md:h-[220px] w-[220px] h-[220px] 
+              transform transition-transform duration-300
+              flex flex-col items-center justify-center gap-2
+              bg-gradient-to-b from-white border-2 border-gray-500
+              ${gradientClass} 
+            `}
+          >
+          <div className="text-base font-mpulus text-center px-6">{dream.content}</div>
+          <div className="bg-white rounded-2xl px-4 py-2 flex flex-col items-center">
+            <div className="font-mpulus flex gap-2 items-center">
+              <span className="text-lg">{dream.likes}</span>
+              <p className="text-xs">いいね</p>
             </div>
+            <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
           </div>
-
         </div>
-      </AlertDialog.Trigger>
-    </div>
+        </div>
+    </AlertDialog.Trigger>
   );
 };
 

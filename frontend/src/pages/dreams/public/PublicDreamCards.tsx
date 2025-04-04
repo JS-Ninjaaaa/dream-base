@@ -4,7 +4,7 @@ import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
 import { useContext, useEffect, useState } from "react";
 import PublicDreamCard from "./card/PublicDreamCard";
-import PublicDreamCardDialog from './card/dialog/PublicDreamDardDialog'
+import PublicDreamCardDialog from './card/dialog/PublicDreamDardDialog';
 
 const PublicDreamCards = () => {
   const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
@@ -27,17 +27,17 @@ const PublicDreamCards = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {publicDreams.map((dream, index) => (
-          <AlertDialog.Root key={index}>
-              <PublicDreamCard
-                dream={dream}
-                setPublicDreams={setPublicDreams}
-              />
-            <PublicDreamCardDialog dream={dream} />
-          </AlertDialog.Root>
-        ))}
-      </div>
+    <div className="px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {publicDreams.map((dream, index) => (
+        <AlertDialog.Root key={index}>
+            <PublicDreamCard
+              dream={dream}
+              setPublicDreams={setPublicDreams}
+            />
+          <PublicDreamCardDialog dream={dream} />
+        </AlertDialog.Root>
+      ))}
+    </div>
   );
 };
 

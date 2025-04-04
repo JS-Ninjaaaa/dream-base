@@ -13,9 +13,8 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
   const [user] = useAtom(userAtom);
   const isMyDream = user?.id === dream.user_id;
   return (
-    <div className="relative transition-transform transform hover:scale-105">
       <AlertDialog.Trigger>
-        <div className="flex flex-col items-center sm:m-6 sm:scale-100 scale-[0.8] origin-top">
+        <div className="flex flex-col items-center p-4">
           {/* 突起 */}
           <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />
 
@@ -25,7 +24,10 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
           {/* 本体 */}
           <div
               className={`
-                bg-[#fff1fa] relative rounded-[70px] w-[260px] h-[260px] flex flex-col items-center justify-center gap-2 border-2 border-gray-500
+                bg-[#fff1fa] relative rounded-[70px] 
+                xl:w-[260px] xl:h-[260px] md:w-[220px] md:h-[220px] w-[220px] h-[220px] 
+                transform transition-transform duration-300
+                flex flex-col items-center justify-center border-2 border-gray-500
               `}
             >
             <div className="text-base font-mpulus text-center px-6">{dream.content}</div>
@@ -42,10 +44,8 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
               </div>
             </div>
           </div>
-
         </div>
       </AlertDialog.Trigger>
-    </div>
   )
 }
 
