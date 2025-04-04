@@ -20,7 +20,6 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
   const gradientClass = getPinkGradientClass(dream.likes);
   return (
     <AlertDialog.Trigger>
-      
       <div className="flex flex-col items-center p-4">
         {/* 突起 */}
         <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />

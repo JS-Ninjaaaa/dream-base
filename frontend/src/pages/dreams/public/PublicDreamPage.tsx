@@ -12,8 +12,8 @@ const DreamCards = () => {
         <h1 className="text-2xl font-mpulus sm:m-4 mt-4 mb-8 flex items-center">
           みんなの夢を見よう！
         </h1>
-        <PublicDreamCards />
       </div>
+      <PublicDreamCards />
     </>
   );
 };
