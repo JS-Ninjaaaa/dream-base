@@ -29,15 +29,17 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
 
         {/* 本体 */}
         <div
-            className={`
-              relative rounded-[70px] xl:w-[260px] xl:h-[260px] md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
+          className={`
+              relative rounded-[50px] md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
               transform transition-transform duration-300
               flex flex-col items-center justify-center gap-2
               bg-gradient-to-b from-white border-2 border-gray-500
               ${gradientClass} 
             `}
-          >
-          <div className="text-base font-mpulus text-center px-6">{dream.content}</div>
+        >
+          <div className="text-base font-mpulus text-center px-6">
+            {dream.content}
+          </div>
           <div className="bg-white rounded-2xl px-4 py-2 flex flex-col items-center">
             <div className="font-mpulus flex gap-2 items-center">
               <span className="text-lg">{dream.likes}</span>
@@ -46,7 +48,7 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
             <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
           </div>
         </div>
-        </div>
+      </div>
     </AlertDialog.Trigger>
   );
 };
