@@ -5,7 +5,6 @@ import MyDreamCardDialog from "./card/dialog/MyDreamCardDialog";
 import MyDreamCard from "./card/MyDreamCard";
 import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
 
-
 interface MyDreamCardsProps {
   myDreams: {
     myDreams: Dream[];
@@ -29,9 +28,9 @@ const MyDreamCards = ({
         myDreamSortKey={myDreamSortKey}
         setMyDreamSortKey={setMyDreamSortKey}
       />
-      <div className="grid px-8 pb-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid px-8 pb-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {myDreams.map((dream, index) => (
-          <AlertDialog.Root 
+          <AlertDialog.Root
             key={index}
             open={openedDreamId === dream.id}
             onOpenChange={(isOpen) => {
@@ -40,15 +39,12 @@ const MyDreamCards = ({
               } else {
                 setOpenedDreamId(null);
               }
-            }} 
+            }}
           >
-            <MyDreamCard
+            <MyDreamCard dream={dream} setMyDreams={setMyDreams} />
+            <MyDreamCardDialog
               dream={dream}
               setMyDreams={setMyDreams}
-            />
-            <MyDreamCardDialog 
-              dream={dream} 
-              setMyDreams={setMyDreams} 
               onClose={() => setOpenedDreamId(null)}
             />
           </AlertDialog.Root>
