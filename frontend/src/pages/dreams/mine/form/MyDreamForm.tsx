@@ -46,7 +46,7 @@ const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
       <h2 className="text-2xl font-mpulus mb-4 mt-2 ml-3">
         あなたの夢を教えてください
       </h2>
-      <div className="flex w-full flex-wrap justify-center items-center  px-8">
+      <div className="flex w-full flex-wrap justify-center items-start  px-8">
         <MyDreamFormInput content={content} setContent={setContent} />
         <MyDreamFormHashtagList hashtags={hashtags} setHashtags={setHashtags} />
       </div>
