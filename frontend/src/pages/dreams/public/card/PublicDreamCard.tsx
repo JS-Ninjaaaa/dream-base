@@ -25,7 +25,7 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
         <div
           className={`
             bg-[#fff1fa] relative rounded-[50px] 
-            md:w-[210px] md:h-[210px] w-[230px] h-[230px] 
+            md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
             flex flex-col items-center justify-center border-2 border-gray-500
           `}
         >
