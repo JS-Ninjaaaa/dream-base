@@ -25,12 +25,11 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
         <div
           className={`
             bg-[#fff1fa] relative rounded-[50px] 
-            md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
-            transform transition-transform duration-300
+            md:w-[210px] md:h-[210px] w-[230px] h-[230px] 
             flex flex-col items-center justify-center border-2 border-gray-500
           `}
         >
-          <div className="text-base font-mpulus text-center px-6 mb-3">
+          <div className="text-base font-mpulus text-center px-6 mb-3 line-clamp-3">
             {dream.content}
           </div>
           <div className="bg-white px-4 gap-3 py-2 rounded-2xl flex items-center gap-2">

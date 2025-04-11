@@ -36,14 +36,13 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
       <AlertDialog.Trigger>
         <div
           className={`
-            relative rounded-[50px] md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
-            transform transition-transform duration-300
+            relative rounded-[50px] md:w-[210px] md:h-[210px] w-[230px] h-[230px] 
             flex flex-col items-center justify-center gap-2
             bg-gradient-to-b from-white border-2 border-gray-500
-            ${gradientClass} 
+            ${gradientClass}
           `}
         >
-          <div className="text-base font-mpulus text-center px-6">
+          <div className="text-base font-mpulus text-center px-6 mb-1 line-clamp-3">
             {dream.content}
           </div>
           <div className="bg-white rounded-2xl px-4 py-2 flex flex-col items-center">
