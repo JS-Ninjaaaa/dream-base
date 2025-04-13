@@ -17,6 +17,8 @@ class RequestPathFilter(logging.Filter):
 
 # ロガーのセットアップ
 def setup_logger(app: Flask):
+    if app.config["ENV"] == "development":
+        return  # ← ローカルなら何も設定しない
     # 既存ロガーの削除
     for h in app.logger.handlers:
         app.logger.removeHandler(h)

@@ -14,8 +14,8 @@ COPY . .
 # ポート5000を公開
 EXPOSE 5000
 
-# 環境変数の設定（本番環境）
-ENV FLASK_ENV=production
+# 環境変数の設定  dev -> 1, pd -> 0
+ENV FLASK_DEBUG=1
 
 # GunicornでFlaskアプリを起動
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
