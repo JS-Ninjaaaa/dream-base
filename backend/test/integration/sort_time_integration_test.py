@@ -13,7 +13,7 @@ TEST_USER_ID = "d7fc2a83-3046-48f1-94e7-bfd9a6b9ba3e"  # UUIDでもOK、authに�
 @pytest.mark.skipif(supabase is None, reason="Supabase client not initialized")
 def test_updated_at_and_sorting_behavior():
     # --- 0. テスト用レコードを作成 ---
-    unique_content = f"pytest content {time.time()}"
+    unique_content = f"pytest content {datetime.utcnow().isoformat()}"
     insert_res = supabase.table("dreams").insert({
         "user_id": TEST_USER_ID,
         "content": unique_content,
@@ -28,14 +28,14 @@ def test_updated_at_and_sorting_behavior():
         before_res = supabase.table("dreams").select("updated_at").eq("id", dream_id).execute()
         assert before_res.data, "❌ レコードが存在しません"
         before_time = datetime.fromisoformat(before_res.data[0]["updated_at"])
-
-        # --- 2. content をユニークな文字列に更新 ---
-        supabase.table("dreams").update({
-            "content": f"pytest updated {time.time()}"
-        }).eq("id", dream_id).execute()
-
-        # --- 3. 反映を待つ ---
+        # --- 2. スリープ ---
         time.sleep(1)
+        # --- 3. content をユニークな文字列に更新 ---
+        new_content = f"pytest content {datetime.utcnow().isoformat()}"
+        update_res = supabase.table("dreams").update({
+            "content": new_content
+        }).eq("id",dream_id).execute()
+        assert update_res.data, "❌ レコードの変更に失敗"
 
         # --- 4. updated_at が更新されているか確認 ---
         after_res = supabase.table("dreams").select("updated_at").eq("id", dream_id).execute()
