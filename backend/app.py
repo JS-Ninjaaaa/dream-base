@@ -19,6 +19,8 @@ from routes.user import user_bp
 load_dotenv()
 
 app = Flask(__name__)
+# 環境設定
+app.debug = os.environ.get("FLASK_DEBUG") == "1"
 # ログの出力設定
 setup_logger(app)
 # CORSのセットアップ
