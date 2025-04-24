@@ -51,7 +51,7 @@ const Header = () => {
       <h1 className="text-[#444444] text-2xl font-bold">Dream Sink</h1>
 
       {/* メニュー */}
-      <div className="hidden sm:flex space-x-6 text-white font-josefin font-bold text-base mt-2 space-x-6">
+      <div className="hidden sm:flex space-x-6 text-white font-josefin font-bold text-base space-x-6">
         {menuItems.map((item) => (
           <a
             href={item.link}
@@ -86,7 +86,7 @@ const Header = () => {
         ${menuOpen ? "translate-x-0" : "translate-x-full"}
       `}
     >
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end p-4 mt-3 mr-3">
           <button onClick={() => setMenuOpen(false)}>
             <img src="/assets/header/delete.png" alt="close" width={30} height={30} />
           </button>
@@ -110,7 +110,7 @@ const Header = () => {
         className={`
           fixed inset-0 bg-black z-40
           transition-opacity duration-800 ease-in-out
-          ${menuOpen ? "opacity-30 pointer-events-auto" : "opacity-0 pointer-events-none"}
+          ${menuOpen ? "opacity-40 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
         onClick={() => setMenuOpen(false)}
       />
