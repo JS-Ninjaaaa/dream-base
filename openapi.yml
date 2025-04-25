@@ -206,6 +206,13 @@ paths:
       summary: 公開されている夢を取得する
       operationId: getPublicDreams
       security: []
+      parameters:
+        - name: keyword
+          in: query
+          description: 検索キーワード
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK
