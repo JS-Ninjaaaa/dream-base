@@ -24,8 +24,8 @@ BEGIN
                             ),
                             '[]'::json
                         )
-                        FROM dream_hashtags dh
-                        JOIN hashtags h
+                        FROM dream_hashtags AS dh
+                        JOIN hashtags AS h
                             ON dh.hashtag_id = h.id
                         WHERE dh.dream_id = d.id
                     ),
@@ -37,13 +37,13 @@ BEGIN
                     pgroonga_score(d.tableoid, d.ctid)
                     + COALESCE((
                         SELECT max(pgroonga_score(h.tableoid, h.ctid))
-                        FROM dream_hashtags dh
-                        JOIN hashtags h
+                        FROM dream_hashtags AS dh
+                        JOIN hashtags AS h
                             ON dh.hashtag_id = h.id
                         WHERE dh.dream_id = d.id AND h.name &@~ keyword
                     ), 0.0)
                 ) AS score -- スコアにエイリアスを付ける
-            FROM dreams d
+            FROM dreams AS d
             WHERE
                 d.is_public = TRUE
                 AND (
@@ -51,8 +51,8 @@ BEGIN
                     OR
                     EXISTS (
                         SELECT 1
-                        FROM dream_hashtags dh
-                        JOIN hashtags h
+                        FROM dream_hashtags AS dh
+                        JOIN hashtags AS h
                             ON dh.hashtag_id = h.id
                         WHERE dh.dream_id = d.id AND h.name &@~ keyword
                     )
