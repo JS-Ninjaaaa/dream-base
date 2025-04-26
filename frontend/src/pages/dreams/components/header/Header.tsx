@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import HeaderMenu from "./menuitems/HeaderMenu";
-import MobileMenu from "./menuitems/MobileMenu";
+import HeaderMenu from "./menu/HeaderMenu";
+import MobileMenu from "./menu/MobileMenu";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
