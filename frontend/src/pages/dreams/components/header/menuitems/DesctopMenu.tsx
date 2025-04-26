@@ -1,5 +1,6 @@
 import { MenuItem } from "@/types/menu";
 import { useRef } from "react";
+import { FiMenu } from 'react-icons/fi'
 
 interface MenuItemsProps {
   menuItems: MenuItem[];
@@ -31,12 +32,7 @@ const DesctopMenu = ({ menuItems, menuOpen, setMenuOpen }: MenuItemsProps) => {
           onClick={() => setMenuOpen(!menuOpen)}
           className="focus:outline-none mt-2"
         >
-          <img
-          src="/assets/header/bars_24.png"
-          alt="menu toggle"
-          width={30}
-          height={30}
-        />          
+          <FiMenu size={30} />     
         </button>
       </div>
     </>

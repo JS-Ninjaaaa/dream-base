@@ -1,5 +1,6 @@
 import { MenuItem } from "@/types/menu";
-import {  useRef } from "react";
+import { useRef } from "react";
+import { FiX } from 'react-icons/fi'
 
 interface MenuItemsProps {
   menuItems: MenuItem[];
@@ -21,7 +22,7 @@ const MobileMenu = ({ menuItems, menuOpen, setMenuOpen }: MenuItemsProps) => {
     >
         <div className="flex justify-end p-4 mt-3 mr-3">
           <button onClick={() => setMenuOpen(false)}>
-            <img src="/assets/header/delete.png" alt="close" width={30} height={30} />
+          <FiX size={30} />     
           </button>
         </div>
 
