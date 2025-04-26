@@ -1,21 +1,20 @@
 import { MenuItem } from "@/types/menu";
 import { useRef } from "react";
-import { FiMenu } from 'react-icons/fi'
+import { FiMenu } from 'react-icons/fi';
 
-interface MenuItemsProps {
-  menuItems: MenuItem[];
+interface HeaderMenuProps {
+  menuList: MenuItem[];
   menuOpen: boolean;
   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DesctopMenu = ({ menuItems, menuOpen, setMenuOpen }: MenuItemsProps) => {
+const HeaderMenu = ({ menuList, menuOpen, setMenuOpen }: HeaderMenuProps) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <>
-    {/* メニュー */}
       <div className="hidden sm:flex space-x-6 text-white font-josefin font-bold text-base space-x-6">
-        {menuItems.map((item) => (
+        {menuList.map((item) => (
           <a
             href={item.link}
             className="text-white font-josefin font-bold text-base mt-2 transition-colors cursor-pointer"
@@ -39,4 +38,4 @@ const DesctopMenu = ({ menuItems, menuOpen, setMenuOpen }: MenuItemsProps) => {
   )
 }
 
-export default DesctopMenu
+export default HeaderMenu

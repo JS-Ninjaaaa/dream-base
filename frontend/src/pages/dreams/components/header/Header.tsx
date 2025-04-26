@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import DesctopMenu from "./menuitems/DesctopMenu";
+import { useEffect, useRef, useState } from "react";
+import HeaderMenu from "./menuitems/HeaderMenu";
 import MobileMenu from "./menuitems/MobileMenu";
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   // メニューのアイテムをまとめた
-  const menuItems = [
+  const menuList = [
     { name: 'みんなの夢', link: '/dreams/public' },
     { name: '自分の夢', link: '/dreams/mine' },
   ];
@@ -52,15 +52,15 @@ const Header = () => {
       {/* ロゴ */}
       <h1 className="text-[#444444] text-2xl font-bold">Dream Sink</h1>
 
-      <DesctopMenu 
-        menuItems = {menuItems}
+      <HeaderMenu 
+        menuList = {menuList}
         menuOpen = {menuOpen}
         setMenuOpen = {setMenuOpen}
       />
     </nav>
 
     <MobileMenu 
-      menuItems = {menuItems}
+      menuList = {menuList}
       menuOpen = {menuOpen}
       setMenuOpen = {setMenuOpen}
     />
