@@ -116,17 +116,25 @@ class Dream:
 
     # 公開されている夢を全て取得
     @classmethod
-    def get_all_public_dreams(cls) -> list[Dream]:
+    def get_all_public_dreams(cls, keyword: str = "") -> list[Dream]:
         supabase: Client = get_supabase_client()
 
-        response = (
-            supabase.table("dreams")
-            .select("*", "hashtags(*)")
-            .eq("is_public", True)
-            # id順で取得
-            .order("id", desc=True)
-            .execute()
-        )
+        if len(keyword) == 0:  # キーワードが空の場合
+            response = (
+                supabase.table("dreams")
+                .select("*", "hashtags(*)")
+                .eq("is_public", True)
+                # id順で取得
+                .order("id", desc=True)
+                .execute()
+            )
+        else:  # キーワードがある場合
+            response = supabase.rpc(
+                "search_public_dreams",
+                {
+                    "keyword": keyword,
+                },
+            ).execute()
 
         public_dreams = [cls(**dream) for dream in response.data]
         return public_dreams

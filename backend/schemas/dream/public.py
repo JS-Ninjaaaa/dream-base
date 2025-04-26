@@ -1,11 +1,12 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import (
-    BaseModel,
-    field_serializer,
-)
+from pydantic import BaseModel, field_serializer
 from schemas.hashtag import HashtagResponse
+
+
+class GetPublicDreamsParams(BaseModel):
+    keyword: Optional[str] = ""
 
 
 class PublicDreamResponse(BaseModel):
