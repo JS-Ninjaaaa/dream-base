@@ -2,8 +2,13 @@ import { Dream } from "@/types/dream";
 
 const ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
-export const fetchPublicDreams = async (): Promise<Dream[]> => {
-  const response = await fetch(`${ENDPOINT}/dreams/public`, {
+export const fetchPublicDreams = async (keyword: string): Promise<Dream[]> => {
+  let url = `${ENDPOINT}/dreams/public`
+  if(0 < keyword.length){
+    url += `?keyword=${keyword}`
+  }
+
+  const response = await fetch(url, {
     method: "GET",
   });
   if (!response.ok) {

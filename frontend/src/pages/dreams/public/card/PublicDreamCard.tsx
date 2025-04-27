@@ -2,14 +2,14 @@ import { userAtom } from "@/atoms/userAtom";
 import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
 import { useAtom } from "jotai";
-import PublicDreamLikeButton from "../PublicDreamLikeButton";
+import PublicDreamLikeButton from "./PublicDreamLikeButton";
 
-interface PublicDreamCardProps {
+interface Props {
   dream: Dream;
-  setPublicDreams: (newPublicDreams: Dream[]) => void;
+  searchPublicDreams: () => Promise<void>;
 }
 
-const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
+const PublicDreamCard = ({ dream, searchPublicDreams }: Props) => {
   const [user] = useAtom(userAtom);
   const isMyDream = user?.id === dream.user_id;
   return (
@@ -24,8 +24,7 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
       <AlertDialog.Trigger>
         <div
           className={`
-            bg-[#fff1fa] relative rounded-t-[95px] rounded-b-[50px] 
-            md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
+            bg-[#fff1fa] relative rounded-t-[95px] rounded-b-[50px] w-[220px] h-[220px] 
             flex flex-col items-center justify-center border-2 border-gray-500
           `}
         >
@@ -36,7 +35,7 @@ const PublicDreamCard = ({ dream, setPublicDreams }: PublicDreamCardProps) => {
             {!isMyDream && (
               <PublicDreamLikeButton
                 dream={dream}
-                setPublicDreams={setPublicDreams}
+                searchPublicDreams={searchPublicDreams}
               />
             )}
             <div className="font-ubuntu flex flex-col items-center">
