@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { RxCross1 } from "react-icons/rx";
 
-interface MyDreamFormHashtagListProps {
+interface Props {
   hashtags: string[];
   setHashtags: (hashtags: string[]) => void;
 }
@@ -10,7 +10,7 @@ interface MyDreamFormHashtagListProps {
 const MyDreamFormHashtagList = ({
   hashtags,
   setHashtags,
-}: MyDreamFormHashtagListProps) => {
+}: Props) => {
   const [hashtag, setHashtag] = useState("");
 
   const addHashtag = () => {

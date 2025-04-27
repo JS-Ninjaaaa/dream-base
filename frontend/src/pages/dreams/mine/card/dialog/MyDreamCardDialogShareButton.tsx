@@ -7,13 +7,13 @@ import {
   XIcon,
 } from "react-share";
 
-interface MyDreamCardDialogShareButtonProps {
+interface Props {
   dream: Dream;
 }
 
 const MyDreamCardDialogShareButton = ({
   dream,
-}: MyDreamCardDialogShareButtonProps) => {
+}: Props) => {
   return (
     <Flex gap="2" justify="center">
       <FacebookShareButton

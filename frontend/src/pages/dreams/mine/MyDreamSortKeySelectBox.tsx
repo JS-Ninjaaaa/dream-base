@@ -1,6 +1,6 @@
 import { MyDreamSortKey } from "@/types/dream";
 
-interface MyDreamSortKeySelectBoxProps {
+interface Props {
   myDreamSortKey: MyDreamSortKey;
   setMyDreamSortKey: (sortKey: MyDreamSortKey) => void;
 }
@@ -8,7 +8,7 @@ interface MyDreamSortKeySelectBoxProps {
 const MyDreamSortKeySelectBox = ({
   myDreamSortKey,
   setMyDreamSortKey,
-}: MyDreamSortKeySelectBoxProps) => {
+}: Props) => {
   return (
     <div className="my-5 ml-10 flex items-center gap-2">
       <span className="text-gray-600">並び替え:</span>

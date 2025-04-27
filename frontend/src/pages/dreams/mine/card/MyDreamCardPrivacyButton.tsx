@@ -3,7 +3,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext } from "react";
 
-interface MyDreamPrivacyButtonProps {
+interface Props {
   dream: Dream;
   setMyDreams: (newMyDreams: Dream[]) => void;
 }
@@ -11,7 +11,7 @@ interface MyDreamPrivacyButtonProps {
 const MyDreamPrivacyButton = ({
   dream,
   setMyDreams,
-}: MyDreamPrivacyButtonProps) => {
+}: Props) => {
   const { setIsLoading } = useContext(LoadingContext);
 
   const handleToggle = async (dreamId: number) => {

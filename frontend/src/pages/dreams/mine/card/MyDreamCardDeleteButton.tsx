@@ -3,7 +3,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext } from "react";
 
-interface MyDreamDeleteButtonProps {
+interface Props {
   dream: Dream;
   setMyDreams: (newMyDreams: Dream[]) => void;
   onClose: () => void;
@@ -13,7 +13,7 @@ const MyDreamDeleteButton = ({
   dream,
   setMyDreams,
   onClose,
-}: MyDreamDeleteButtonProps) => {
+}: Props) => {
   const { setIsLoading } = useContext(LoadingContext);
 
   const handleDeleteButtonClick = async (dreamId: number) => {

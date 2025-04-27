@@ -2,7 +2,7 @@ import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
 import MyDreamPrivacyButton from "./MyDreamCardPrivacyButton";
 
-interface MyDreamCardProps {
+interface Props {
   dream: Dream;
   setMyDreams: (newMyDreams: Dream[]) => void;
 }
@@ -22,7 +22,7 @@ const getPinkGradientClass = (likes: number = 0): string => {
   return "to-pink-50";
 };
 
-const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
+const MyDreamCard = ({ dream, setMyDreams }: Props) => {
   const gradientClass = getPinkGradientClass(dream.likes);
   return (
     <div className="flex flex-col items-center p-4">
@@ -36,7 +36,7 @@ const MyDreamCard = ({ dream, setMyDreams }: MyDreamCardProps) => {
       <AlertDialog.Trigger>
         <div
           className={`
-            relative rounded-t-[95px] rounded-b-[50px] md:w-[220px] md:h-[220px] w-[240px] h-[240px] 
+            relative rounded-t-[95px] rounded-b-[50px] w-[220px] h-[220px]
             flex flex-col items-center justify-center gap-2
             bg-gradient-to-b from-white border-2 border-gray-500
             ${gradientClass}

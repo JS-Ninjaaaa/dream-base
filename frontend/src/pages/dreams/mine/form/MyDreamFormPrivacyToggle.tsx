@@ -1,4 +1,4 @@
-interface MyDreamFormPrivacyToggleProps {
+interface Props {
   isPublic: boolean;
   togglePrivacy: () => void;
 }
@@ -6,7 +6,7 @@ interface MyDreamFormPrivacyToggleProps {
 const MyDreamFormPrivacyToggle = ({
   isPublic,
   togglePrivacy,
-}: MyDreamFormPrivacyToggleProps) => {
+}: Props) => {
   return (
     <>
       <span className="text-lg text-gray-600">非公開</span>

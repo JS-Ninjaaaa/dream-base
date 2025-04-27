@@ -6,11 +6,11 @@ import MyDreamFormHashtagList from "./MyDreamFormHashtagList";
 import MyDreamFormInput from "./MyDreamFormInput";
 import MyDreamFormPrivacyToggle from "./MyDreamFormPrivacyToggle";
 
-interface MyDreamInputProps {
+interface Props {
   setMyDreams: (dreams: Dream[]) => void;
 }
 
-const MyDreamInput = ({ setMyDreams }: MyDreamInputProps) => {
+const MyDreamInput = ({ setMyDreams }: Props) => {
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [hashtags, setHashtags] = useState<string[]>([]);
