@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import SakuraScatterEffect from "../components/SakuraScatterEffect";
 import PublicDreamCards from "./PublicDreamCards";
 import "../../../css/style.css"

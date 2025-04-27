@@ -3,7 +3,7 @@ import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream, MyDreamSortKey } from "@/types/dream";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import SakuraScatterEffect from "../components/SakuraScatterEffect";
 import MyDreamCards from "./MyDreamCards";
 import MyDreamInput from "./form/MyDreamForm";
