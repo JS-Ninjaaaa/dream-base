@@ -1,19 +1,15 @@
-import { deleteMyDream, fetchMyDreams } from "@/api/dreams/mine";
+import { deleteMyDream } from "@/api/dreams/mine";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { useContext } from "react";
 
 interface Props {
   dream: Dream;
-  setMyDreams: (newMyDreams: Dream[]) => void;
+  updateMyDreams: () => Promise<void>;
   onClose: () => void;
 }
 
-const MyDreamDeleteButton = ({
-  dream,
-  setMyDreams,
-  onClose,
-}: Props) => {
+const MyDreamDeleteButton = ({ dream, updateMyDreams, onClose }: Props) => {
   const { setIsLoading } = useContext(LoadingContext);
 
   const handleDeleteButtonClick = async (dreamId: number) => {
@@ -22,9 +18,7 @@ const MyDreamDeleteButton = ({
         setIsLoading(true);
 
         await deleteMyDream(dreamId);
-        const myDreams = await fetchMyDreams();
-
-        setMyDreams(myDreams);
+        await updateMyDreams();
         onClose();
       } catch (e) {
         alert("夢の削除に失敗しました");

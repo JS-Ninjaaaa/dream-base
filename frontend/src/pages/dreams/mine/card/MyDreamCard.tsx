@@ -4,7 +4,7 @@ import MyDreamPrivacyButton from "./MyDreamPrivacyButton";
 
 interface Props {
   dream: Dream;
-  setMyDreams: (newMyDreams: Dream[]) => void;
+  updateMyDreams: () => Promise<void>;
 }
 
 const getPinkGradientClass = (likes: number = 0): string => {
@@ -22,7 +22,7 @@ const getPinkGradientClass = (likes: number = 0): string => {
   return "to-pink-50";
 };
 
-const MyDreamCard = ({ dream, setMyDreams }: Props) => {
+const MyDreamCard = ({ dream, updateMyDreams }: Props) => {
   const gradientClass = getPinkGradientClass(dream.likes);
   return (
     <div className="flex flex-col items-center p-4">
@@ -50,7 +50,10 @@ const MyDreamCard = ({ dream, setMyDreams }: Props) => {
               <span className="text-lg">{dream.likes}</span>
               <p className="text-xs">いいね</p>
             </div>
-            <MyDreamPrivacyButton dream={dream} setMyDreams={setMyDreams} />
+            <MyDreamPrivacyButton
+              dream={dream}
+              updateMyDreams={updateMyDreams}
+            />
           </div>
         </div>
       </AlertDialog.Trigger>

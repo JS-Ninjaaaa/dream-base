@@ -3,13 +3,13 @@ import { IoSearchOutline } from "react-icons/io5";
 interface Props {
   keyword: string;
   setKeyword: (keyword: string) => void;
-  searchPublicDreams: () => Promise<void>;
+  updatePublicDreams: () => Promise<void>;
 }
 
 const PublicDreamSearchInput = ({
   keyword,
   setKeyword,
-  searchPublicDreams,
+  updatePublicDreams,
 }: Props) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
@@ -17,7 +17,7 @@ const PublicDreamSearchInput = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await searchPublicDreams();
+    await updatePublicDreams();
   };
 
   return (

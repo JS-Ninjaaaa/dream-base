@@ -5,11 +5,11 @@ import MyDreamCardDialogShareButton from "./MyDreamShareButton";
 
 interface Props {
   dream: Dream;
-  setMyDreams: (newMyDreams: Dream[]) => void;
+  updateMyDreams: () => Promise<void>;
   onClose: () => void;
 }
 
-const MyDreamCardDialog = ({ dream, setMyDreams, onClose }: Props) => {
+const MyDreamCardDialog = ({ dream, updateMyDreams, onClose }: Props) => {
   return (
     <AlertDialog.Content className="flex flex-col h-full min-h-[320px] max-w-[400px]">
       <AlertDialog.Title></AlertDialog.Title>
@@ -32,7 +32,7 @@ const MyDreamCardDialog = ({ dream, setMyDreams, onClose }: Props) => {
           <AlertDialog.Cancel>
             <MyDreamDeleteButton
               dream={dream}
-              setMyDreams={setMyDreams}
+              updateMyDreams={updateMyDreams}
               onClose={onClose}
             />
           </AlertDialog.Cancel>

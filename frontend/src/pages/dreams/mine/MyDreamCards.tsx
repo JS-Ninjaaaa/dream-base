@@ -1,14 +1,14 @@
 import { Dream, MyDreamSortKey } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
 import { useState } from "react";
-import MyDreamCardDialog from "./card/dialog/MyDreamCardDialog";
 import MyDreamCard from "./card/MyDreamCard";
+import MyDreamCardDialog from "./dialog/MyDreamCardDialog";
 import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
 
 interface Props {
   myDreams: {
     myDreams: Dream[];
-    setMyDreams: (newMyDreams: Dream[]) => void;
+    updateMyDreams: () => Promise<void>;
   };
   sortKey: {
     myDreamSortKey: MyDreamSortKey;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const MyDreamCards = ({
-  myDreams: { myDreams, setMyDreams },
+  myDreams: { myDreams, updateMyDreams },
   sortKey: { myDreamSortKey, setMyDreamSortKey },
 }: Props) => {
   const [openedDreamId, setOpenedDreamId] = useState<number | null>(null);
@@ -41,10 +41,10 @@ const MyDreamCards = ({
               }
             }}
           >
-            <MyDreamCard dream={dream} setMyDreams={setMyDreams} />
+            <MyDreamCard dream={dream} updateMyDreams={updateMyDreams} />
             <MyDreamCardDialog
               dream={dream}
-              setMyDreams={setMyDreams}
+              updateMyDreams={updateMyDreams}
               onClose={() => setOpenedDreamId(null)}
             />
           </AlertDialog.Root>

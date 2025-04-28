@@ -14,7 +14,7 @@ const PublicDreamPage = () => {
 
   const { setIsLoading } = useContext(LoadingContext);
 
-  const searchPublicDreams = async () => {
+  const updatePublicDreams = async () => {
     try {
       setIsLoading(true);
       const dreams = await fetchPublicDreams(keyword);
@@ -27,11 +27,7 @@ const PublicDreamPage = () => {
   };
 
   useEffect(() => {
-    const loadPublicDreams = async () => {
-      await searchPublicDreams();
-    };
-
-    loadPublicDreams();
+    updatePublicDreams();
   }, []);
 
   return (
@@ -45,12 +41,12 @@ const PublicDreamPage = () => {
         <PublicDreamSearchInput
           keyword={keyword}
           setKeyword={setKeyword}
-          searchPublicDreams={searchPublicDreams}
+          updatePublicDreams={updatePublicDreams}
         />
       </div>
       <PublicDreamCards
         publicDreams={publicDreams}
-        searchPublicDreams={searchPublicDreams}
+        updatePublicDreams={updatePublicDreams}
       />
     </>
   );

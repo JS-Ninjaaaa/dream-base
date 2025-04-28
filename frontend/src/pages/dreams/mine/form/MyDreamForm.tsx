@@ -1,16 +1,15 @@
-import { createMyDream, fetchMyDreams } from "@/api/dreams/mine";
+import { createMyDream } from "@/api/dreams/mine";
 import { LoadingContext } from "@/contexts/LoadingContext";
-import { Dream } from "@/types/dream";
 import { useContext, useState } from "react";
 import MyDreamFormHashtagList from "./MyDreamFormHashtagList";
 import MyDreamFormInput from "./MyDreamFormInput";
 import MyDreamFormPrivacyToggle from "./MyDreamFormPrivacyToggle";
 
 interface Props {
-  setMyDreams: (dreams: Dream[]) => void;
+  updateMyDreams: () => Promise<void>;
 }
 
-const MyDreamInput = ({ setMyDreams }: Props) => {
+const MyDreamForm = ({ updateMyDreams }: Props) => {
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -28,9 +27,8 @@ const MyDreamInput = ({ setMyDreams }: Props) => {
       setIsLoading(true);
 
       await createMyDream(newDream);
-      const myDreams: Dream[] = await fetchMyDreams();
+      await updateMyDreams();
 
-      setMyDreams(myDreams);
       setContent("");
       setHashtags([]);
     } catch (e) {
@@ -71,4 +69,4 @@ const MyDreamInput = ({ setMyDreams }: Props) => {
   );
 };
 
-export default MyDreamInput;
+export default MyDreamForm;

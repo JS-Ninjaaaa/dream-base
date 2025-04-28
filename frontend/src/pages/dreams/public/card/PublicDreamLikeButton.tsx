@@ -1,6 +1,4 @@
-import {
-  increasePublicDreamLikes
-} from "@/api/dreams/public";
+import { increasePublicDreamLikes } from "@/api/dreams/public";
 import { userAtom } from "@/atoms/userAtom";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
@@ -10,13 +8,10 @@ import { HiThumbUp } from "react-icons/hi";
 
 interface Props {
   dream: Dream;
-  searchPublicDreams: () => Promise<void>;
+  updatePublicDreams: () => Promise<void>;
 }
 
-const PublicDreamLikeButton = ({
-  dream,
-  searchPublicDreams,
-}: Props) => {
+const PublicDreamLikeButton = ({ dream, updatePublicDreams }: Props) => {
   const { setIsLoading } = useContext(LoadingContext);
   const [user] = useAtom(userAtom);
 
@@ -25,7 +20,7 @@ const PublicDreamLikeButton = ({
       setIsLoading(true);
 
       await increasePublicDreamLikes(id);
-      await searchPublicDreams()
+      await updatePublicDreams();
     } catch (e) {
       alert("いいね数の更新に失敗しました");
       console.error(e);
