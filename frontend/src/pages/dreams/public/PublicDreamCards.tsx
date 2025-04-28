@@ -3,12 +3,12 @@ import { AlertDialog } from "@radix-ui/themes";
 import PublicDreamCard from "./card/PublicDreamCard";
 import PublicDreamCardDialog from "./card/dialog/PublicDreamCardDialog";
 
-interface PublicDreamCardsPropes{
+interface Propes{
   publicDreams: Dream[]
   searchPublicDreams: () => Promise<void>;
 }
 
-const PublicDreamCards = ({ publicDreams, searchPublicDreams }: PublicDreamCardsPropes) => {
+const PublicDreamCards = ({ publicDreams, searchPublicDreams }: Propes) => {
   return (
     <div className="px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {publicDreams.map((dream, index) => (
