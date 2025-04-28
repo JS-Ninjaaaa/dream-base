@@ -1,7 +1,7 @@
-from flask import Blueprint, jsonify, current_app
+from flask import Blueprint, current_app, jsonify, request
 from models.dream import Dream
 from pydantic import ValidationError
-from schemas.dream.public import PublicDreamResponse
+from schemas.dream.public import GetPublicDreamsParams, PublicDreamResponse
 
 public_dream_bp = Blueprint("public_dream", __name__)
 
@@ -9,7 +9,9 @@ public_dream_bp = Blueprint("public_dream", __name__)
 # 公開されている夢を取得
 @public_dream_bp.route("/dreams/public", methods=["GET"])
 def get_public_dreams():
-    public_dreams = Dream.get_all_public_dreams()
+    params = GetPublicDreamsParams(**request.args)
+    public_dreams = Dream.get_all_public_dreams(params.keyword)
+
     try:
         public_dreams = [
             PublicDreamResponse(**dream.__dict__) for dream in public_dreams

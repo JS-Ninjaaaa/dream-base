@@ -1,9 +1,9 @@
-interface MyDreamFormInputProps {
+interface Props {
   content: string;
   setContent: (content: string) => void;
 }
 
-const MyDreamFormInput = ({ content, setContent }: MyDreamFormInputProps) => {
+const MyDreamFormInput = ({ content, setContent }: Props) => {
   return (
     <div className="my-3 w-full min-w-xs max-w-xl">
       <div className="w-full h-full border border-gray-300 rounded-lg p-4 flex items-center justify-center relative bg-white shadow">

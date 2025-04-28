@@ -1,9 +1,39 @@
+import { fetchPublicDreams } from "@/api/dreams/public";
+import { LoadingContext } from "@/contexts/LoadingContext";
+import "@/css/style.css";
+import { Dream } from "@/types/dream";
+import { useContext, useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import SakuraScatterEffect from "../components/SakuraScatterEffect";
 import PublicDreamCards from "./PublicDreamCards";
-import "../../../css/style.css"
+import PublicDreamSearchInput from "./PublicDreamSearchInput";
 
-const DreamCards = () => {
+const PublicDreamPage = () => {
+  const [keyword, setKeyword] = useState<string>("");
+  const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
+
+  const { setIsLoading } = useContext(LoadingContext);
+
+  const searchPublicDreams = async () => {
+    try {
+      setIsLoading(true);
+      const dreams = await fetchPublicDreams(keyword);
+      setPublicDreams(dreams);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const loadPublicDreams = async () => {
+      await searchPublicDreams();
+    };
+
+    loadPublicDreams();
+  }, []);
+
   return (
     <>
       <Header />
@@ -12,10 +42,18 @@ const DreamCards = () => {
         <h1 className="text-2xl font-mpulus sm:m-4 mt-4 mb-8 flex items-center">
           みんなの夢を見よう！
         </h1>
+        <PublicDreamSearchInput
+          keyword={keyword}
+          setKeyword={setKeyword}
+          searchPublicDreams={searchPublicDreams}
+        />
       </div>
-      <PublicDreamCards />
+      <PublicDreamCards
+        publicDreams={publicDreams}
+        searchPublicDreams={searchPublicDreams}
+      />
     </>
   );
 };
 
-export default DreamCards;
+export default PublicDreamPage;

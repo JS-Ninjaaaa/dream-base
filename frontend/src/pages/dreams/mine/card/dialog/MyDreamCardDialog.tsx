@@ -1,15 +1,15 @@
 import { Dream } from "@/types/dream";
 import { AlertDialog, Flex } from "@radix-ui/themes";
-import MyDreamCardDialogShareButton from "./MyDreamCardDialogShareButton";
 import MyDreamDeleteButton from "../MyDreamCardDeleteButton";
+import MyDreamCardDialogShareButton from "./MyDreamCardDialogShareButton";
 
-interface MyDreamCardDialogProps {
+interface Props {
   dream: Dream;
   setMyDreams: (newMyDreams: Dream[]) => void;
   onClose: () => void;
 }
 
-const MyDreamCardDialog = ({ dream, setMyDreams, onClose,  }: MyDreamCardDialogProps) => {
+const MyDreamCardDialog = ({ dream, setMyDreams, onClose,  }: Props) => {
   return (
     <AlertDialog.Content className="flex flex-col h-full min-h-[320px] max-w-[400px]">
       <AlertDialog.Title></AlertDialog.Title>

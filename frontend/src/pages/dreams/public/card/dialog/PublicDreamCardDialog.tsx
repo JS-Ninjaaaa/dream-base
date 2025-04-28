@@ -1,11 +1,11 @@
 import { Dream } from "@/types/dream";
 import { AlertDialog, Flex } from "@radix-ui/themes";
 
-interface MyDreamCardDialogProps {
+interface Props {
   dream: Dream;
 }
 
-const PublicDreamCardDialog = ({ dream }: MyDreamCardDialogProps) => {
+const PublicDreamCardDialog = ({ dream }: Props) => {
   return (
     <AlertDialog.Content className="flex flex-col h-full min-h-[320px] max-w-[400px]">
       <AlertDialog.Title></AlertDialog.Title>

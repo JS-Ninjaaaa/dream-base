@@ -5,7 +5,7 @@ import MyDreamCardDialog from "./card/dialog/MyDreamCardDialog";
 import MyDreamCard from "./card/MyDreamCard";
 import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
 
-interface MyDreamCardsProps {
+interface Props {
   myDreams: {
     myDreams: Dream[];
     setMyDreams: (newMyDreams: Dream[]) => void;
@@ -19,7 +19,7 @@ interface MyDreamCardsProps {
 const MyDreamCards = ({
   myDreams: { myDreams, setMyDreams },
   sortKey: { myDreamSortKey, setMyDreamSortKey },
-}: MyDreamCardsProps) => {
+}: Props) => {
   const [openedDreamId, setOpenedDreamId] = useState<number | null>(null);
 
   return (

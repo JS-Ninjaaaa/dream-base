@@ -1,36 +1,19 @@
-import { fetchPublicDreams } from "@/api/dreams/public";
-import { LoadingContext } from "@/contexts/LoadingContext";
 import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
-import { useContext, useEffect, useState } from "react";
 import PublicDreamCard from "./card/PublicDreamCard";
 import PublicDreamCardDialog from "./card/dialog/PublicDreamCardDialog";
 
-const PublicDreamCards = () => {
-  const [publicDreams, setPublicDreams] = useState<Dream[]>([]);
-  const { setIsLoading } = useContext(LoadingContext);
+interface Propes{
+  publicDreams: Dream[]
+  searchPublicDreams: () => Promise<void>;
+}
 
-  useEffect(() => {
-    const loadPublicDreams = async () => {
-      try {
-        setIsLoading(true);
-        const dreams = await fetchPublicDreams();
-        setPublicDreams(dreams);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPublicDreams();
-  }, []);
-
+const PublicDreamCards = ({ publicDreams, searchPublicDreams }: Propes) => {
   return (
     <div className="px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {publicDreams.map((dream, index) => (
         <AlertDialog.Root key={index}>
-          <PublicDreamCard dream={dream} setPublicDreams={setPublicDreams} />
+          <PublicDreamCard dream={dream} searchPublicDreams={searchPublicDreams} />
           <PublicDreamCardDialog dream={dream} />
         </AlertDialog.Root>
       ))}
