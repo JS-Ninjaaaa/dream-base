@@ -1,6 +1,6 @@
 import { Dream } from "@/types/dream";
 import { AlertDialog } from "@radix-ui/themes";
-import MyDreamPrivacyButton from "./MyDreamCardPrivacyButton";
+import MyDreamPrivacyButton from "./MyDreamPrivacyButton";
 
 interface Props {
   dream: Dream;
