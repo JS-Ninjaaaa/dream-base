@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Header from "../components/header/Header";
 import SakuraScatterEffect from "../components/SakuraScatterEffect";
+import MyDreamForm from "./form/MyDreamForm";
 import MyDreamCards from "./MyDreamCards";
-import MyDreamInput from "./form/MyDreamForm";
 
 const MyDreamPage = () => {
   const [myDreams, setMyDreams] = useState<Dream[]>([]);
@@ -16,6 +16,18 @@ const MyDreamPage = () => {
 
   const navigate = useNavigate();
 
+  const updateMyDreams = async () => {
+    try {
+      setIsLoading(true);
+      const dreams: Dream[] = await fetchMyDreams(myDreamSortKey);
+      setMyDreams(dreams);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -23,28 +35,16 @@ const MyDreamPage = () => {
       return;
     }
 
-    const loadMyDreams = async () => {
-      try {
-        setIsLoading(true);
-        const dreams: Dream[] = await fetchMyDreams(myDreamSortKey);
-        setMyDreams(dreams);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadMyDreams();
+    updateMyDreams();
   }, [myDreamSortKey]);
 
   return (
     <>
       <Header />
       <SakuraScatterEffect />
-      <MyDreamInput setMyDreams={setMyDreams} />
+      <MyDreamForm updateMyDreams={updateMyDreams} />
       <MyDreamCards
-        myDreams={{ myDreams, setMyDreams }}
+        myDreams={{ myDreams, updateMyDreams }}
         sortKey={{ myDreamSortKey, setMyDreamSortKey }}
       />
     </>

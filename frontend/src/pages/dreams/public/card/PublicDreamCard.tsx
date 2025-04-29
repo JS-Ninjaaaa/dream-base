@@ -6,10 +6,10 @@ import PublicDreamLikeButton from "./PublicDreamLikeButton";
 
 interface Props {
   dream: Dream;
-  searchPublicDreams: () => Promise<void>;
+  updatePublicDreams: () => Promise<void>;
 }
 
-const PublicDreamCard = ({ dream, searchPublicDreams }: Props) => {
+const PublicDreamCard = ({ dream, updatePublicDreams }: Props) => {
   const [user] = useAtom(userAtom);
   const isMyDream = user?.id === dream.user_id;
   return (
@@ -35,7 +35,7 @@ const PublicDreamCard = ({ dream, searchPublicDreams }: Props) => {
             {!isMyDream && (
               <PublicDreamLikeButton
                 dream={dream}
-                searchPublicDreams={searchPublicDreams}
+                updatePublicDreams={updatePublicDreams}
               />
             )}
             <div className="font-ubuntu flex flex-col items-center">
