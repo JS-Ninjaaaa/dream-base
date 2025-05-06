@@ -1,4 +1,4 @@
-# Dream Sink
+# Dream Base
 
 書き溜めた夢を公開して「いいね！」がもらえるWebサービス
 

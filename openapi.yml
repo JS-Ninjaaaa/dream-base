@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Dream Sink API
+  title: Dream Base API
   version: v1
 servers:
   - url: https://dreamsink-backend.onrender.com
