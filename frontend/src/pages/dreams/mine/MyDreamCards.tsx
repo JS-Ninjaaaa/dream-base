@@ -8,17 +8,19 @@ import MyDreamSortKeySelectBox from "./MyDreamSortKeySelectBox";
 interface Props {
   myDreams: {
     myDreams: Dream[];
-    updateMyDreams: () => Promise<void>;
+    updateMyDreams: (updatedDreamId?: number) => Promise<void>;
   };
   sortKey: {
     myDreamSortKey: MyDreamSortKey;
     setMyDreamSortKey: (sortKey: MyDreamSortKey) => void;
   };
+  publishedDreamId?: number;
 }
 
 const MyDreamCards = ({
   myDreams: { myDreams, updateMyDreams },
   sortKey: { myDreamSortKey, setMyDreamSortKey },
+  publishedDreamId,
 }: Props) => {
   const [openedDreamId, setOpenedDreamId] = useState<number | null>(null);
 
@@ -41,7 +43,11 @@ const MyDreamCards = ({
               }
             }}
           >
-            <MyDreamCard dream={dream} updateMyDreams={updateMyDreams} />
+            <MyDreamCard
+              dream={dream}
+              published={dream.id === publishedDreamId}
+              updateMyDreams={updateMyDreams}
+            />
             <MyDreamCardDialog
               dream={dream}
               updateMyDreams={updateMyDreams}
