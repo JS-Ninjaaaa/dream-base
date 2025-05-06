@@ -3,7 +3,7 @@ info:
   title: Dream Base API
   version: v1
 servers:
-  - url: https://dreamsink-backend.onrender.com
+  - url: https://dream-base-backend.onrender.com
 tags: 
   - name: dreams
     description: 夢に関するAPI

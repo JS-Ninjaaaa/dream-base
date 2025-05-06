@@ -2,8 +2,8 @@
 
 書き溜めた夢を公開して「いいね！」がもらえるWebサービス
 
-- [サービスのリンク](https://dreamsink.vercel.app/)
-- [API 仕様書](https://js-ninjaaaa.github.io/dreamsink/)
+- [サービスのリンク](https://dream-base.vercel.app/)
+- [API 仕様書](https://js-ninjaaaa.github.io/dream-base/)
 - テストユーザー
 
 | 項目         | 値                        |
