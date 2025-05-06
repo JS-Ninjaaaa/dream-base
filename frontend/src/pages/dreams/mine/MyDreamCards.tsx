@@ -14,7 +14,7 @@ interface Props {
     myDreamSortKey: MyDreamSortKey;
     setMyDreamSortKey: (sortKey: MyDreamSortKey) => void;
   };
-  publishedDreamId?: number;
+  publishedDreamId: number | null;
 }
 
 const MyDreamCards = ({
