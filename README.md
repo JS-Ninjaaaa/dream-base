@@ -32,12 +32,12 @@
 
 <details>
 <summary>自分の夢画面</summary>
-<image src="https://github.com/user-attachments/assets/9ba573db-10b1-422a-bb93-8c848bd5ab35" width="700">
+<image src="https://github.com/user-attachments/assets/28661240-0055-4fb3-ac6a-8c6980f4754c" width="700">
 </details>
 
 <details>
 <summary>みんなの夢画面</summary>
-<image src="https://github.com/user-attachments/assets/e6e237da-abbd-4704-8b09-a3105d8e335d" width="700">
+<image src="https://github.com/user-attachments/assets/381ef3fa-c2d7-4d98-b451-0169a1303d99" width="700">
 </details>
 
 ## 技術スタック
