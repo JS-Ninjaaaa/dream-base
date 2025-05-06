@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 interface Props {
   dream: Dream;
-  updateMyDreams: () => Promise<void>;
+  updateMyDreams: (updatedDreamId?: number) => Promise<void>;
 }
 
 const MyDreamPrivacyButton = ({ dream, updateMyDreams }: Props) => {
@@ -16,7 +16,14 @@ const MyDreamPrivacyButton = ({ dream, updateMyDreams }: Props) => {
       setIsLoading(true);
 
       await toggleMyDreamVisibility(dreamId);
-      await updateMyDreams();
+      if (dream.is_public) {
+        // 夢を非公開にする場合
+        await updateMyDreams();
+      } else {
+        // 夢を公開する場合
+        // 紙吹雪を出すために公開した夢のIDを渡す
+        await updateMyDreams(dreamId);
+      }
     } catch (e) {
       alert("夢の公開設定の変更に失敗しました");
       console.error(e);

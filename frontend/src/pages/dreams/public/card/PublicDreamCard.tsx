@@ -14,18 +14,15 @@ const PublicDreamCard = ({ dream, updatePublicDreams }: Props) => {
   const isMyDream = user?.id === dream.user_id;
   return (
     <div className="flex flex-col items-center p-4">
-      {/* 突起 */}
-      <div className="w-[100px] h-[40px] rounded-full bg-[#ffbadf] border-2 border-gray-500 z-10" />
-
-      {/* 軸 */}
-      <div className="w-[40px] h-[20px] bg-white border-l-2 border-r-2 border-gray-500 z-0" />
-
-      {/* 本体 */}
       <AlertDialog.Trigger>
         <div
           className={`
-            bg-[#fff1fa] relative rounded-t-[95px] rounded-b-[50px] w-[220px] h-[220px] 
+            bg-[#fff1fa] relative rounded-[35px] w-[230px] h-[220px] 
             flex flex-col items-center justify-center border-2 border-gray-500
+            shadow-lg hover:shadow-xl
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-2
+            cursor-pointer
           `}
         >
           <div className="text-base font-mpulus text-center px-6 my-3 line-clamp-3">
